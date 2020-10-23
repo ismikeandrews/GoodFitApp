@@ -8,10 +8,11 @@ export default Etapa2 = forwardRef((props, ref) =>{
     const [loginUsuario, setLoginUsuario] = useState(props.loginUsuario);
     const [password, setPassword] = useState(props.password);
     const [confirmPassword, setConfirmPassword] = useState(props.confirmPassword);
+    const [cpfCandidato, setCpfCandidato] = useState(props.cpfCandidato);
 
     useImperativeHandle(ref, () => ({
         sendDataToParent() {
-            props.parentCallback({loginUsuario, password, confirmPassword});
+            props.parentCallback({loginUsuario, password, confirmPassword, cpfCandidato});
         }
     }));
 
@@ -21,13 +22,16 @@ export default Etapa2 = forwardRef((props, ref) =>{
             <Text style={ Variables.subtitle }>Agora vamos configurar a sua conta</Text>
 
             <Text style={ Variables.label }>Login</Text>
-            <TextInput style={ Variables.input } autoCapitalize="none" textContentType="username" autoFocus={true} autoCompleteType="username" value={loginUsuario} onChangeText={ text => setLoginUsuario(text) }/>
+            <TextInput style={ Variables.input } autoCapitalize="none" textContentType="username" autoFocus={true} autoCompleteType="username" value={loginUsuario} onChangeText={ text => setLoginUsuario(text.trim()) }/>
+
+            <Text style={ Variables.label }>CPF</Text>
+            <TextInput style={ Variables.input } maxLength={11} keyboardType="number-pad" autoCapitalize="none" textContentType="none"  autoCompleteType="username" value={cpfCandidato} onChangeText={ text => setCpfCandidato(text.trim()) }/>
 
             <Text style={ Variables.label }>Senha</Text>
-            <TextInput style={ Variables.input } textContentType="password" autoCapitalize="none" secureTextEntry={true} value={password} onChangeText={ text => setPassword(text) }/>
+            <TextInput style={ Variables.input } textContentType="password" autoCapitalize="none" secureTextEntry={true} value={password} onChangeText={ text => setPassword(text.trim()) }/>
 
             <Text style={ Variables.label }>Confirmar senha</Text>
-            <TextInput style={ Variables.input } textContentType="password" autoCapitalize="none" secureTextEntry={true} value={confirmPassword} onChangeText={ text => setConfirmPassword(text) }/>
+            <TextInput style={ Variables.input } textContentType="password" autoCapitalize="none" secureTextEntry={true} value={confirmPassword} onChangeText={ text => setConfirmPassword(text.trim()) }/>
         </View>
     );
 });

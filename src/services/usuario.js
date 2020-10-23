@@ -9,6 +9,20 @@ const usuarioService = {
                 return await axios.post(`${url}/login`, data)
         },
 
+        async getUsuarioByUsername(username){
+                let data = {
+                        loginUsuario: username
+                }
+                return await axios.post(`${url}/${prefix}/find`, data)
+        },
+
+        async getUsuarioByEmail(email){
+                let data = {
+                        email: email
+                }
+                return await axios.post(`${url}/${prefix}/find`, data)
+        },
+
         async getUsuarioList(){
                 return await axios.get(`${url}/${prefix}`);
         },

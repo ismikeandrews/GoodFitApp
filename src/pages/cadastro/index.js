@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Etapa1, Etapa2, Etapa3 } from './etapas';
 import { Stepper, Variables } from '../../shared/';
+import { usuarioValidation, candidatoValidation, enderecoValidation } from '../../validations'
 
 import styles from './styles';
 
@@ -13,11 +14,13 @@ class Cadastro extends Component{
             page: 0,
             total: 3,
             email: '',
-            dataNascimentoCandidato: '',
-            nomeCandidato: '',
             loginUsuario: '',
+            codNivelUsuario: 2,
             password: '',
             confirmPassword: '',
+            dataNascimentoCandidato: {timestamp: '', display: '', isoString: ''},
+            nomeCandidato: '',
+            cpfCandidato: '',
             cepEndereco: '',
             logradouroEndereco: '',
             numeroEndereco: '',
@@ -29,13 +32,12 @@ class Cadastro extends Component{
         },
         this.etapa1 = React.createRef();
         this.etapa2 = React.createRef();
-        this.etapa3 = React.createRef();
     };
 
     callbackFunctionE1 = (childData) => {
         this.setState({
             email: childData.email,
-            dataNascimentoCandidato: childData.dataNascimentoCandidato, 
+            dataNascimentoCandidato: childData.dateObj, 
             nomeCandidato: childData.nomeCandidato
         });
     };
@@ -44,7 +46,8 @@ class Cadastro extends Component{
         this.setState({
             loginUsuario: childData.loginUsuario,
             password: childData.password, 
-            confirmPassword: childData.confirmPassword
+            confirmPassword: childData.confirmPassword,
+            cpfCandidato: childData.cpfCandidato
         });
     };
 
@@ -58,7 +61,7 @@ class Cadastro extends Component{
             zonaEndereco: childData.zonaEndereco,
             cidadeEndereco: childData.cidadeEndereco,
             estadoEndereco: childData.estadoEndereco,
-        })
+        });
     };
 
     currentPage = () => {
@@ -77,6 +80,7 @@ class Cadastro extends Component{
                 <Etapa2
                 ref={this.etapa2}
                 parentCallback={this.callbackFunctionE2} 
+                cpfCandidato={this.state.cpfCandidato}
                 password={this.state.password}
                 loginUsuario={this.state.loginUsuario}
                 confirmPassword={this.state.confirmPassword}/>
@@ -85,7 +89,6 @@ class Cadastro extends Component{
         if (this.state.page === 2) {
             return (
                 <Etapa3
-                ref={this.etapa3}
                 parentCallback={this.callbackFunctionE3}
                 cepEndereco={this.state.cepEndereco}
                 logradouroEndereco={this.state.logradouroEndereco}
@@ -108,16 +111,40 @@ class Cadastro extends Component{
             this.etapa2.current.sendDataToParent();
             this.setState({page: this.state.page + 1});
         };
-        if (this.state.page === 2) {
-            console.log("teste")
-            this.etapa3.current.sendDataToParent();
-
-        };
     };
 
-    // handleSubmit = () => {
+    handleSubmit = async () => { 
+        let usuarioObj = {
+            loginUsuario: this.state.loginUsuario,
+            email: this.state.email,
+            password: this.state.password,
+            codNivelUsuario: this.state.codNivelUsuario,
+            confirm: this.state.confirmPassword
+        };
+        const validatedUsuarioObj = await usuarioValidation.validate(usuarioObj);
+        console.log(validatedUsuarioObj.isValid)
 
-    // }
+        let canditadoObj = {
+            nomeCandidato: this.state.nomeCandidato,
+            cpfCandidato: this.state.cpfCandidato,
+            imagemCpfCandidato: '',
+            dataNascimentoCandidato: this.state.dataNascimentoCandidato
+        };
+        const validatedCandidatoObj = candidatoValidation.validate(canditadoObj);
+        console.log(validatedCandidatoObj.isValid)
+        let enderecoObj = {
+            cepEndereco: this.state.cepEndereco,
+            logradouroEndereco: this.state.logradouroEndereco,
+            numeroEndereco: this.state.numeroEndereco,
+            complementoEndereco: this.state.complementoEndereco,
+            bairroEndereco: this.state.bairroEndereco,
+            zonaEndereco: this.state.zonaEndereco,
+            cidadeEndereco: this.state.cidadeEndereco,
+            estadoEndereco: this.state.estadoEndereco
+        };
+        const validatedEnderecoObj = enderecoValidation.validate(enderecoObj);
+        console.log(validatedEnderecoObj.isValid)
+    }
 
     render(){
         return(
@@ -131,7 +158,7 @@ class Cadastro extends Component{
                     <View style={[ Variables.contentBtn, styles.contentBtn ]}>
 
                         {this.state.page + 1 === this.state.total ?
-                            <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnCadastrar ]} onPress={() => this.handleNextPage()}>
+                            <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnCadastrar ]} onPress={() => this.handleSubmit()}>
                                 <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar</Text>
                             </TouchableOpacity> :
                             <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnNext ]} onPress={() => this.handleNextPage()}>
