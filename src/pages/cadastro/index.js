@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Etapa1, Etapa2, Etapa3 } from './etapas';
 import { Stepper, Variables } from '../../shared/';
 import { usuarioValidation, candidatoValidation, enderecoValidation } from '../../validations'
-
+import { usuarioService, candidatoService, enderecoService } from '../../services'
 import styles from './styles';
 
 class Cadastro extends Component{
@@ -121,17 +121,12 @@ class Cadastro extends Component{
             codNivelUsuario: this.state.codNivelUsuario,
             confirm: this.state.confirmPassword
         };
-        const validatedUsuarioObj = await usuarioValidation.validate(usuarioObj);
-        console.log(validatedUsuarioObj.isValid)
-
         let canditadoObj = {
             nomeCandidato: this.state.nomeCandidato,
             cpfCandidato: this.state.cpfCandidato,
             imagemCpfCandidato: '',
             dataNascimentoCandidato: this.state.dataNascimentoCandidato
         };
-        const validatedCandidatoObj = candidatoValidation.validate(canditadoObj);
-        console.log(validatedCandidatoObj.isValid)
         let enderecoObj = {
             cepEndereco: this.state.cepEndereco,
             logradouroEndereco: this.state.logradouroEndereco,
@@ -142,8 +137,46 @@ class Cadastro extends Component{
             cidadeEndereco: this.state.cidadeEndereco,
             estadoEndereco: this.state.estadoEndereco
         };
+
+        const validatedUsuarioObj = await usuarioValidation.validate(usuarioObj);
+        const validatedCandidatoObj = candidatoValidation.validate(canditadoObj);
         const validatedEnderecoObj = enderecoValidation.validate(enderecoObj);
-        console.log(validatedEnderecoObj.isValid)
+
+        if(validatedUsuarioObj.isValid && validatedCandidatoObj.isValid && validatedEnderecoObj.isValid){
+            let enderecoData = {
+                cepEndereco: validatedEnderecoObj.cepEndereco.value,
+                logradouroEndereco: validatedEnderecoObj.logradouroEndereco.value,
+                numeroEndereco: validatedEnderecoObj.numeroEndereco.value,
+                complementoEndereco: validatedEnderecoObj.complementoEndereco.value,
+                bairroEndereco: validatedEnderecoObj.bairroEndereco.value,
+                zonaEndereco: validatedEnderecoObj.zonaEndereco.value,
+                cidadeEndereco: validatedEnderecoObj.cidadeEndereco.value,
+                estadoEndereco: validatedEnderecoObj.estadoEndereco.value
+            }
+            const codEndereco = await enderecoService.createEndereco(enderecoData);
+
+            let usuarioData = {
+                loginUsuario: validatedUsuarioObj.loginUsuario.value,
+                email: validatedUsuarioObj.email.value,
+                password: validatedUsuarioObj.password.value,
+                codNivelUsuario: this.state.codNivelUsuario,
+                codEndereco: codEndereco.data
+            };
+            const codUsuario = await usuarioService.createUsuario(usuarioData)
+
+            let candidatoData = {
+                nomeCandidato: validatedCandidatoObj.nomeCandidato.value,
+                cpfCandidato: validatedCandidatoObj.cpfCandidato.value,
+                dataNascimentoCandidato: validatedCandidatoObj.dataNascimentoCandidato.value,
+                codUsuario: codUsuario.data
+            }
+            const candidatoResponse = await candidatoService.createCandidato(candidatoData);
+            console.log(candidatoResponse.data)
+
+        }else{
+            //completar mostrar os erros <------
+            console.log("Not all fields are valid");
+        }
     }
 
     render(){

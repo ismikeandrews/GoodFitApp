@@ -32,7 +32,7 @@ const usuarioService = {
         },
 
         async createUsuario(data){
-                return await axios.post(`${url}/${prefix}`, data)
+                return await axios.post(`${url}/${prefix}/`, data)
         },
 
         async updateUsuario(id, data){

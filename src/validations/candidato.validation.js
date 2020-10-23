@@ -16,7 +16,7 @@ const candidatoValidation = {
                     error: ''
                 },
                 dataNascimentoCandidato: {
-                    value: data.dataNascimentoCandidato,
+                    value: data.dataNascimentoCandidato.timestamp,
                     valid: true,
                     error: ''
                 }

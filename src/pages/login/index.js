@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, AsyncStorage } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native'
 
-import { usuarioService } from '../../services'
+import { usuarioService, authService } from '../../services'
 import { Variables } from '../../shared'
 import styles from './styles'
 
@@ -17,11 +17,10 @@ class Login extends Component{
             user: this.state.user,
             password: this.state.password
         }
-
         try {
-            const res = await usuarioService.login(data)
-            if (res.data) {
-                await AsyncStorage.setItem('token', res.data.token)
+            const loginResponse = await usuarioService.login(data);
+            if (loginResponse.data) {
+                await authService.saveData(loginResponse.data);
                 this.props.navigation.navigate('CadastroCurriculo')
             }
         } catch (error) {
@@ -40,7 +39,7 @@ class Login extends Component{
                 <Text style={ Variables.subtitle }>Faça login para acessar a plataforma</Text>
             
                 <Text style={[ Variables.label, styles.label ]}>Login</Text>
-                <TextInput style={ Variables.input } onChangeText={ text => this.setState({ user: text }) }/>
+                <TextInput style={ Variables.input } autoCapitalize="none" autoCompleteType="username" textContentType="username" onChangeText={ text => this.setState({ user: text.trim() }) }/>
                 
                 <Text style={[ Variables.label, styles.label ]}>Senha</Text>
                 <TextInput style={ Variables.input } secureTextEntry={true} onChangeText={ text => this.setState({ password: text }) }/>

@@ -37,7 +37,8 @@ const enderecoValidation = {
                 value: data.estadoEndereco,
                 valid: true,
                 error: ''
-            }
+            },
+            complementoEndereco: data.complementoEndereco
         };
         //CEP section
         if(data.cepEndereco.length !== 8){
