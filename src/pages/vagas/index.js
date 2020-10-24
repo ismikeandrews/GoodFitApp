@@ -19,14 +19,7 @@ class Vagas extends Component{
 
     async fetchAuthData(){
         const authData = await authService.getData();
-        try {
-            const curriculoRes = await curriculoService.getCurriculoByCandidatoId(authData.codCandidato);
-            if(!curriculoRes.data){
-                this.setState({isCurriculoSet: true});
-            };
-        } catch (error) {
-            console.log(error);
-        }
+        this.setState({isCurriculoSet: authData.curriculo.isSet})
     }
 
     render(){

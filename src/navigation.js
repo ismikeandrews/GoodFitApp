@@ -6,12 +6,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { AuthContext } from './config/authContext'
 import { Login, Cadastro, Vagas, CadastroCurriculo, Processos, Perfil, Curriculo, ProcessosVaga } from './pages';
-import { authService } from './services';
-
 
 const AuthStack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 const ProcessosStack = createStackNavigator();
+const CurriculoStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const ProcessosStackScreen = () => (
@@ -21,13 +20,19 @@ const ProcessosStackScreen = () => (
     </ProcessosStack.Navigator>
 );
 
+const CurriculoStackScreen = () => {
+    return (
+        <CurriculoStack.Navigator screenOptions={{ headerShown: false }}>
+            <CurriculoStack.Screen name="Curriculo" component={Curriculo}/>
+            <CurriculoStack.Screen name="CadastroCurriculo" component={CadastroCurriculo}/>
+        </CurriculoStack.Navigator>
+    )
+}
+
 const TabsScreen = () => (
     <Tabs.Navigator>
         <Tabs.Screen name="Vagas" component={Vagas} />
-        <Tabs.Screen name="CadastroCurriculo" component={CadastroCurriculo}/>
-        <Tabs.Screen name="Processos" component={ProcessosStackScreen}/>
-        <Tabs.Screen name="Perfil" component={Perfil}/>
-        <Tabs.Screen name="Curriculo" component={Curriculo}/>
+        <Tabs.Screen name="Curriculo" component={CurriculoStackScreen}/>
     </Tabs.Navigator>
 );
 
@@ -39,7 +44,7 @@ export default Navigation = () => {
         return {
             signIn: (token) => {
                 setIsLoading(false)
-                setUserToken('token')
+                setUserToken(token)
             },
             signOut: () => {
                 setIsLoading(false)
@@ -47,13 +52,6 @@ export default Navigation = () => {
             }
         }
     }, []);
-
-    // useEffect(async () => {
-    //     const authRes = await authService.getData();
-    //     if (authRes) {
-    //         //do smt
-    //     }
-    // }, []);
 
     if (isLoading) {
         return  <Text>loading</Text>
@@ -66,6 +64,7 @@ export default Navigation = () => {
                     <Drawer.Navigator>
                         <Drawer.Screen name="Vagas" component={TabsScreen}/>
                         <Drawer.Screen name="Processos" component={ProcessosStackScreen}/>
+                        <Drawer.Screen name="Perfil" component={Perfil}/>
                     </Drawer.Navigator>
                 ) : (
                     <AuthStack.Navigator screenOptions={{ headerShown: false }}>

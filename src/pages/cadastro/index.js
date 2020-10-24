@@ -37,7 +37,7 @@ class Cadastro extends Component{
     callbackFunctionE1 = (childData) => {
         this.setState({
             email: childData.email,
-            dataNascimentoCandidato: childData.dateObj, 
+            dataNascimentoCandidato: JSON.parse(childData.dateObj), 
             nomeCandidato: childData.nomeCandidato
         });
     };
@@ -72,7 +72,7 @@ class Cadastro extends Component{
                 parentCallback={this.callbackFunctionE1} 
                 email={this.state.email} 
                 nomeCandidato={this.state.nomeCandidato} 
-                dataNascimentoCandidato={this.state.dataNascimentoCandidato}/>
+                dataNascimentoCandidato={JSON.stringify(this.state.dataNascimentoCandidato)}/>
             );
         };
         if (this.state.page === 1) {

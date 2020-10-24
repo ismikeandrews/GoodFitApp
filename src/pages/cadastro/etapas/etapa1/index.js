@@ -14,19 +14,17 @@ export default Etapa1 = forwardRef((props, ref) => {
     const [toggleDatepicker, setToggleDatepicker] = useState(false)
 
     useEffect(() => {
-        if (props.dataNascimentoCandidato.timestamp && props.dataNascimentoCandidato.display && props.dataNascimentoCandidato.isoString) {
-           setDateObj(props.dataNascimentoCandidato)
+        const date = JSON.parse(props.dataNascimentoCandidato) 
+        if (date.timestamp && date.isoString, date.display) {
+           setDateObj(date)
         }
     }, [])
 
     useImperativeHandle(ref, () => ({
         sendDataToParent() {
-            props.parentCallback({nomeCandidato, email, dateObj})
+            props.parentCallback({nomeCandidato, email, dateObj: JSON.stringify(dateObj)})
         }
     }));
-
-    initiateDateState = () => {
-    }
 
     showDatepicker = () => {
         setToggleDatepicker(true)

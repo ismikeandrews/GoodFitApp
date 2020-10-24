@@ -30,7 +30,7 @@ export default Perfil = () => {
         try {
             const usuario = await usuarioService.getUsuarioById(session.codUsuario);
             const candidato = await candidatoService.getCandidatoById(session.codCandidato);
-            const endereco = await enderecoService.getEnderecoById(usuario.data.codEndereco);
+            const endereco = await enderecoService.getEnderecoById(session.codEndereco);
 
             setName(candidato.data.nomeCandidato);
             setEmail(usuario.data.email);

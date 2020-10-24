@@ -8,16 +8,6 @@ class Curriculo extends Component{
     render(){
         return(
             <View style={ styles.container }>
-                {/* <Image style={ styles.icon } source={require('../../assets/images/ijc.png')} />
-
-                <Text style={ styles.empty }>Cadastre um currículo para continuar</Text>
-
-                <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                onPress={() => this.props.navigation.navigate('CadastroCurriculo')}>
-                    <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar</Text>
-                </TouchableOpacity> */}
-               
-
                 <SafeAreaView style={ styles.container }>
                     <ScrollView style={ styles.scrollView }>
                         <View style={ styles.header }>
@@ -64,7 +54,7 @@ class Curriculo extends Component{
                                 <Text style={[ Variables.btnText, styles.btnText ]}>Download</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                            onPress={() => console.log('clicked')}>
+                            onPress={() => this.props.navigation.push('CadastroCurriculo')}>
                                 <Text style={[ Variables.btnText, styles.btnText ]}>Editar</Text>
                             </TouchableOpacity>
                         </View>

@@ -1,15 +1,21 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import { candidatoService } from './';
+import { candidatoService, curriculoService,  } from './';
 
 const authService = {
 
     async saveData(data){
         try {
             const candidatoRes = await candidatoService.getCandidatoByUserId(data.codUsuario)
+            const curriculoRes = await curriculoService.getCurriculoByCandidatoId(candidatoRes.data.codCandidato)
             const sessionData = {
                 codUsuario: data.codUsuario,
                 codCandidato: candidatoRes.data.codCandidato,
-                token: data.token
+                codEndereco: data.codEndereco,
+                token: data.token,
+                curriculo: {
+                    isSet: curriculoRes.data ? true : false,
+                    codCurriculo: curriculoRes.data ? curriculoRes.data.codCurriculo : null
+                }
             }
             let stringData = JSON.stringify(sessionData);
             await AsyncStorage.setItem('data', stringData);
