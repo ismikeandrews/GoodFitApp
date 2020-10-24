@@ -25,6 +25,14 @@ const authService = {
         } catch (error) {
             console.log(error)
         }
+    },
+
+    async clearData(){
+        try {
+            await AsyncStorage.clear()
+        } catch (error) {
+            console.log(error)
+        }
     }
 };
 

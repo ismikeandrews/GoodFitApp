@@ -52,7 +52,7 @@ class Processos extends Component{
                             </TouchableOpacity>
 
                             <TouchableOpacity style={ styles.vagaItem }
-                            onPress={() => this.props.navigation.navigate('ProcessosVaga')}>
+                            onPress={() => this.props.navigation.push('ProcessosVaga')}>
                                 <Image style={ styles.logo } source={require('../../assets/images/ijc.png')} />
                                 
                                 <View style={ styles.desc }>
