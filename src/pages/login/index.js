@@ -1,30 +1,30 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 
-import { usuarioService, authService } from '../../services'
-import { Variables } from '../../shared'
-import styles from './styles'
+import { usuarioService, authService } from '../../services';
+import { Variables } from '../../shared';
+import styles from './styles';
 
 class Login extends Component{
 
     state = {
         user: '',
         password: '',
-    }
+    };
     
     async login(){
         const data = {
             user: this.state.user,
             password: this.state.password
-        }
+        };
         try {
             const loginResponse = await usuarioService.login(data);
             if (loginResponse.data) {
                 await authService.saveData(loginResponse.data);
-                this.props.navigation.navigate('CadastroCurriculo')
+                this.props.navigation.navigate('Vagas');
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
     
@@ -61,7 +61,7 @@ class Login extends Component{
                     </TouchableOpacity>
                     
                     <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btns, styles.btnCodigo ]}
-                    onPress={() => this.props.navigation.navigate('CadastroCurriculo')}>
+                    onPress={() => this.props.navigation.navigate('Vagas')}>
                         <Text style={[ Variables.btnText, styles.btnTextCodigo ]}>Código de cadastro</Text>
                     </TouchableOpacity>
                 </View>

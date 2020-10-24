@@ -1,9 +1,17 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import { candidatoService } from './';
 
 const authService = {
+
     async saveData(data){
         try {
-            let stringData = JSON.stringify(data);
+            const candidatoRes = await candidatoService.getCandidatoByUserId(data.codUsuario)
+            const sessionData = {
+                codUsuario: data.codUsuario,
+                codCandidato: candidatoRes.data.codCandidato,
+                token: data.token
+            }
+            let stringData = JSON.stringify(sessionData);
             await AsyncStorage.setItem('data', stringData);
         } catch (error) {
             console.log(error)

@@ -7,8 +7,8 @@ const Tab = createBottomTabNavigator();
 export default function BottomRoutes(){
     return(
         <Tab.Navigator>
-            <Tab.Screen name="CadastroCurriculo" component={CadastroCurriculo}/>
             <Tab.Screen name="Vagas" component={Vagas}/>
+            <Tab.Screen name="CadastroCurriculo" component={CadastroCurriculo}/>
             <Tab.Screen name="Processos" component={Processos}/>
             <Tab.Screen name="Perfil" component={Perfil}/>
             <Tab.Screen name="Curriculo" component={Curriculo}/>

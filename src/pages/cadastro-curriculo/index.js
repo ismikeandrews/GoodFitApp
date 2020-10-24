@@ -38,6 +38,7 @@ class CadastroCurriculo extends Component{
         }
     }
 
+
     render(){
         return(
             <View style={ styles.container }>
@@ -54,15 +55,13 @@ class CadastroCurriculo extends Component{
                             <Text style={[ Variables.btnText, styles.btnText ]}>Próximo</Text>
                         </TouchableOpacity>
                     }
-                    {this.state.page > 0 ? 
+                    {this.state.page > 0 &&
                         <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnPrev ]} onPress={() => this.setState({page: this.state.page - 1})}>
                             <Text style={[ Variables.btnText, styles.btnText ]}>Voltar</Text>
-                        </TouchableOpacity> :
-                        null
+                        </TouchableOpacity>
                     }
                 </View>
                 
-                {/* <Menu/> */}
             </View>
         )
     }
