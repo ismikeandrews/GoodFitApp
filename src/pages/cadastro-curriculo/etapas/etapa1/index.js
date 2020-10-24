@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, TextInput, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import { Etapa1VideoSvg, Etapa1TextoSvg } from '../../../../assets'
 import { Variables } from '../../../../shared'
 import styles from './styles'
 
@@ -19,11 +20,11 @@ class Etapa1 extends React.Component {
         
                 <View style={ styles.tabs }>
                     <TouchableOpacity style={ styles.tabsItem } onPress={() => this.setState({ tabs: true })}>
-                        <Image style={ styles.tabsImg } source={require('../../../../assets/images/ijc.png')} />
+                        <Etapa1VideoSvg style={ styles.tabsImg }/>
                     </TouchableOpacity>
                     <View style={ styles.bar } />
                     <TouchableOpacity style={ styles.tabsItem } onPress={() => this.setState({ tabs: false })}>
-                        <Image style={ styles.tabsImg } source={require('../../../../assets/images/ijc.png')} />
+                        <Etapa1TextoSvg style={ styles.tabsImg }/>
                     </TouchableOpacity>
                 </View>
         

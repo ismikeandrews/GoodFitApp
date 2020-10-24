@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native'
 
 import { Variables } from '../../shared'
+import { CandidaturaTodosSvg, CandidaturaAprovadoSvg, CandidaturaAndamentoSvg, CandidaturaFinalizado } from '../../assets'
 import styles from './styles'
 
 class Processos extends Component{
@@ -15,19 +16,19 @@ class Processos extends Component{
                     <View style={ styles.tabs }>
                         <TouchableOpacity style={[ styles.tabItem, styles.tabAll ]}
                             onPress={() => console.log('clicked')}>
-                            <Image style={ styles.icon } source={require('../../assets/images/ijc.png')} />
+                            <CandidaturaTodosSvg style={ styles.icon }/>
                         </TouchableOpacity>
                         <TouchableOpacity style={[ styles.tabItem, styles.tabAprovado ]}
                             onPress={() => console.log('clicked')}>
-                            <Image style={ styles.icon } source={require('../../assets/images/ijc.png')} />
+                            <CandidaturaAprovadoSvg style={ styles.icon }/>
                         </TouchableOpacity>
                         <TouchableOpacity style={[ styles.tabItem, styles.tabAndamento ]}
                             onPress={() => console.log('clicked')}>
-                            <Image style={ styles.icon } source={require('../../assets/images/ijc.png')} />
+                            <CandidaturaAndamentoSvg style={ styles.icon }/>
                         </TouchableOpacity>
                         <TouchableOpacity style={[ styles.tabItem, styles.tabReprovado ]}
                             onPress={() => console.log('clicked')}>
-                            <Image style={ styles.icon } source={require('../../assets/images/ijc.png')} />
+                            <CandidaturaFinalizado style={ styles.icon }/>   
                         </TouchableOpacity>
                     </View>
                 </View>

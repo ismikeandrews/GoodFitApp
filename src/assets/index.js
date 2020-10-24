@@ -1,0 +1,7 @@
+export { default as Etapa1TextoSvg } from './svgr/etapa1Texto'
+export { default as Etapa1VideoSvg } from './svgr/etapa1Video'
+export { default as CurriculoSvg } from './svgr/curriculo'
+export { default as CandidaturaTodosSvg } from './svgr/candidaturaTodos'
+export { default as CandidaturaAprovadoSvg } from './svgr/candidaturaAprovado'
+export { default as CandidaturaAndamentoSvg } from './svgr/candidaturaAndamento'
+export { default as CandidaturaFinalizado } from './svgr/candidaturaFinalizado'

@@ -5,6 +5,7 @@ import { authService, curriculoService } from '../../services';
 import { Vaga } from './component';
 import { Variables } from '../../shared';
 import styles from './styles';
+import { CurriculoSvg } from '../../assets'
 
 class Vagas extends Component{
 
@@ -41,12 +42,13 @@ class Vagas extends Component{
                 </TouchableOpacity> */}
                 {this.state.isCurriculoSet ?
                     <SafeAreaView>
+                        <CurriculoSvg/>
                         <Text style={ styles.text }>
-                            Nem um curriculo cadastrado 
+                        Para continuar cadastre um currículo
                         </Text>
                         <TouchableOpacity style={[ Variables.btn, styles.btn ]}
                         onPress={() => this.props.navigation.navigate('CadastroCurriculo')}>
-                            <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar curriculo</Text>
+                            <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar do curriculo</Text>
                         </TouchableOpacity>
                     </SafeAreaView> :
                     <SafeAreaView style={ styles.slider } >
