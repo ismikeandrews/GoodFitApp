@@ -21,8 +21,8 @@ class Curriculo extends Component{
                             <Text style={[ styles.text, styles.topic ]}>Requisitos</Text>
                             <Text style={[ styles.text, styles.desc ]}>Minhas formações básicas em...</Text>
 
-                            <Formacao img='ijc.png' title='Escolaridade' value='Ensino superior completo'></Formacao>
-                            <Formacao img='ijc.png' title='Alfabetização' value='Alfabetizado'></Formacao>
+                            <Formacao img='requisitos/escolaridade.png' title='Escolaridade' value='Ensino superior completo'></Formacao>
+                            <Formacao img='requisitos/alfabetizacao.png' title='Alfabetização' value='Alfabetizado'></Formacao>
                         </View>
 
                         <View style={[ styles.item, styles.habilidades ]}>
@@ -30,10 +30,10 @@ class Curriculo extends Component{
                             <Text style={[ styles.text, styles.desc ]}>Eu sou bom com...</Text>
                             
                             <View style={ styles.list }>
-                                <IconBox name='Comunicação' img='ijc.png'></IconBox>
-                                <IconBox name='Códigos' img='ijc.png'></IconBox>
-                                <IconBox name='Raciocínio' img='ijc.png'></IconBox>
-                                <IconBox name='Organização' img='ijc.png'></IconBox>
+                                {/* <IconBox name='Comunicação' img='habilidades/comunicativo.png'></IconBox>
+                                <IconBox name='Códigos' img='habilidades/html.png'></IconBox>
+                                <IconBox name='Raciocínio' img='habilidades/inteligente.png'></IconBox>
+                                <IconBox name='Organização' img='habilidades/organizacao.png'></IconBox> */}
                             </View>
                         </View>
 
@@ -42,9 +42,9 @@ class Curriculo extends Component{
                             <Text style={[ styles.text, styles.desc ]}>Gostaria de trabalhar com...</Text>
                             
                             <View style={ styles.list }>
-                                <IconBox name='Educação' img='ijc.png'></IconBox>
-                                <IconBox name='Esportes' img='ijc.png'></IconBox>
-                                <IconBox name='TI' img='ijc.png'></IconBox>
+                                {/* <IconBox name='Educação' img='profissao/livros.png'></IconBox>
+                                <IconBox name='Esportes' img='profissao/esportes.png'></IconBox>
+                                <IconBox name='TI' img='profissao/ti.png'></IconBox> */}
                             </View>
                         </View>
 

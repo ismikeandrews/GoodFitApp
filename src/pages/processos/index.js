@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native'
 
 import { Variables } from '../../shared'
-import { CandidaturaTodosSvg, CandidaturaAprovadoSvg, CandidaturaAndamentoSvg, CandidaturaFinalizado } from '../../assets'
+import { CandidaturaTodosSvg, CandidaturaAprovadoSvg, CandidaturaAndamentoSvg, CandidaturaFinalizadoSvg } from '../../assets'
 import styles from './styles'
 
 class Processos extends Component{
@@ -28,7 +28,7 @@ class Processos extends Component{
                         </TouchableOpacity>
                         <TouchableOpacity style={[ styles.tabItem, styles.tabReprovado ]}
                             onPress={() => console.log('clicked')}>
-                            <CandidaturaFinalizado style={ styles.icon }/>   
+                            <CandidaturaFinalizadoSvg style={ styles.icon }/>   
                         </TouchableOpacity>
                     </View>
                 </View>

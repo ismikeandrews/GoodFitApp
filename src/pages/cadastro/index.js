@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { Etapa1, Etapa2, Etapa3 } from './etapas';
 import { Stepper, Variables } from '../../shared/';
 import { usuarioValidation, candidatoValidation, enderecoValidation } from '../../validations'
@@ -175,6 +175,7 @@ class Cadastro extends Component{
 
         }else{
             //completar mostrar os erros <------
+            Alert.alert("O formulario contem erros")
             console.log("Not all fields are valid");
         }
     }

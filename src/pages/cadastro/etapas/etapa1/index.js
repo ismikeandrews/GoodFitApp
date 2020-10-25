@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { Variables } from '../../../../shared';
 import styles from './styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 
 export default Etapa1 = forwardRef((props, ref) => {
     const [nomeCandidato, setNomeCandidato] = useState(props.nomeCandidato);
@@ -26,9 +26,6 @@ export default Etapa1 = forwardRef((props, ref) => {
         }
     }));
 
-    showDatepicker = () => {
-        setToggleDatepicker(true)
-    }
 
     setBirthDay = (event, data) => {
         let parseUnix = moment(data).unix()
@@ -51,7 +48,7 @@ export default Etapa1 = forwardRef((props, ref) => {
             <TextInput style={ Variables.input } textContentType="emailAddress" autoCompleteType="email" autoCapitalize="none" keyboardType="email-address" value={email} onChangeText={ text => setEmail(text.trim()) }/>
 
             <Text style={ Variables.label }>Data de Nascimento</Text>
-            <TextInput style={ Variables.input } value={dateObj.display} onFocus={() => showDatepicker()} />
+            <TextInput style={ Variables.input } value={dateObj.display} onFocus={() => setToggleDatepicker(true)} onBlur={() => setToggleDatepicker(false)}/>
             {toggleDatepicker && (
                 <DateTimePicker
                 mode="date"

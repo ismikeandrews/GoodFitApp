@@ -69,4 +69,17 @@ export default StyleSheet.create({
         marginTop: -3,
         paddingHorizontal: 10,
     },
+    form: {
+        marginTop: 10,
+    },
+    formContent: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    formItem: {
+        width: '48%',
+    },
+    formName: {
+        width: '100%',
+    },
 })

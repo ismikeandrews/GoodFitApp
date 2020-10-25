@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, TouchableOpacity, TextInput, Image } from 'react-native'
-
+import { Etapa1VideoSvg, Etapa1TextoSvg } from '../../assets'
 import styles from './styles'
 
 class DescriptionBox extends React.Component {
@@ -14,11 +14,11 @@ class DescriptionBox extends React.Component {
             <View style={ styles.content }>
                 <View style={ styles.tabs }>
                     <TouchableOpacity style={ styles.tabsItem } onPress={() => this.setState({ tabs: true })}>
-                        <Image style={ styles.tabsImg } source={require('../../assets/images/ijc.png')} />
+                        <Etapa1VideoSvg/>
                     </TouchableOpacity>
                     <View style={ styles.bar } />
                     <TouchableOpacity style={ styles.tabsItem } onPress={() => this.setState({ tabs: false })}>
-                        <Image style={ styles.tabsImg } source={require('../../assets/images/ijc.png')} />
+                        <Etapa1TextoSvg/>
                     </TouchableOpacity>
                 </View>
         

@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 
-function CandidaturaFinalizado(props) {
+function CandidaturaFinalizadoSvg(props) {
   return (
     <Svg width={25.12} height={25.12} viewBox="0 0 25.12 25.12" {...props}>
       <Path
@@ -14,4 +14,4 @@ function CandidaturaFinalizado(props) {
   )
 }
 
-export default CandidaturaFinalizado
+export default CandidaturaFinalizadoSvg
