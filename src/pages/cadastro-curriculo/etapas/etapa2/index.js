@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 
-import { adicionalService, profissaoService  } from '../../../../services'
+import { adicionalService  } from '../../../../services'
 import { Variables } from '../../../../shared'
 import styles from './styles'
 

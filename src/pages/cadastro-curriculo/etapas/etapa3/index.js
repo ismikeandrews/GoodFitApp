@@ -4,11 +4,11 @@ import { Picker } from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
-import { DescriptionBox } from '../../../../shared';
 import { Variables } from '../../../../shared';
 import styles from './styles';
+import descriptionBoxStyles from './descriptionBoxStyles'
 import { profissaoService } from '../../../../services'
-import { CandidaturaFinalizadoSvg, CandidaturaAprovadoSvg } from '../../../../assets';
+import { CandidaturaFinalizadoSvg, CandidaturaAprovadoSvg, Etapa1VideoSvg, Etapa1TextoSvg } from '../../../../assets';
 
 class Etapa3 extends Component {
 
@@ -25,6 +25,7 @@ class Etapa3 extends Component {
 
     initialExperienceState(){
         return {
+            tabs: true,
             isOpen: false,
             empresaExperienciaProfissional: '',
             descricaoExperienciaProfissional: '',
@@ -53,6 +54,7 @@ class Etapa3 extends Component {
     toggleNewExperience(){
         const arr = this.state.experiences;
         const experienceObj = {
+            tabs: true,
              isOpen: false,
              empresaExperienciaProfissional: '',
              descricaoExperienciaProfissional: '',
@@ -126,6 +128,29 @@ class Etapa3 extends Component {
         arr[index].dataFinalExperienciaProfissional.display = moment(data).format("DD/MM/YYYY");
         this.setState({experiences: arr})
     }
+
+    handleVideoTab(index){
+        const arr = this.state.experiences;
+        if (arr[index].tabs === false) {
+            arr[index].tabs = true
+        }
+        this.setState({experiences: arr})
+    }
+
+    handleTextTab(index){
+        const arr = this.state.experiences;
+        if (arr[index].tabs === true) {
+            arr[index].tabs = false
+        }
+        this.setState({experiences: arr})
+    }
+
+    handleDescriptionText(index, text){
+        const arr = this.state.experiences;
+        arr[index].descricaoExperienciaProfissional = text;
+        this.setState({experiences: arr});
+    }
+
 
     render(){
         return (
@@ -203,7 +228,25 @@ class Etapa3 extends Component {
                                             </View>
     
                                             <Text style={ Variables.label }>Sobre o emprego</Text>
-                                            <DescriptionBox placeholder='Escreva uma breve descrição sobre seu emprego e suas experiências'></DescriptionBox>
+                                            <View style={ descriptionBoxStyles.content }>
+                                                <View style={ descriptionBoxStyles.tabs }>
+                                                    <TouchableOpacity style={ descriptionBoxStyles.tabsItem } onPress={() => this.handleVideoTab(index)}>
+                                                        <Etapa1VideoSvg/>
+                                                    </TouchableOpacity>
+                                                    <View style={ descriptionBoxStyles.bar } />
+                                                    <TouchableOpacity style={ descriptionBoxStyles.tabsItem } onPress={() => this.handleTextTab(index)}>
+                                                        <Etapa1TextoSvg/>
+                                                    </TouchableOpacity>
+                                                </View>
+                                        
+                                                <View style={ descriptionBoxStyles.desc }>
+                                                    {experience.tabs === true ?
+                                                        <TextInput style={ descriptionBoxStyles.textarea } placeholder={ 'Envie um vídeo explicativo' } onChangeText={text => onChangeText(text)} />
+                                                        :
+                                                        <TextInput style={ descriptionBoxStyles.textarea } placeholder="Escreva uma breve descrição sobre seu emprego e suas experiências" onChangeText={text => handleDescriptionText(index, text)} />
+                                                    }
+                                                </View>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
@@ -212,9 +255,6 @@ class Etapa3 extends Component {
                         <View>
                             <TouchableOpacity style={ styles.accordion } onPress={() => this.toggleNewExperience()}>
                                 <Text style={[ styles.accordionTitle, styles.newTitle ]}>+</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={ styles.accordion } onPress={() => console.log(this.state.experiences)}>
-                                <Text style={[ styles.accordionTitle, styles.newTitle ]}>tester</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
