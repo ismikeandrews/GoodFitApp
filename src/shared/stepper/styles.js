@@ -11,16 +11,23 @@ export default StyleSheet.create({
     },
     step: {
         borderColor: color.gray,
-        borderRadius: 50,
+        borderRadius: 150,
         borderWidth: 2,
-        color: color.gray,
-        fontSize: 20,
-        fontWeight: 'bold',
         height: 30,
         textAlign: 'center',
         width: 30,
     },
     stepActive: {
+        borderColor: color.orange,
+        color: color.orange,
+    },
+    number: {
+        color: color.gray,
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    numberActive: {
         borderColor: color.orange,
         color: color.orange,
     },

@@ -1,16 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    title: {
-        marginBottom: 10
+    content: {
+        marginVertical: 30,
+        width: '95%'
     },
-    inputGrid: {
+    container: {
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'center',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
     },
-    input: {
-        width: '48%',
-        marginHorizontal: 5,
-    }
 })

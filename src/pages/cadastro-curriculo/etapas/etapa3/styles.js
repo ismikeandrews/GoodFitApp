@@ -41,45 +41,111 @@ export default StyleSheet.create({
         textAlign: 'center',
     },
     accordion: {
-        borderColor: color.gray,
-        borderRadius: 15,
-        borderWidth: 1,
+        borderColor: color.dark_red,
+        borderBottomWidth: 2,
         marginTop: 20,
     },
+    header: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    accordiontIcon: {
+        paddingRight: 30,
+        width: '15%',
+    },
     accordionTitle: {
-        color: color.gray,
-        fontSize: 18,
-        marginLeft: 10,
+        color: color.dark_red,
+        fontSize: 20,
         paddingVertical: 10,
         textAlign: 'left',
+        width: '80%',
     },
     newTitle: {
         paddingVertical: 5,
         textAlign: 'center',
+        width: '100%'
     },
     xp: {
         display: 'none'
     },
     xpActive: {
-        borderColor: color.gray,
-        borderRadius: 5,
-        borderTopWidth: 0,
-        borderWidth: 1,
         display: 'flex',
         marginTop: -3,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
+    },
+    select: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20,
+    },
+    selectItem: {
+        alignItems: 'center',
+        borderColor: color.gray,
+        borderRadius: 15,
+        borderWidth: 2,
+        paddingBottom: 10,
+        paddingTop: 20,
+        width: 270,  
+    },
+    image: {
+        height: 60,
+        marginBottom: 20,
+        paddingBottom: 10,
+        width: 60,
+    },
+    label: {
+        color: color.gray,
+        fontSize: 18,
+        textAlign: 'center',
+    },
+    list: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    listContent: {
+        borderColor: color.gray,
+        borderRadius: 15,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        borderTopWidth: 0,
+        borderWidth: 2,
+        marginTop: -7,
+        paddingVertical: 10,
+        paddingLeft: 10,
+        width: 270,
+    },
+    item: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        fontSize: 18,
+        marginVertical: 10,
+    },
+    selectIcon: {
+        height: 60,
+        width: '5%',
+    },
+    itemText: {
+        fontSize: 15,
+        marginVertical: 7,
+        width: '90%',
     },
     form: {
         marginTop: 10,
     },
-    formContent: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
     formItem: {
-        width: '48%',
+        marginBottom: 15
     },
-    formName: {
-        width: '100%',
+    calendar: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    calendarIcon: {
+        width: '5%',
+    },
+    calendarInput: {
+        width: '90%',
     },
 })

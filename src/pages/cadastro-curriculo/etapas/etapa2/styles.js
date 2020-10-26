@@ -15,12 +15,11 @@ export default StyleSheet.create({
     selectItem: {
         alignItems: 'center',
         borderColor: color.gray,
-        borderRadius: 5,
+        borderRadius: 15,
         borderWidth: 2,
         paddingBottom: 10,
         paddingTop: 20,
         width: 270,
-        
     },
     image: {
         height: 60,
@@ -39,10 +38,12 @@ export default StyleSheet.create({
     },
     listContent: {
         borderColor: color.gray,
-        borderRadius: 5,
+        borderRadius: 15,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
         borderTopWidth: 0,
         borderWidth: 2,
-        marginTop: -3,
+        marginTop: -7,
         paddingVertical: 10,
         paddingLeft: 10,
         width: 270,

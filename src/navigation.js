@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ActivityIndicator, Text } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -58,6 +58,7 @@ export default Navigation = () => {
     };
 
     return (
+
         <AuthContext.Provider value={authContext}>
             <NavigationContainer>
                 {userToken ? (

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, ScrollView, Text, TouchableOpacity} from 'react-native';
 
-import { authService, curriculoService } from '../../services';
+import { authService, vagaService,  } from '../../services';
 import { Vaga } from './component';
 import { Variables } from '../../shared';
 import styles from './styles';
@@ -11,6 +11,7 @@ class Vagas extends Component{
 
     state = {
         isCurriculoSet: false,
+        vagas: []
     };
 
     componentDidMount(){
@@ -19,7 +20,9 @@ class Vagas extends Component{
 
     async fetchAuthData(){
         const authData = await authService.getData();
-        this.setState({isCurriculoSet: authData.curriculo.isSet})
+        const vagaRes = await vagaService.match(authData.codCandidato, authData.curriculo.codCurriculo)
+        console.log(vagaRes.data)
+        this.setState({isCurriculoSet: authData.curriculo.isSet, vagas: vagaRes.data})
     }
 
     render(){
@@ -33,7 +36,7 @@ class Vagas extends Component{
                     onPress={() => console.log('click')}>
                     <Text style={[ Variables.btnText, styles.btnText ]}>Ative as notificações</Text>
                 </TouchableOpacity> */}
-                {this.state.isCurriculoSet ?
+                {this.state.isCurriculoSet === false ?
                     <SafeAreaView>
                         <CurriculoSvg/>
                         <Text style={ styles.text }>

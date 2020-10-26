@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert, SafeAreaView } from 'react-native';
 import { Etapa1, Etapa2, Etapa3 } from './etapas';
 import { Stepper, Variables } from '../../shared/';
 import { usuarioValidation, candidatoValidation, enderecoValidation } from '../../validations'
@@ -182,31 +182,32 @@ class Cadastro extends Component{
 
     render(){
         return(
-            <View style={ Variables.container }>
-                <ScrollView>
+            <SafeAreaView>
+                <View style={ Variables.container }>
+                    <ScrollView>
+                        {this.currentPage()}
 
-                    {this.currentPage()}
+                        <Stepper style={ styles.stepper } page={this.state.page} total={this.state.total}/>
+                        
+                        <View style={[ Variables.contentBtn, styles.contentBtn ]}>
 
-                    <Stepper style={ styles.stepper } page={this.state.page} total={this.state.total}/>
-                    
-                    <View style={[ Variables.contentBtn, styles.contentBtn ]}>
-
-                        {this.state.page + 1 === this.state.total ?
-                            <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnCadastrar ]} onPress={() => this.handleSubmit()}>
-                                <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar</Text>
-                            </TouchableOpacity> :
-                            <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnNext ]} onPress={() => this.handleNextPage()}>
-                                <Text style={[ Variables.btnText, styles.btnText ]}>Próximo</Text>
-                            </TouchableOpacity>
-                        }
-                        {this.state.page > 0 &&
-                            <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnPrev ]} onPress={() => this.setState({page: this.state.page - 1})}>
-                                <Text style={[ Variables.btnText, styles.btnText ]}>Voltar</Text>
-                            </TouchableOpacity>
-                        }
-                    </View>
-                </ScrollView>
-            </View>
+                            {this.state.page + 1 === this.state.total ?
+                                <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnCadastrar ]} onPress={() => this.handleSubmit()}>
+                                    <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar</Text>
+                                </TouchableOpacity> :
+                                <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnNext ]} onPress={() => this.handleNextPage()}>
+                                    <Text style={[ Variables.btnText, styles.btnText ]}>Próximo</Text>
+                                </TouchableOpacity>
+                            }
+                            {this.state.page > 0 &&
+                                <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnPrev ]} onPress={() => this.setState({page: this.state.page - 1})}>
+                                    <Text style={[ Variables.btnText, styles.btnText ]}>Voltar</Text>
+                                </TouchableOpacity>
+                            }
+                        </View>
+                    </ScrollView>
+                </View>
+            </SafeAreaView>
         );
     };
 };

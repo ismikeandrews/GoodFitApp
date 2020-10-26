@@ -6,9 +6,14 @@ import { Etapa1VideoSvg, Etapa1TextoSvg } from '../../../../assets';
 import { Variables } from '../../../../shared';
 import styles from './styles';
 
-export default Etapa1 = () => {
+export default Etapa1 = (props) => {
     const [tabs, setTabs] = useState(true);
     const [descricaoCurriculo, setDescricaoCurriculo] = useState('');
+
+    const sendDataToParent = () => {
+        props.parentCallback(descricaoCurriculo)
+    }
+
 
     return (
         <View style={ styles.content }>
@@ -29,7 +34,7 @@ export default Etapa1 = () => {
                 {tabs === true ?
                     <TextInput style={ styles.textarea } placeholder={ 'Vídeo sobre você' } onChangeText={text => onChangeText(text)} />
                     :
-                    <TextInput style={ styles.textarea } placeholder={ 'Escreva uma breve descrição sobre você' } value={descricaoCurriculo} onChangeText={text => setDescricaoCurriculo(text)} />
+                    <TextInput style={ styles.textarea } onBlur={() => sendDataToParent()} placeholder={ 'Escreva uma breve descrição sobre você' } value={descricaoCurriculo} onChangeText={text => setDescricaoCurriculo(text)} />
                 }
             </View>
         </View>

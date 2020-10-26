@@ -1,56 +1,56 @@
-import React from 'react'
-import { View, Text, TextInput, Button } from 'react-native'
+import React, { Component } from 'react'
+import { View, Text, ScrollView } from 'react-native'
 
-import { Variables } from '../../../../shared'
+import { adicionalService } from '../../../../services'
+import { Variables, Checkbox } from '../../../../shared'
 import styles from './styles'
 
-export default function Etapa5(){
+class Etapa5 extends Component {
+    state = {
+        adicionais: [],
+        selected: []
+    }
 
-    return (
-        <View style={ Variables.content }>
-            <Text style={[ Variables.title, styles.title ]}>Endereço</Text>
+    componentDidMount(){
+        this.fetchData()
+    }
 
-            <Text style={ Variables.label }>CEP</Text>
-            <TextInput style={ Variables.input } onChangeText={ text => onChangeText(text) }/>
+    
+    async fetchData(){
+        const adicionalRes = await adicionalService.getAdicionalList();
+        this.setState({adicionais: adicionalRes.data.slice(0, 11)});
+    }
 
-            <Text style={ Variables.label }>Logradouro</Text>
-            <TextInput style={ Variables.input } onChangeText={ text => onChangeText(text) }/>
-
-            <View style={ styles.inputGrid }>
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Cidade</Text>
-                    <TextInput style={ Variables.input } onChangeText={ text => onChangeText(text) }/>
-                </View>
-
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Bairro</Text>
-                    <TextInput style={ Variables.input } onChangeText={ text => onChangeText(text) }/>
-                </View>
+    callbackFunction = childData => {
+        let arr = this.state.selected
+        if (childData.active === false) {
+            arr.push(childData)
+        }
+        if (childData.active === true) {
+            arr = arr.filter(element => {
+                if (element.cod != childData.cod) {
+                    return element 
+                }
+            })
+        }
+        this.setState({selected: arr})
+    }
+    
+    render() {
+          return (
+            <View style={ styles.content }>
+                <Text style={ Variables.title }>Habilidades</Text>
+                <Text style={ Variables.subtitle }>Eu sou bom com...</Text>
+                <ScrollView>
+                    <View style={ styles.container }>
+                        {this.state.adicionais.map(adicional => (
+                            <Checkbox key={adicional.codAdicional} name={adicional.nomeAdicional} img={adicional.imagemAdicional} cod={adicional.codAdicional} parentCallback={this.callbackFunction}/>
+                        ))}
+                    </View>
+                </ScrollView>
             </View>
-
-            <View style={ styles.inputGrid }>
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Estado</Text>
-                    <TextInput style={ Variables.input } onChangeText={ text => onChangeText(text) }/>
-                </View>
-
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Zona</Text>
-                    <TextInput style={ Variables.input } onChangeText={ text => onChangeText(text) }/>
-                </View>
-            </View>
-
-            <View style={ styles.inputGrid }>
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Número</Text>
-                    <TextInput style={ Variables.input } onChangeText={ text => onChangeText(text) }/>
-                </View>
-
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Complemento</Text>
-                    <TextInput style={ Variables.input } onChangeText={ text => onChangeText(text) }/>
-                </View>
-            </View>
-        </View>
-    )
+        )
+    }
 }
+
+export {Etapa5}

@@ -52,7 +52,6 @@ export default StyleSheet.create({
         height: 170,
         paddingHorizontal: 15,
         paddingTop: 15,
-        textAlignVertical: 'top'
     },
     btn: {
         backgroundColor: color.pink_light,

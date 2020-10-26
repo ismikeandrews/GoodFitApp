@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import { Etapa1, Etapa2, Etapa3, Etapa4, Etapa5 } from './etapas'
 import { Stepper } from '../../shared'
 
@@ -10,10 +10,32 @@ class CadastroCurriculo extends Component{
 
     state = {page: 0, total: 5}
 
+    callbackFunctionE1(childData){
+        console.log(childData)
+        // this.setState({})
+    }
+
+    callbackFunctionE2(childData){
+        // this.setState({})
+    }
+
+    callbackFunctionE3(childData){
+        // this.setState({})
+    }
+
+    callbackFunctionE4(childData){
+        // this.setState({})
+    }
+
+    callbackFunctionE5(childData){
+        // this.setState({})
+    }
+
     currentPage(){
         if (this.state.page === 0) {
             return (
-                <Etapa1/>
+                <Etapa1 
+                parentCallback={this.callbackFunctionE1}/>
             )
         }
         if (this.state.page === 1) {
@@ -41,28 +63,30 @@ class CadastroCurriculo extends Component{
 
     render(){
         return(
-            <View style={ styles.container }>
-                <Stepper page={this.state.page} total={this.state.total}/>
+            <SafeAreaView>
+                <View style={ styles.container }>
+                    <Stepper page={this.state.page} total={this.state.total}/>
 
-                {this.currentPage()}
+                    {this.currentPage()}
 
-                <View style={[ Variables.contentBtn, styles.contentBtn ]}>
-                    {this.state.page + 1 === this.state.total ?
-                        <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnCadastrar ]}>
-                            <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar</Text>
-                        </TouchableOpacity> :
-                        <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnNext ]} onPress={() => this.setState({page: this.state.page + 1})}>
-                            <Text style={[ Variables.btnText, styles.btnText ]}>Próximo</Text>
-                        </TouchableOpacity>
-                    }
-                    {this.state.page > 0 &&
-                        <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnPrev ]} onPress={() => this.setState({page: this.state.page - 1})}>
-                            <Text style={[ Variables.btnText, styles.btnText ]}>Voltar</Text>
-                        </TouchableOpacity>
-                    }
+                    <View style={[ Variables.contentBtn, styles.contentBtn ]}>
+                        {this.state.page + 1 === this.state.total ?
+                            <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnCadastrar ]}>
+                                <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar</Text>
+                            </TouchableOpacity> :
+                            <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnNext ]} onPress={() => this.setState({page: this.state.page + 1})}>
+                                <Text style={[ Variables.btnText, styles.btnText ]}>Próximo</Text>
+                            </TouchableOpacity>
+                        }
+                        {this.state.page > 0 &&
+                            <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnPrev ]} onPress={() => this.setState({page: this.state.page - 1})}>
+                                <Text style={[ Variables.btnText, styles.btnText ]}>Voltar</Text>
+                            </TouchableOpacity>
+                        }
+                    </View>
+                    
                 </View>
-                
-            </View>
+            </SafeAreaView>
         )
     }
 }

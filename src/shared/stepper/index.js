@@ -8,12 +8,13 @@ export default function Stepper(props){
         for (let i = 0; i < props.total; i++) {
             steps.push(
                 <View style={{flexDirection: 'row', alignItems: 'center'}} key={i}>
-                    {
-                        i === 0 ?
-                        null :
+                    {i != 0 &&
                         <View style={ props.page >= i ? [styles.bar, styles.barActive] : styles.bar } />
                     }
-                    <Text style={ props.page >= i ? [styles.step, styles.stepActive] : styles.step } key={i}>{i + 1}</Text>
+                    <View key={i} style={ props.page >= i ? [styles.step, styles.stepActive] : styles.step }>
+                        <Text style={ props.page >= i ? [styles.number, styles.numberActive] : styles.number } >{i + 1}</Text>
+                    </View>
+
                 </View>
             )
         }

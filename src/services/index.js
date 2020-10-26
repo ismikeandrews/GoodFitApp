@@ -7,3 +7,4 @@ export { default as usuarioService } from './usuario';
 export { default as viacepService } from './viacep';
 export { default as adicionalService } from './adicional';
 export { default as profissaoService } from './profissao';
+export { default as vagaService } from './vaga';
