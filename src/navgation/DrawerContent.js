@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useIsDrawerOpen } from '@react-navigation/drawer';
 import drawerStyle from './drawerStyle'
-import { MenuVagasSvg, CurriculoSvg, MenuPerfilSvg, MenuCandidaturaSvg, CloseButtonSvg } from '../assets';
+import { MenuVagasSvg, CurriculoSvg, MenuPerfilSvg, MenuCandidaturaSvg, CloseButtonSvg, MenuSairSvg } from '../assets';
+import { AuthContext } from '../config/authContext';
+import { authService } from '../services'
 
 export function DrawerContent(props){
     const isDrawerOpen = useIsDrawerOpen();
+    const { signOut } = useContext(AuthContext);
+
+    const handleSignOut = async () => {
+        await authService.clearData();
+        signOut();
+    };
+
     return(
         isDrawerOpen &&
         <View style={ drawerStyle.sideBar }>
@@ -32,6 +41,11 @@ export function DrawerContent(props){
                 onPress={() => {props.navigation.navigate('Perfil')}}>
                     <MenuPerfilSvg style={ drawerStyle.itemIcon } />
                     <Text style={[ drawerStyle.itemText, drawerStyle.itemTextOdd ]}>Perfil</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={ drawerStyle.item }
+                onPress={() => handleSignOut()}>
+                    <MenuSairSvg style={ drawerStyle.itemIcon }/>
+                    <Text style={ drawerStyle.itemText }>Sair</Text>
             </TouchableOpacity>
         </View>
     )

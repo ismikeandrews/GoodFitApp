@@ -3,6 +3,7 @@ import color from '../../shared/variables/colors'
 
 export default StyleSheet.create({
     container: {
+        paddingBottom: 300,
         paddingHorizontal: 30,
     },
     imgBorder: {
@@ -64,26 +65,5 @@ export default StyleSheet.create({
     btnText: {
         color: color.dark_red,
         fontWeight: '700',
-    },
-    logout: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-    },
-    btnSair: {
-        backgroundColor: color.orange,
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 20,
-        marginBottom: 10,
-        paddingVertical: 5,
-        width: '45%',
-    },
-    btnSairText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: '700',
-        textTransform: 'uppercase',
-        marginLeft: 10,
     },
 })

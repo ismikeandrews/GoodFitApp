@@ -6,7 +6,7 @@ function MenuSairSvg(props) {
     <Svg
       viewBox="0 0 128 128"
       width={34}
-      height={33.999}
+      height={34}
       data-name="Layer 1"
       {...props}
     >
@@ -15,14 +15,14 @@ function MenuSairSvg(props) {
         data-original="#000000"
         className="prefix__active-path"
         data-old_color="#000000"
-        fill="#fff"
+        fill="#ff9015"
       />
       <Path
         d="M95.424 72.25a1.75 1.75 0 00-1.75 1.75v36.9H48.633V17.1h45.041V54a1.75 1.75 0 103.5 0V15.35a1.75 1.75 0 00-1.75-1.75H48.633V6.5a1.75 1.75 0 00-2.461-1.6L6.365 22.593a1.751 1.751 0 00-1.039 1.6v79.615a1.751 1.751 0 001.039 1.6L46.172 123.1a1.75 1.75 0 002.461-1.6v-7.1h46.791a1.75 1.75 0 001.75-1.75V74a1.75 1.75 0 00-1.75-1.75zm-50.291 46.558L8.826 102.67V25.33L45.133 9.192z"
         data-original="#000000"
         className="prefix__active-path"
         data-old_color="#000000"
-        fill="#fff"
+        fill="#ff9015"
       />
     </Svg>
   )

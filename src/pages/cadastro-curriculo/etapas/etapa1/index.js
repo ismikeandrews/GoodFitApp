@@ -32,9 +32,13 @@ export default Etapa1 = (props) => {
     
             <View style={ styles.desc }>
                 {tabs === true ?
-                    <TextInput style={ styles.textarea } placeholder={ 'Vídeo sobre você' } onChangeText={text => onChangeText(text)} />
+                    <View style={ styles.textAreaContainer } >
+                        <TextInput multiline={true} numberOfLines={7} style={ styles.textarea } placeholder={ 'Vídeo sobre você' } onChangeText={text => onChangeText(text)} />
+                    </View>
                     :
-                    <TextInput style={ styles.textarea } onBlur={() => sendDataToParent()} placeholder={ 'Escreva uma breve descrição sobre você' } value={descricaoCurriculo} onChangeText={text => setDescricaoCurriculo(text)} />
+                    <View style={ styles.textAreaContainer } >
+                        <TextInput multiline={true} numberOfLines={7} style={ styles.textarea } onBlur={() => sendDataToParent()} placeholder={ 'Escreva uma breve descrição sobre você' } value={descricaoCurriculo} onChangeText={text => setDescricaoCurriculo(text)} />
+                    </View>
                 }
             </View>
         </View>

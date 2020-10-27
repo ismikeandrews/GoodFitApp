@@ -44,14 +44,17 @@ export default StyleSheet.create({
     desc: {
         marginBottom: 30
     },
-    textarea: {
+    textAreaContainer: {
         backgroundColor: '#fff',
         borderColor: 'gray',
         borderWidth: 1,
-        color: color.gray,
-        height: 170,
         paddingHorizontal: 15,
-        paddingTop: 15,
+        paddingVertical: 20,
+        height: 170,
+    },
+    textArea: {
+        color: color.gray,
+        justifyContent: 'flex-start',
     },
     btn: {
         backgroundColor: color.pink_light,

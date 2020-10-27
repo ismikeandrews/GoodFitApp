@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native'
-import { IconBox } from '../../shared'
+import { IconBox, Help } from '../../shared'
 import { CloseButtonSvg } from '../../assets';
 
 import styles from './styles'
@@ -51,6 +51,7 @@ class ProcessosVaga extends Component{
                         <CloseButtonSvg style={[ styles.icon, styles.iconX ]} color="#9d1d64"/>
                     </TouchableOpacity>
                 </ScrollView>
+                <Help/>
             </SafeAreaView>
         )
     }

@@ -17,17 +17,18 @@ export default StyleSheet.create({
     item: {
         alignItems: 'center',
         backgroundColor: '#fff',
+        borderRadius: 5,
         elevation: 10,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginLeft: 30,
-        marginVertical: 30,
+        marginLeft: 35,
+        marginVertical: 23,
         paddingVertical: 20,
         width: 350,
         zIndex: 10,
     },
     itemFirst: {
-        marginTop: 110,
+        marginTop: 100,
     },
     itemIcon: {
         paddingLeft: 50,

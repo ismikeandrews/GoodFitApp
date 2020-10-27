@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert, SafeAreaView } from 'react-native';
 import { Etapa1, Etapa2, Etapa3 } from './etapas';
-import { Stepper, Variables } from '../../shared/';
+import { Stepper, Variables, Help } from '../../shared/';
 import { usuarioValidation, candidatoValidation, enderecoValidation } from '../../validations'
 import { usuarioService, candidatoService, enderecoService } from '../../services'
 import styles from './styles';
@@ -193,6 +193,7 @@ class Cadastro extends Component{
                         </View>
                     </ScrollView>
                 </View>
+                <Help/>
             </SafeAreaView>
         );
     };

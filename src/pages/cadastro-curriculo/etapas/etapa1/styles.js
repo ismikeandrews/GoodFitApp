@@ -9,10 +9,8 @@ export default StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        height: '100%',
         paddingBottom: 50,
         paddingHorizontal: 30,
-        position: 'relative',
     },
     title: {
         fontWeight: 'bold',
@@ -45,14 +43,17 @@ export default StyleSheet.create({
     desc: {
         marginBottom: 30
     },
-    textarea: {
+    textAreaContainer: {
         backgroundColor: '#fff',
         borderColor: 'gray',
         borderWidth: 1,
+        paddingHorizontal: 15,
+        paddingVertical: 20,
+        height: 170,
+    },
+    textArea: {
         color: color.gray,
-        paddingBottom: 150,
-        paddingHorizontal: 10,
-        paddingTop: 10,
+        justifyContent: 'flex-start',
     },
     btn: {
         backgroundColor: color.pink_light,

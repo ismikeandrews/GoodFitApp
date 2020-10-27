@@ -1,14 +1,13 @@
-import React, { useState, useContext, useEffect} from 'react';
+import React, { useState, useEffect} from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
-import { MenuSairSvg } from '../../assets';
 import moment from 'moment';
 
 import { AuthContext } from '../../config/authContext';
 import { candidatoService, usuarioService, enderecoService, authService } from '../../services';
-import { Variables } from '../../shared';
+import { Variables, Menu } from '../../shared';
 import styles from './styles';
 
-export default Perfil = () => {
+export default Perfil = (props) => {
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [birthDay, setBirthDay] = useState();
@@ -20,7 +19,6 @@ export default Perfil = () => {
     const [zone, setZone] = useState();
     const [number, setNumber] = useState();
     const [complement, setComplement] = useState();
-    const { signOut } = useContext(AuthContext);
 
     useEffect(() => {
         fetchData();
@@ -49,105 +47,95 @@ export default Perfil = () => {
         };
     };
 
-    const handleSignOut = async () => {
-        await authService.clearData();
-        signOut();
-    };
-
     return(
-        <View style={ styles.container }>
-            <SafeAreaView>
-                <ScrollView style={ styles.scrollView }>
-                    <View style={ styles.imgBorder }>
-                        <Image style={ styles.img } source={require('../../assets/images/ijc.png')} />
-                    </View>
+        <View>
+            <Menu {...props}/>
+            <View style={ styles.container }>
+                <SafeAreaView>
+                    <ScrollView style={ styles.scrollView }>
+                        <View style={ styles.imgBorder }>
+                            <Image style={ styles.img } source={require('../../assets/images/ijc.png')} />
+                        </View>
 
-                    <Text style={ styles.name }>{name}</Text>
+                        <Text style={ styles.name }>{name}</Text>
+                    
+                        <View style={[ styles.item, styles.topic ]}>
+                            <Text style={ styles.topicTitle }>Pessoal</Text>
                 
-                    <View style={[ styles.item, styles.topic ]}>
-                        <Text style={ styles.topicTitle }>Pessoal</Text>
+                            <TouchableOpacity style={[ Variables.btn, styles.btn ]}
+                            onPress={() => console.log('click')}>
+                                <Text style={[ Variables.btnText, styles.btnText ]}>Editar</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>E-mail: </Text>
+                            <Text style={ styles.text }>{email}</Text>
+                        </View>
+
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Telefone: </Text>
+                            <Text style={ styles.text }>(11) 1234-5678</Text>
+                        </View>
+                        
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Data de nascimento: </Text>
+                            <Text style={ styles.text }>{birthDay}</Text>
+                        </View>
+                        
+                        <View style={ styles.line }></View>
+
+                        <View style={[ styles.item, styles.topic ]}>
+                            <Text style={ styles.topicTitle }>Endereço</Text>
             
-                        <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                        onPress={() => console.log('click')}>
-                            <Text style={[ Variables.btnText, styles.btnText ]}>Editar</Text>
-                        </TouchableOpacity>
-                    </View>
+                            <TouchableOpacity style={[ Variables.btn, styles.btn ]}
+                            onPress={() => console.log('click')}>
+                                <Text style={[ Variables.btnText, styles.btnText ]}>Editar</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>E-mail: </Text>
-                        <Text style={ styles.text }>{email}</Text>
-                    </View>
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>CEP: </Text>
+                            <Text style={ styles.text }>{postalcode}</Text>
+                        </View>
 
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Telefone: </Text>
-                        <Text style={ styles.text }>(11) 1234-5678</Text>
-                    </View>
-                    
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Data de nascimento: </Text>
-                        <Text style={ styles.text }>{birthDay}</Text>
-                    </View>
-                    
-                    <View style={ styles.line }></View>
-
-                    <View style={[ styles.item, styles.topic ]}>
-                        <Text style={ styles.topicTitle }>Endereço</Text>
-        
-                        <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                        onPress={() => console.log('click')}>
-                            <Text style={[ Variables.btnText, styles.btnText ]}>Editar</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>CEP: </Text>
-                        <Text style={ styles.text }>{postalcode}</Text>
-                    </View>
-
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Logradouro: </Text>
-                        <Text style={ styles.text }>{address}</Text>
-                    </View>
-                    
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Cidade: </Text>
-                        <Text style={ styles.text }>{city}</Text>
-                    </View>
-                    
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Bairro: </Text>
-                        <Text style={ styles.text }>{neighbor}</Text>
-                    </View>
-                    
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Estado: </Text>
-                        <Text style={ styles.text }>{state}</Text>
-                    </View>
-                    
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Zona: </Text>
-                        <Text style={ styles.text }>{zone}</Text>
-                    </View>
-                    
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Número: </Text>
-                        <Text style={ styles.text }>{number}</Text>
-                    </View>
-                    
-                    <View style={ styles.item }>
-                        <Text style={ styles.itemTitle }>Complemento: </Text>
-                        <Text style={ styles.text }>{complement}</Text>
-                    </View>
-
-                    <View style={ styles.logout }>
-                        <TouchableOpacity style={[ Variables.btn, styles.btnSair ]}
-                        onPress={() => handleSignOut()}>
-                            <MenuSairSvg style={ styles.sairIcon }/>
-                            <Text style={[ Variables.btnText, styles.btnSairText ]}>Sair</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Logradouro: </Text>
+                            <Text style={ styles.text }>{address}</Text>
+                        </View>
+                        
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Cidade: </Text>
+                            <Text style={ styles.text }>{city}</Text>
+                        </View>
+                        
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Bairro: </Text>
+                            <Text style={ styles.text }>{neighbor}</Text>
+                        </View>
+                        
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Estado: </Text>
+                            <Text style={ styles.text }>{state}</Text>
+                        </View>
+                        
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Zona: </Text>
+                            <Text style={ styles.text }>{zone}</Text>
+                        </View>
+                        
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Número: </Text>
+                            <Text style={ styles.text }>{number}</Text>
+                        </View>
+                        
+                        <View style={ styles.item }>
+                            <Text style={ styles.itemTitle }>Complemento: </Text>
+                            <Text style={ styles.text }>{complement}</Text>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+            </View>
         </View>
     )
 };

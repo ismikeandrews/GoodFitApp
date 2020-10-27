@@ -3,7 +3,7 @@ import { SafeAreaView, View, ScrollView, Text, TouchableOpacity} from 'react-nat
 
 import { authService, vagaService,  } from '../../services';
 import { Vaga } from './component';
-import { Variables, Menu } from '../../shared';
+import { Variables, Menu, Help } from '../../shared';
 import styles from './styles';
 import { CurriculoSvg } from '../../assets'
 
@@ -61,6 +61,7 @@ class Vagas extends Component{
                         </SafeAreaView>
                     }
                 </View>
+                <Help/>
             </View> 
         )
     }

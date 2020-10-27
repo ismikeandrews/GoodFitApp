@@ -12,13 +12,13 @@ export default function Menu(props){
                     <MenuSvg style={ styles.btn }/>
                 </TouchableOpacity>
 
-                <View style={ styles.logo }>
+                <TouchableOpacity style={ styles.logo } onPress={() => props.navigation.navigate('Vagas')}>
                     <Image style={ styles.logoImg } source={require('../../assets/images/components/logo-branco.png')} />
-                </View>
+                </TouchableOpacity>
 
-                <View style={ styles.perfil }>
+                <TouchableOpacity style={ styles.perfil } onPress={() => props.navigation.navigate('Perfil')}>
                     <Image style={ styles.perfilImg } source={require('../../assets/images/ijc.png')} />
-                </View>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )

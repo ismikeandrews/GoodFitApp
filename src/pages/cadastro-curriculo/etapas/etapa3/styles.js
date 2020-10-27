@@ -125,15 +125,11 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         fontSize: 18,
-        marginVertical: 10,
-    },
-    selectIcon: {
-        height: 60,
-        width: '5%',
+        marginVertical: 5,
     },
     itemText: {
         fontSize: 15,
-        marginVertical: 7,
+        marginVertical: 5,
         width: '90%',
     },
     form: {

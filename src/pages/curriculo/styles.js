@@ -4,12 +4,16 @@ import color from '../../shared/variables/colors'
 export default StyleSheet.create({
     container: {
         alignItems: 'center',
-        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         marginHorizontal: 10,
-        marginTop: 30,
-        paddingBottom: 40,
+        paddingTop: 50,
+        paddingBottom: 170,
+    },
+    safeArea: {
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
     },
     title: {
         color: '#6b6b6b',
@@ -44,6 +48,9 @@ export default StyleSheet.create({
         color: '#6b6b6b',
         fontSize: 18,
         marginBottom: 10,
+    },
+    btnList: {
+        marginBottom: 140,
     },
     list: {
         alignItems: 'center',

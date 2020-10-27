@@ -24,9 +24,13 @@ class DescriptionBox extends React.Component {
         
                 <View style={ styles.desc }>
                     {this.state.tabs === true ?
-                        <TextInput style={ styles.textarea } placeholder={ 'Envie um vídeo explicativo' } onChangeText={text => onChangeText(text)} />
+                        <View style={ styles.textAreaContainer } >
+                            <TextInput style={ styles.textarea } placeholder={ 'Envie um vídeo explicativo' } onChangeText={text => onChangeText(text)} />
+                        </View>
                         :
-                        <TextInput style={ styles.textarea } placeholder={ this.props.placeholder } onChangeText={text => onChangeText(text)} />
+                        <View style={ styles.textAreaContainer } >
+                            <TextInput style={ styles.textarea } placeholder={ this.props.placeholder } onChangeText={text => onChangeText(text)} />
+                        </View>
                     }
 
                     {/* accept={.mp4, .avi, .mkv, .ogg, .ogm, .mpg, .mpeg, .vob, .bvcd, .bsvcd} */}

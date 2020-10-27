@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Etapa1, Etapa2, Etapa3, Etapa4, Etapa5 } from './etapas';
-import { Stepper } from '../../shared';
-import { Variables } from '../../shared';
+import { Stepper, Help } from '../../shared';
+import { Variables, Menu } from '../../shared';
 import styles from './styles';
 
 class CadastroCurriculo extends Component{
@@ -73,7 +73,8 @@ class CadastroCurriculo extends Component{
 
     render(){
         return(
-            <SafeAreaView>
+            <View>
+                <Menu {...this.props}/>
                 <View style={ styles.container }>
                     <Stepper page={this.state.page} total={this.state.total}/>
 
@@ -96,7 +97,8 @@ class CadastroCurriculo extends Component{
                     </View>
                     
                 </View>
-            </SafeAreaView>
+                <Help/>
+            </View>
         );
     };
 }

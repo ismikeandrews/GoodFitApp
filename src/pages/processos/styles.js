@@ -2,15 +2,15 @@ import { StyleSheet } from 'react-native';
 import color from '../../shared/variables/colors'
 
 export default StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 80,
-    },
     content: {
+        height: '80%',
+        marginBottom: 100,
+        paddingTop: 50,
+    },
+    contentVagas: {
         alignItems: 'center',
-        flex: 1,
         paddingBottom: 60,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
     },
     text: {
         color: '#6b6b6b',

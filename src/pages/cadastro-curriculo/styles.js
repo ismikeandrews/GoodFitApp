@@ -6,8 +6,8 @@ export default StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        height: '100%',
-        paddingBottom: 40,
+        paddingBottom: 140,
+        paddingTop: 70,
         paddingHorizontal: 20,
     },
     contentBtn: {
