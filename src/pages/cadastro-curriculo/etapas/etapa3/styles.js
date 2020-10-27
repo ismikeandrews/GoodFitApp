@@ -50,6 +50,11 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly'
     },
+    deleteIcon: {
+        height: 70,
+        marginTop: 10,
+        width: 70,
+    },
     accordiontIcon: {
         paddingRight: 30,
         width: '15%',

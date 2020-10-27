@@ -1,32 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { adicionalService  } from '../../../../services';
+import { Variables } from '../../../../shared';
+import styles from './styles';
 
-import { adicionalService  } from '../../../../services'
-import { Variables } from '../../../../shared'
-import styles from './styles'
-
-export default Etapa2 = () => {
+export default Etapa2 = (props) => {
     const [active1, setActive1] = useState(false);
     const [active2, setActive2] = useState(false);
     const [school, setSchool] = useState('');
     const [literate, setLiterate] = useState('');
-    const [shoolLevels, setSchoolLevels] = useState([])
-    const [literateLevels, setLiterateLevels] = useState([])
+    const [adicionais, setAdicionais] = useState([]);
+    const [shoolLevels, setSchoolLevels] = useState([]);
+    const [literateLevels, setLiterateLevels] = useState([]);
 
     useEffect(() => {
-        fetchAdicionalList()
-    }, [])
+        fetchAdicionalList();
+    }, []);
+
 
     const fetchAdicionalList = async () => {
         try {
             const adicionalRes = await adicionalService.getAdicionalList();
             if (adicionalRes.data) {
-                setSchoolLevels(adicionalRes.data.slice(12, 17))
-                setLiterateLevels(adicionalRes.data.slice(18, 21))
+                setSchoolLevels(adicionalRes.data.slice(12, 17));
+                setLiterateLevels(adicionalRes.data.slice(18, 21));
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
+    }
+
+    const handleShoolSelected = (nomeAdicional, codAdicional) => {
+        const arr = adicionais;
+        if (arr.length > 0) {
+            for (const element of arr) {
+                if (!element.tipo || element.tipo != "school") {
+                    arr.length < 2 && arr.push({tipo: "school", codAdicional: codAdicional});
+                }else{
+                    element.codAdicional = codAdicional;
+                }
+            };
+        }else{
+            arr.length < 2 && arr.push({tipo: "school", codAdicional: codAdicional});
+        }
+
+        setActive1(false);
+        setSchool(nomeAdicional);
+        setAdicionais(arr);
+        props.parentCallback(arr);
+    }
+
+    const handleLiterateSelected = (nomeAdicional, codAdicional)  => {
+        const arr = adicionais;
+        if (arr.length > 0) {
+            for (const element of arr) {
+                if (!element.tipo || element.tipo != "literate") {
+                    arr.length < 2 && arr.push({tipo: "literate", codAdicional: codAdicional});
+                }else{
+                    element.codAdicional = codAdicional;
+                }
+            };
+        }else{
+            arr.length < 2 && arr.push({tipo: "literate", codAdicional: codAdicional});
+        }
+
+        setActive2(false);
+        setLiterate(nomeAdicional);
+        setAdicionais(arr);
+        props.parentCallback(arr);
     }
 
     return (
@@ -45,11 +86,10 @@ export default Etapa2 = () => {
                 <View style={ styles.list }>
                     <View style={ styles.listContent }>
                         {shoolLevels.map( schoolLevel => (
-                            <TouchableOpacity key={schoolLevel.codAdicional} style={ styles.item } onPress={() => { setSchool(schoolLevel.nomeAdicional), setActive1(false)}}>
+                            <TouchableOpacity key={schoolLevel.codAdicional} style={ styles.item } onPress={() => handleShoolSelected(schoolLevel.nomeAdicional, schoolLevel.codAdicional)}>
                                 <Text style={ styles.itemText }>{schoolLevel.nomeAdicional}</Text>
                             </TouchableOpacity>
                         ))}
-                        
                     </View>
                 </View>
             }
@@ -64,7 +104,7 @@ export default Etapa2 = () => {
                 <View style={ styles.list }>
                     <View style={ styles.listContent }>
                         {literateLevels.map(literateLevel => (
-                            <TouchableOpacity key={literateLevel.codAdicional} style={ styles.item } onPress={() => { setLiterate(literateLevel.nomeAdicional), setActive2(false)}}>
+                            <TouchableOpacity key={literateLevel.codAdicional} style={ styles.item } onPress={() => handleLiterateSelected(literateLevel.nomeAdicional,literateLevel.codAdicional)}>
                                 <Text style={ styles.itemText }>{literateLevel.nomeAdicional}</Text>
                             </TouchableOpacity>
                         ))}

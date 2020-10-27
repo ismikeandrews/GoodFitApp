@@ -3,7 +3,7 @@ import Svg, { G, Path } from "react-native-svg"
 
 function MenuConfiguraçãoSvg(props) {
   return (
-    <Svg width={38.5} height={38.58} viewBox="0 0 38.5 38.58" {...props}>
+    <Svg width={35} height={35} viewBox="0 0 38.5 38.58" {...props}>
       <G data-name="Grupo 157" fill="#04b2d9">
         <Path
           data-name="Caminho 71"

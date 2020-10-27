@@ -29,12 +29,11 @@ class Cadastro extends Component{
             zonaEndereco: '',
             cidadeEndereco: '',
             estadoEndereco: ''
-        },
-        this.etapa1 = React.createRef();
-        this.etapa2 = React.createRef();
+        }
     };
 
     callbackFunctionE1 = (childData) => {
+        console.log(childData)
         this.setState({
             email: childData.email,
             dataNascimentoCandidato: JSON.parse(childData.dateObj), 
@@ -68,7 +67,6 @@ class Cadastro extends Component{
         if (this.state.page === 0) {
             return (
                 <Etapa1 
-                ref={this.etapa1}
                 parentCallback={this.callbackFunctionE1} 
                 email={this.state.email} 
                 nomeCandidato={this.state.nomeCandidato} 
@@ -78,7 +76,6 @@ class Cadastro extends Component{
         if (this.state.page === 1) {
             return (
                 <Etapa2
-                ref={this.etapa2}
                 parentCallback={this.callbackFunctionE2} 
                 cpfCandidato={this.state.cpfCandidato}
                 password={this.state.password}
@@ -99,17 +96,6 @@ class Cadastro extends Component{
                 cidadeEndereco={this.state.cidadeEndereco}
                 estadoEndereco={this.state.estadoEndereco}/>
             );
-        };
-    };
-
-    handleNextPage = () => {
-        if (this.state.page === 0) {
-            this.etapa1.current.sendDataToParent();
-            this.setState({page: this.state.page + 1});
-        };
-        if (this.state.page === 1) {
-            this.etapa2.current.sendDataToParent();
-            this.setState({page: this.state.page + 1});
         };
     };
 
@@ -183,7 +169,7 @@ class Cadastro extends Component{
     render(){
         return(
             <SafeAreaView>
-                <View style={ Variables.container }>
+                <View style={ styles.container } >
                     <ScrollView>
                         {this.currentPage()}
 
@@ -195,7 +181,7 @@ class Cadastro extends Component{
                                 <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnCadastrar ]} onPress={() => this.handleSubmit()}>
                                     <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar</Text>
                                 </TouchableOpacity> :
-                                <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnNext ]} onPress={() => this.handleNextPage()}>
+                                <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btnNext ]} onPress={() => this.setState({page: this.state.page + 1})}>
                                     <Text style={[ Variables.btnText, styles.btnText ]}>Próximo</Text>
                                 </TouchableOpacity>
                             }

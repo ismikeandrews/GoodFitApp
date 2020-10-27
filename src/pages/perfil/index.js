@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect} from 'react';
 import { SafeAreaView, ScrollView, View, Text, Image, TouchableOpacity } from 'react-native';
+import { MenuSairSvg } from '../../assets';
 import moment from 'moment';
 
 import { AuthContext } from '../../config/authContext';
@@ -54,7 +55,7 @@ export default Perfil = () => {
     };
 
     return(
-        <View style={ Variables.container }>
+        <View style={ styles.container }>
             <SafeAreaView>
                 <ScrollView style={ styles.scrollView }>
                     <View style={ styles.imgBorder }>
@@ -137,10 +138,14 @@ export default Perfil = () => {
                         <Text style={ styles.itemTitle }>Complemento: </Text>
                         <Text style={ styles.text }>{complement}</Text>
                     </View>
-                    <TouchableOpacity style={[ Variables.btn, styles.btn ]}
+
+                    <View style={ styles.logout }>
+                        <TouchableOpacity style={[ Variables.btn, styles.btnSair ]}
                         onPress={() => handleSignOut()}>
-                            <Text style={[ Variables.btnText, styles.btnText ]}>Sair</Text>
-                    </TouchableOpacity>
+                            <MenuSairSvg style={ styles.sairIcon }/>
+                            <Text style={[ Variables.btnText, styles.btnSairText ]}>Sair</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
             </SafeAreaView>
         </View>

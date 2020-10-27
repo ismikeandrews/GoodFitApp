@@ -58,6 +58,9 @@ export default StyleSheet.create({
         marginBottom: 10,
         width: 30,
     },
+    vagas: {
+        paddingHorizontal: 20,
+    },
     vagaItem: {
         alignItems: 'center',
         backgroundColor: '#fff',
@@ -93,9 +96,9 @@ export default StyleSheet.create({
         marginTop: 5,
     },
     dot: {
-        fontSize: 27,
+        fontSize: 20,
         marginRight: 5,
-        marginTop: -11,
+        marginTop: -5,
     },
     dotAprovado: {
         color: '#63DE9A',

@@ -1,33 +1,39 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native'
-import { Etapa1, Etapa2, Etapa3, Etapa4, Etapa5 } from './etapas'
-import { Stepper } from '../../shared'
-
-import { Variables } from '../../shared'
-import styles from './styles'
+import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Etapa1, Etapa2, Etapa3, Etapa4, Etapa5 } from './etapas';
+import { Stepper } from '../../shared';
+import { Variables } from '../../shared';
+import styles from './styles';
 
 class CadastroCurriculo extends Component{
 
-    state = {page: 0, total: 5}
+    state = {
+        page: 0, 
+        total: 5,
+        adicionais: [],
+        descricaoCurriculo: ''
+    };
 
-    callbackFunctionE1(childData){
+    callbackFunctionE1 = (childData) => {
+        this.setState({descricaoCurriculo: childData});
+    }
+
+    callbackFunctionE2 = (childData) => {
+        this.setState({adicionais: childData}, () => console.log(this.state.adicionais));
+    }
+
+    callbackFunctionE3(childData){
         console.log(childData)
         // this.setState({})
     }
 
-    callbackFunctionE2(childData){
-        // this.setState({})
-    }
-
-    callbackFunctionE3(childData){
-        // this.setState({})
-    }
-
     callbackFunctionE4(childData){
+        console.log(childData)
         // this.setState({})
     }
 
     callbackFunctionE5(childData){
+        console.log(childData)
         // this.setState({})
     }
 
@@ -36,28 +42,32 @@ class CadastroCurriculo extends Component{
             return (
                 <Etapa1 
                 parentCallback={this.callbackFunctionE1}/>
-            )
-        }
+            );
+        };
         if (this.state.page === 1) {
             return (
-                <Etapa2/>
-            )
-        }
+                <Etapa2
+                parentCallback={this.callbackFunctionE2}/>
+            );
+        };
         if (this.state.page === 2) {
             return (
-                <Etapa3/>
-            )
-        }
+                <Etapa3
+                parentCallback={this.callbackFunctionE3}/>
+            );
+        };
         if (this.state.page === 3) {
             return (
-                <Etapa4/>
-            )
-        }
+                <Etapa4
+                parentCallback={this.callbackFunctionE4}/>
+            );
+        };
         if (this.state.page === 4) {
             return (
-                <Etapa5/>
-            )
-        }
+                <Etapa5
+                parentCallback={this.callbackFunctionE5}/>
+            );
+        };
     }
 
 
@@ -87,8 +97,8 @@ class CadastroCurriculo extends Component{
                     
                 </View>
             </SafeAreaView>
-        )
-    }
+        );
+    };
 }
 
 export {CadastroCurriculo};

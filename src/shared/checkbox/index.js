@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useImperativeHandle } from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
-import styles from './styles'
+import { TouchableOpacity } from 'react-native'
+import { IconBox } from '../icon-box'
 
 export default function Checkbox(props){
     const [active, setActive] = useState(false);
@@ -11,12 +11,9 @@ export default function Checkbox(props){
     }
    
     return (
-        <TouchableOpacity style={ styles.checkbox }
+        <TouchableOpacity
         onPress={() => handleChanges()}>
-            <View style={active ? [styles.item, styles.itemActive] : styles.item }>
-                <Image style={ styles.image } source={{uri:'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',}}/>
-                <Text style={ styles.label }>{props.name}</Text>
-            </View>
+            <IconBox active={active} name={props.name} img={props.img}></IconBox>
         </TouchableOpacity>
     );
 };

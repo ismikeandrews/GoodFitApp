@@ -16,7 +16,8 @@ export default StyleSheet.create({
         paddingBottom: 10,
         paddingTop: 20,
         paddingHorizontal: 10,
-        width: 145,
+        marginHorizontal: 5,
+        minWidth: 175,
     },
     itemActive: {
         backgroundColor: '#ec377c40',

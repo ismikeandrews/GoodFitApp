@@ -46,7 +46,7 @@ class Etapa4 extends React.Component {
                 <ScrollView>
                     <View style={ styles.container }>
                         {this.state.adicionais.map(adicional => (
-                            <Checkbox key={adicional.codAdicional} name={adicional.nomeAdicional} img={adicional.imagemAdicional} cod={adicional.codAdicional} parentCallback={this.callbackFunction}/>
+                            <Checkbox style={ styles.item } key={adicional.codAdicional} name={adicional.nomeAdicional} img={adicional.imagemAdicional} cod={adicional.codAdicional} parentCallback={this.callbackFunction}/>
                         ))}
                     </View>
                 </ScrollView>

@@ -1,3 +1,5 @@
+export { default as Menu } from './menu';
+export { default as Datepicker } from './datepicker';
 export { default as Variables } from './variables';
 export { default as Stepper } from './stepper';
 export { DescriptionBox } from "./description-box";

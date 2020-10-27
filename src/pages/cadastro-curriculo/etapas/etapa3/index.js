@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, TextInput, Image, CheckBox } from 'react-native';
-import { Picker } from '@react-native-community/picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-
-
-import { Variables } from '../../../../shared';
+import { Variables, Datepicker} from '../../../../shared';
 import styles from './styles';
 import descriptionBoxStyles from './descriptionBoxStyles'
 import { profissaoService } from '../../../../services'
@@ -24,6 +20,10 @@ class Etapa3 extends Component {
         this.fetchData()
     };
 
+    sendDataToParent = () => {
+        this.props.parentCallback(this.state.experiences);
+    }
+
     initialExperienceState(){
         return {
             tabs: true,
@@ -33,16 +33,10 @@ class Etapa3 extends Component {
             isEmpregoAtualExperienciaProfissional: false,
             codProfissao: null,
             togglePicker: false,
-            dataInicioExperienciaProfissional:{
-                toggleCalendar: false,
-                display: moment().format('DD/MM/YYYY'),
-                timestamp: moment().unix()
-            },
-            dataFinalExperienciaProfissional:{
-                toggleCalendar: false,
-                display: moment().format('DD/MM/YYYY'),
-                timestamp: moment().unix()
-            }
+            toggleCalendar1: false,
+            toggleCalendar2: false,
+            dataInicioExperienciaProfissional:{timestamp: moment().unix(), isoString: moment().toISOString(), display: moment()},
+            dataFinalExperienciaProfissional:{timestamp: moment().unix(), isoString: moment().toISOString(), display: moment()}
        }
     }
 
@@ -55,20 +49,14 @@ class Etapa3 extends Component {
         const arr = this.state.experiences;
         const experienceObj = {
             tabs: true,
-             isOpen: false,
-             empresaExperienciaProfissional: '',
-             descricaoExperienciaProfissional: '',
-             isEmpregoAtualExperienciaProfissional: false,
-             dataInicioExperienciaProfissional:{
-                toggleCalendar: false,
-                display: moment().format('DD/MM/YYYY'),
-                timestamp: moment().unix()
-            },
-            dataFinalExperienciaProfissional:{
-                toggleCalendar2: false,
-                display: moment().format('DD/MM/YYYY'),
-                timestamp: moment().unix()
-            },
+            isOpen: false,
+            empresaExperienciaProfissional: '',
+            descricaoExperienciaProfissional: '',
+            isEmpregoAtualExperienciaProfissional: false,
+            toggleCalendar1: false,
+            toggleCalendar2: false,
+            dataInicioExperienciaProfissional:{timestamp: moment().unix(), isoString: moment().toISOString(), display: moment()},
+            dataFinalExperienciaProfissional:{timestamp: moment().unix(), isoString: moment().toISOString(), display: moment()},
             codProfissao: null,
             togglePicker: false,
         };
@@ -83,49 +71,9 @@ class Etapa3 extends Component {
         this.setState({experiences: arr});
     }
 
-    handleEmpresaExperienciaProfissional(index, text){
-        const arr = this.state.experiences;
-        arr[index].empresaExperienciaProfissional = text
-        this.setState({experiences: arr})
-    }
-
-    handleCodCargo(index, codCargo){
-        const arr = this.state.experiences;
-        arr[index].codProfissao = codCargo;
-        this.setState({experiences: arr})
-    }
-
     handleTogglePicker(index){
-        console.log("teste")
         const arr = this.state.experiences;
         arr[index].togglePicker === true ? arr[index].togglePicker = false : arr[index].togglePicker = true;
-        this.setState({experiences: arr})
-    }
-
-    handleToggleInitCalendar(index){
-        const arr = this.state.experiences;
-        arr[index].dataInicioExperienciaProfissional.toggleCalendar === true ? arr[index].dataInicioExperienciaProfissional.toggleCalendar = false : arr[index].dataInicioExperienciaProfissional.toggleCalendar = true;
-        this.setState({experiences: arr})
-    }
-
-    handleToggleFinishCalendar(index){
-        const arr = this.state.experiences;
-        arr[index].dataFinalExperienciaProfissional.toggleCalendar === true ? arr[index].dataFinalExperienciaProfissional.toggleCalendar = false : arr[index].dataFinalExperienciaProfissional.toggleCalendar = true;
-        this.setState({experiences: arr})
-    }
-
-    handleInitDate = (event, data, index) => {
-        const arr = this.state.experiences
-        arr[index].dataInicioExperienciaProfissional.timestamp = moment(data).unix();
-        [index].dataInicioExperienciaProfissional.display = moment(data).format("DD/MM/YYYY");
-        console.log(arr[index].dataInicioExperienciaProfissional)
-        this.setState({experiences: arr})
-    }
-
-    handleFinishDate(index, data){
-        const arr = this.state.experiences
-        arr[index].dataFinalExperienciaProfissional.timestamp = moment(data).unix();
-        arr[index].dataFinalExperienciaProfissional.display = moment(data).format("DD/MM/YYYY");
         this.setState({experiences: arr})
     }
 
@@ -142,6 +90,47 @@ class Etapa3 extends Component {
         if (arr[index].tabs === true) {
             arr[index].tabs = false
         }
+        this.setState({experiences: arr})
+    }
+    
+    //Fields
+    handleEmpresaExperienciaProfissional(index, text){
+        const arr = this.state.experiences;
+        arr[index].empresaExperienciaProfissional = text
+        this.setState({experiences: arr})
+    }
+
+    handleCodCargo(index, codCargo){
+        const arr = this.state.experiences;
+        arr[index].codProfissao = codCargo;
+        this.setState({experiences: arr}, () => this.sendDataToParent())
+    }
+
+    handleToggleInitCalendar(index){
+        const arr = this.state.experiences;
+        arr[index].toggleCalendar1 === true ? arr[index].toggleCalendar1 = false : arr[index].toggleCalendar1 = true;
+        this.setState({experiences: arr}, () => {
+            this.sendDataToParent()
+        })
+    }
+
+    handleToggleFinishCalendar(index){
+        const arr = this.state.experiences;
+        arr[index].toggleCalendar2 === true ? arr[index].toggleCalendar2 = false : arr[index].toggleCalendar2 = true;
+        this.setState({experiences: arr}, () => {
+            this.sendDataToParent()
+        })
+    }
+
+    handleInitDate = (childData, index) => {
+        const arr = this.state.experiences
+        arr[index].dataInicioExperienciaProfissional = childData
+        this.setState({experiences: arr})
+    }
+
+    handleFinishDate(childData, index){
+        const arr = this.state.experiences
+        arr[index].dataFinalExperienciaProfissional = childData
         this.setState({experiences: arr})
     }
 
@@ -177,19 +166,25 @@ class Etapa3 extends Component {
                                 <View>
                                     {this.state.experiences.map((experience, index) => (
                                         <View key={index}>
-                                            <TouchableOpacity style={[ experience.isOpen === false ? styles.accordion : [styles.accordion, styles.accordionActive] ]}
-                                            onPress={() => this.openCloseAccord(index)}>
-                                                <View style={ styles.header }>
-                                                    <Text style={ styles.accordionTitle }>Experiência</Text>
-                                                    <Etapa1VideoSvg style={ styles.accordiontIcon }/>
-                                                </View>
-                                            </TouchableOpacity>
+                                            <View style={ styles.header }>
+                                                <TouchableOpacity style={[ experience.isOpen === false ? styles.accordion : [styles.accordion, styles.accordionActive] ]}
+                                                onPress={() => this.openCloseAccord(index)}>
+                                                    <View style={ styles.header }>
+                                                        <Text style={ styles.accordionTitle }>Experiência</Text>
+                                                        <Etapa1VideoSvg style={ styles.accordiontIcon }/>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity style={ styles.delete }
+                                                onPress={() => console.log('click')}>
+                                                    <Etapa1VideoSvg style={ styles.deleteIcon }/>
+                                                </TouchableOpacity>
+                                            </View>
                                             <View style={[ experience.isOpen === false ? styles.xp : styles.xpActive ]}>
                                                 <View style={ styles.form }>
                                                     <View style={ styles.formContent }>
                                                         <View style={ styles.formItem }>
                                                             <Text style={ Variables.label }>Nome da empresa</Text>
-                                                            <TextInput style={ Variables.input } value={experience.empresaExperienciaProfissional} onChangeText={ text => this.handleEmpresaExperienciaProfissional(index, text) }/>
+                                                            <TextInput style={ Variables.input } onBlur={() => this.sendDataToParent()} value={experience.empresaExperienciaProfissional} onChangeText={ text => this.handleEmpresaExperienciaProfissional(index, text) }/>
                                                         </View>
                                                     </View>
             
@@ -198,7 +193,7 @@ class Etapa3 extends Component {
                                                         <TouchableOpacity style={ styles.select }
                                                         onPress={() => this.handleTogglePicker(index)}>
                                                             <View style={ styles.selectItem }>
-                                                                {/* <Image style={ styles.image } source={require('../../../../assets/images/icons/requisitos/alfabetizacao.png')} /> */}
+                                                                <Image style={ styles.image } source={require('../../../../assets/images/icons/requisitos/alfabetizacao.png')} />
                                                                 <Text style={ styles.label }>Profissao</Text>
                                                             </View> 
                                                         </TouchableOpacity>
@@ -209,7 +204,6 @@ class Etapa3 extends Component {
                                                                         <ScrollView style={styles.scrollView}>
                                                                             {this.state.professions.map(profession => (
                                                                                 <TouchableOpacity key={profession.codProfession} style={ styles.item } onPress={() => { this.handleCodCargo(index, experience.codProfissao), this.handleTogglePicker(index)}}>
-                                                                                    <Etapa1VideoSvg style={ styles.selectIcon }/>
                                                                                     <Text style={ styles.itemText }>{profession.nomeProfissao}</Text>
                                                                                 </TouchableOpacity>
                                                                             ))}
@@ -227,14 +221,10 @@ class Etapa3 extends Component {
                                                             <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleInitCalendar(index)} onBlur={() => this.handleToggleInitCalendar(index)} value={experience.dataInicioExperienciaProfissional.display}/>
                                                             <Etapa1VideoSvg style={ styles.calendarIcon }/>
                                                         </View>
-                                                        {experience.dataInicioExperienciaProfissional.toggleCalendar && (
-                                                            <Text></Text>
-                                                            )}
-                                                        {/* <DateTimePicker
-                                                        mode="date"
-                                                        value={experience.dataInicioExperienciaProfissional.timestamp}
-                                                        display="default"
-                                                    onChange={(event, data) => setBirthDay(index, data)}/> */}
+                                                        {experience.toggleCalendar1 && (
+                                                            <Datepicker
+                                                            parentCallback={data => this.handleInitDate(data, index)}/>
+                                                        )}
                                                     </View>
                                                     <View style={ styles.formItem }>
                                                         <Text style={ Variables.label }>Data de término</Text>
@@ -242,9 +232,10 @@ class Etapa3 extends Component {
                                                             <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleFinishCalendar(index)} onBlur={() => this.handleToggleFinishCalendar(index)} value={experience.dataFinalExperienciaProfissional.display}/>
                                                             <Etapa1VideoSvg style={ styles.calendarIcon }/>
                                                         </View>
-                                                        {experience.dataFinalExperienciaProfissional.toggleCalendar && (
-                                                            <Text>Date Picker aqui</Text>
-                                                            )}
+                                                        {experience.toggleCalendar2 && (
+                                                             <Datepicker
+                                                             parentCallback={data => this.handleFinishDate(data, index)}/>
+                                                        )}
                                                     </View>
                                                 
                                                     <View style={ descriptionBoxStyles.content }>
@@ -261,11 +252,11 @@ class Etapa3 extends Component {
                                                         <View style={ descriptionBoxStyles.desc }>
                                                             {experience.tabs === true ?
                                                                 <View style={descriptionBoxStyles.textAreaContainer} >
-                                                                    <TextInput multiline={true} numberOfLines={7} style={ descriptionBoxStyles.textarea } placeholder={ 'Envie um vídeo sobre seu emprego e suas experiências' } onChangeText={text => onChangeText(text)} />
+                                                                    <TextInput multiline={true} numberOfLines={7}  style={ descriptionBoxStyles.textarea } placeholder={ 'Envie um vídeo sobre seu emprego e suas experiências' } onChangeText={text => onChangeText(text)} />
                                                                 </View>
                                                                 :
                                                                 <View style={descriptionBoxStyles.textAreaContainer} >
-                                                                    <TextInput multiline={true} numberOfLines={7} style={ descriptionBoxStyles.textarea } placeholder="Escreva uma breve descrição sobre seu emprego e suas experiências" onChangeText={text => handleDescriptionText(index, text)} />
+                                                                    <TextInput multiline={true} numberOfLines={7} onBlur={() => this.sendDataToParent()} style={ descriptionBoxStyles.textarea } placeholder="Escreva uma breve descrição sobre seu emprego e suas experiências" onChangeText={text => handleDescriptionText(index, text)} />
                                                                 </View>
                                                             }
                                                         </View>

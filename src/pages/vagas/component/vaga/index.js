@@ -14,14 +14,14 @@ class Vaga extends Component{
                         <Image style={ styles.logoImg } source={require('../../../../assets/images/ijc.png')} />
                     </View>
                     
-                    <View style={ styles.buttons }>
-                        <TouchableOpacity style={ styles.btn }
-                        onPress={() => console.log('clicked')}>
-                            <Image style={[ styles.icon, styles.iconX ]} source={require('../../../../assets/images/ijc.png')} />
-                        </TouchableOpacity>
-                    </View>
-
                     <View style={ styles.content }>
+                        <View style={ styles.buttons }>
+                            <TouchableOpacity style={ styles.btn }
+                            onPress={() => console.log('clicked')}>
+                                <Image style={[ styles.icon, styles.iconX ]} source={require('../../../../assets/images/ijc.png')} />
+                            </TouchableOpacity>
+                        </View>
+
                         <Text style={[ styles.text, styles.cargo ]}>Assistente</Text>
 
                         <View style={ styles.item }>

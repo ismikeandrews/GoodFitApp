@@ -1,16 +1,21 @@
 import { StyleSheet } from 'react-native';
 import color from '../../shared/variables/colors'
 
-
 export default StyleSheet.create({
+    container: {
+        paddingHorizontal: 30,
+    },
     imgBorder: {
         alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 20,
     },
     img: {
-        height: 72,
-        marginTop: 30,
-        marginBottom: 45,
-        width: 100,
+        borderColor: color.pink_light,
+        borderRadius: 100,
+        borderWidth: 3,
+        height: 140,
+        width: 140,
     },
     name: {
         color: color.pink,
@@ -22,7 +27,7 @@ export default StyleSheet.create({
     item: {
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: 10,
+        marginVertical: 10,
     },
     itemTitle: {
         color: '#555',
@@ -59,5 +64,26 @@ export default StyleSheet.create({
     btnText: {
         color: color.dark_red,
         fontWeight: '700',
+    },
+    logout: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    btnSair: {
+        backgroundColor: color.orange,
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 10,
+        paddingVertical: 5,
+        width: '45%',
+    },
+    btnSairText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '700',
+        textTransform: 'uppercase',
+        marginLeft: 10,
     },
 })

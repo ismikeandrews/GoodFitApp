@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native'
 import { IconBox } from '../../shared'
+import { CloseButtonSvg } from '../../assets';
 
 import styles from './styles'
 
@@ -8,11 +9,6 @@ class ProcessosVaga extends Component{
     render(){
         return(
             <SafeAreaView style={ styles.container }>
-                <TouchableOpacity style={ styles.voltar }
-                onPress={() => this.props.navigation.navigate('Processos')}>
-                    <Image style={ styles.icon } source={require('../../assets/images/ijc.png')} />
-                </TouchableOpacity>
-
                 <ScrollView style={ styles.scrollView }>
                     <View style={ styles.logo }>
                         <Image style={ styles.logoImg } source={require('../../assets/images/ijc.png')} />
@@ -52,7 +48,7 @@ class ProcessosVaga extends Component{
                     <TouchableOpacity style={ styles.btn }
                     onPress={() => console.log('clicked')}>
                         <Text style={ styles.btnText }>Cancelar candidatura</Text>
-                        <Image style={[ styles.icon, styles.iconX ]} source={require('../../assets/images/ijc.png')} />
+                        <CloseButtonSvg style={[ styles.icon, styles.iconX ]} color="#9d1d64"/>
                     </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>

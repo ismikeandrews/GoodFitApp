@@ -2,6 +2,10 @@ import { StyleSheet } from 'react-native';
 import color from '../../shared/variables/colors'
 
 export default StyleSheet.create({
+    container: {
+        marginTop: 50,
+        paddingHorizontal: 30,
+    },
     contentBtn: {
         alignItems: 'center',
         flexDirection: 'row-reverse',

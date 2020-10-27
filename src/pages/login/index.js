@@ -1,5 +1,5 @@
 import React, { useState, useContext} from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity, Alert } from 'react-native';
 
 import { AuthContext } from '../../config/authContext';
 import { usuarioService, authService } from '../../services';
@@ -23,6 +23,7 @@ export default Login = ({ navigation }) => {
                 signIn(loginResponse.data.token)
             }
         } catch (error) {
+            Alert.alert('Usuario ou senha errado(s)')
             console.log(error);
         }
     }
