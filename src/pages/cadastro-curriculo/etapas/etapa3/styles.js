@@ -66,10 +66,14 @@ export default StyleSheet.create({
         textAlign: 'left',
         width: '80%',
     },
-    newTitle: {
-        paddingVertical: 5,
+    newAccordion: {
+        flexDirection: 'row',
+        justifyContent: 'center',
         textAlign: 'center',
-        width: '100%'
+        marginTop: 20,
+    },
+    newTitle: {
+        marginBottom: 10,
     },
     xp: {
         display: 'none'
@@ -148,5 +152,28 @@ export default StyleSheet.create({
     },
     calendarInput: {
         width: '90%',
+    },
+    checkboxContent: {
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    checkbox: {
+        borderColor: color.dark_red,
+        borderRadius: 5,
+        borderWidth: 2,
+        color: color.dark_red,
+        height: 26,
+        width: 26,
+    },
+    checkboxText: {
+        color: color.dark_grey,
+        fontSize: 16,
+        marginLeft: 10,
+    },
+    present: {
+        color: color.dark_grey,
+        fontSize: 16,
+        marginBottom: 20,
+        marginTop: 10,
     },
 })

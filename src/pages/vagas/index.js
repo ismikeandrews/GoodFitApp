@@ -39,7 +39,7 @@ class Vagas extends Component{
                     onPress={() => console.log('click')}>
                     <Text style={[ Variables.btnText, styles.btnText ]}>Ative as notificações</Text>
                 </TouchableOpacity> */}
-                    {this.state.isCurriculoSet === false ?
+                    {/* {this.state.isCurriculoSet === false ?
                         <SafeAreaView>
                             <View style={ styles.contentEmpty }>
                                 <CurriculoSvg style={ styles.icon } />
@@ -47,7 +47,7 @@ class Vagas extends Component{
                                     Para continuar cadastre um currículo
                                 </Text>
                                 <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                                onPress={() => this.props.navigation.navigate('CadastroCurriculo')}>
+                                onPress={() => this.props.navigation.navigate('Curriculo', {screen: 'CadastroCurriculo'})}>
                                     <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar do curriculo</Text>
                                 </TouchableOpacity>
                             </View>
@@ -59,7 +59,14 @@ class Vagas extends Component{
                                 <Vaga></Vaga>
                             </ScrollView>
                         </SafeAreaView>
-                    }
+                    } */}
+                    <SafeAreaView style={ styles.slider } >
+                        <ScrollView style={ styles.scrollView } horizontal>
+                            <Vaga style={ styles.first } ></Vaga>
+                            <Vaga></Vaga>
+                            <Vaga></Vaga>
+                        </ScrollView>
+                    </SafeAreaView>
                 </View>
                 <Help/>
             </View> 

@@ -7,6 +7,18 @@ const curriculoService = {
     
     async getCurriculoByCandidatoId(codCandidato) {
         return axios.get(`${url}/${prefix}/candidato/${codCandidato}`);
+    },
+
+    async setCurriculo(data){
+        return await axios.post(`${url}/${prefix}/`, data)
+    },
+
+    async setAdicionalCurriculo(data){
+        return await axios.post(`${url}/${prefix}/adicional`, data)
+    },
+
+    async setCargoCurriculo(data){
+        return await axios.post(`${url}/${prefix}/cargo`, data)
     }
 
 };

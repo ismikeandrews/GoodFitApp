@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { View, Text, ScrollView } from 'react-native'
 
-import { adicionalService } from '../../../../services'
+import { categoriaService } from '../../../../services'
 import { Variables, Checkbox } from '../../../../shared'
 import styles from './styles'
 
 class Etapa5 extends Component {
     state = {
-        adicionais: [],
+        categorias: [],
         selected: []
     }
 
@@ -17,8 +17,8 @@ class Etapa5 extends Component {
 
     
     async fetchData(){
-        const adicionalRes = await adicionalService.getAdicionalList();
-        this.setState({adicionais: adicionalRes.data.slice(0, 11)});
+        const categoriaRes = await categoriaService.getCategoriaList();
+        this.setState({categorias: categoriaRes.data});
     }
 
     callbackFunction = childData => {
@@ -33,21 +33,22 @@ class Etapa5 extends Component {
                 }
             })
         }
-        this.setState({selected: arr})
+        this.setState({selected: arr}, () => {
+            this.props.parentCallback(this.state.selected)
+        })
     }
     
     render() {
           return (
-            <View style={ styles.content }>
-                <Text style={ Variables.title }>Habilidades</Text>
-                <Text style={ Variables.subtitle }>Eu sou bom com...</Text>
-                <ScrollView>
-                    <View style={ styles.container }>
-                        {this.state.adicionais.map(adicional => (
-                            <Checkbox key={adicional.codAdicional} name={adicional.nomeAdicional} img={adicional.imagemAdicional} cod={adicional.codAdicional} parentCallback={this.callbackFunction}/>
-                        ))}
-                    </View>
-                </ScrollView>
+            <View style={ styles.container }>
+                <Text style={ Variables.title }>Objetivo Profissional</Text>
+                <Text style={ Variables.subtitle }>Eu quero trabalhar com...</Text>
+                
+                <View style={ styles.content }>
+                    {this.state.categorias.map(categoria => (
+                        <Checkbox tipo="profissao" style={ styles.item } key={categoria.codCategoria} name={categoria.nomeCategoria} img={categoria.imagemCategoria} cod={categoria.codCategoria} parentCallback={this.callbackFunction}/>
+                    ))}
+                </View>
             </View>
         )
     }

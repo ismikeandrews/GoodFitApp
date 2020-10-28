@@ -8,3 +8,5 @@ export { default as viacepService } from './viacep';
 export { default as adicionalService } from './adicional';
 export { default as profissaoService } from './profissao';
 export { default as vagaService } from './vaga';
+export { default as categoriaService } from './categoria';
+export { default as experienciaProfissionalService } from './experienciaProfissional';

@@ -24,6 +24,14 @@ const authService = {
         }
     },
 
+    async updateCurriculo(codCurriculo){
+        let data = await AsyncStorage.getItem('data')
+        data = JSON.parse(data)
+        data.curriculo.codCurriculo = codCurriculo;
+        data = JSON.stringify(data);
+        await AsyncStorage.setItem('data', data);
+    },
+
     async getData(){
         try {
             let data = await AsyncStorage.getItem('data')

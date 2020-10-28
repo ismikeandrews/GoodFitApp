@@ -10,8 +10,10 @@ export default Etapa1 = (props) => {
     const [tabs, setTabs] = useState(true);
     const [descricaoCurriculo, setDescricaoCurriculo] = useState('');
 
-    const sendDataToParent = () => {
-        props.parentCallback(descricaoCurriculo)
+
+    const handleDescricao = text => {
+        setDescricaoCurriculo(text)
+        props.parentCallback(text)
     }
 
 
@@ -33,11 +35,11 @@ export default Etapa1 = (props) => {
             <View style={ styles.desc }>
                 {tabs === true ?
                     <View style={ styles.textAreaContainer } >
-                        <TextInput multiline={true} numberOfLines={7} style={ styles.textarea } placeholder={ 'Vídeo sobre você' } onChangeText={text => onChangeText(text)} />
+                        {/* <TextInput  multiline={true} numberOfLines={7} style={ styles.textarea } placeholder={ 'Vídeo sobre você' } onChangeText={text => onChangeText(text)} /> */}
                     </View>
                     :
                     <View style={ styles.textAreaContainer } >
-                        <TextInput multiline={true} numberOfLines={7} style={ styles.textarea } onBlur={() => sendDataToParent()} placeholder={ 'Escreva uma breve descrição sobre você' } value={descricaoCurriculo} onChangeText={text => setDescricaoCurriculo(text)} />
+                        <TextInput multiline={true} numberOfLines={7} style={ styles.textarea } placeholder={ 'Escreva uma breve descrição sobre você' } value={descricaoCurriculo} onChangeText={text => handleDescricao(text)} />
                     </View>
                 }
             </View>

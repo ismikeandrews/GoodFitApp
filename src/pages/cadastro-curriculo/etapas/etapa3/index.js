@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, TextInput, Image, CheckBox } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import moment from 'moment';
 import { Variables, Datepicker} from '../../../../shared';
 import styles from './styles';
 import descriptionBoxStyles from './descriptionBoxStyles'
 import { profissaoService } from '../../../../services'
-import { CandidaturaFinalizadoSvg, CandidaturaAprovadoSvg, Etapa1VideoSvg, Etapa1TextoSvg } from '../../../../assets';
+import { CandidaturaFinalizadoSvg, CandidaturaAprovadoSvg, Etapa1VideoSvg, Etapa1TextoSvg, CalendarSvg, DeleteSvg, PlusSvg } from '../../../../assets';
+import CheckBox from '@react-native-community/checkbox';
 
 class Etapa3 extends Component {
 
@@ -25,18 +26,22 @@ class Etapa3 extends Component {
     }
 
     initialExperienceState(){
+        const defaultData = JSON.stringify({timestamp: moment().unix(), isoString: moment().toISOString(), display: moment().format('DD/MM/YYYY')})
         return {
             tabs: true,
             isOpen: false,
             empresaExperienciaProfissional: '',
             descricaoExperienciaProfissional: '',
             isEmpregoAtualExperienciaProfissional: false,
+            nomeProfissao: '',
             codProfissao: null,
             togglePicker: false,
             toggleCalendar1: false,
             toggleCalendar2: false,
-            dataInicioExperienciaProfissional:{timestamp: moment().unix(), isoString: moment().toISOString(), display: moment()},
-            dataFinalExperienciaProfissional:{timestamp: moment().unix(), isoString: moment().toISOString(), display: moment()}
+            initDateDisplay: '',
+            finishDateDisplay: '',
+            dataInicioExperienciaProfissional: defaultData,
+            dataFinalExperienciaProfissional: defaultData
        }
     }
 
@@ -47,16 +52,20 @@ class Etapa3 extends Component {
 
     toggleNewExperience = () => {
         const arr = this.state.experiences;
+        const defaultDate = JSON.stringify({timestamp: moment().unix(), isoString: moment().toISOString(), display: moment().format('DD/MM/YYYY')})
         const experienceObj = {
             tabs: true,
             isOpen: false,
+            nomeProfissao: '',
             empresaExperienciaProfissional: '',
             descricaoExperienciaProfissional: '',
             isEmpregoAtualExperienciaProfissional: false,
             toggleCalendar1: false,
             toggleCalendar2: false,
-            dataInicioExperienciaProfissional:{timestamp: moment().unix(), isoString: moment().toISOString(), display: moment()},
-            dataFinalExperienciaProfissional:{timestamp: moment().unix(), isoString: moment().toISOString(), display: moment()},
+            initDateDisplay: '',
+            finishDateDisplay: '',
+            dataInicioExperienciaProfissional: defaultDate,
+            dataFinalExperienciaProfissional: defaultDate,
             codProfissao: null,
             togglePicker: false,
         };
@@ -64,6 +73,18 @@ class Etapa3 extends Component {
         arr.push(experienceObj);
         this.setState({experiences: arr});
     };
+
+    removeExperience = (index) => {
+        const arr = this.state.experiences
+        if (arr.length > 1) {
+            arr.splice(index, 1);
+        }else{
+            this.setState({yesSelected: false, noSelected: true}, () => {
+                this.props.parentCallback({noExperience: true})
+            })
+        }
+        this.setState({experience: arr})
+    }
 
     openCloseAccord(index){
         const arr = this.state.experiences;
@@ -92,6 +113,12 @@ class Etapa3 extends Component {
         }
         this.setState({experiences: arr})
     }
+
+    handleNoPressed(){
+        this.setState({noSelected: true, yesSelected: false, experiences: [this.initialExperienceState()]}, () => {
+            this.props.parentCallback(false)
+        })
+    }
     
     //Fields
     handleEmpresaExperienciaProfissional(index, text){
@@ -100,9 +127,10 @@ class Etapa3 extends Component {
         this.setState({experiences: arr})
     }
 
-    handleCodCargo(index, codCargo){
+    handleCodCargo(index, codCargo, nome){
         const arr = this.state.experiences;
         arr[index].codProfissao = codCargo;
+        arr[index].nomeProfissao = nome;
         this.setState({experiences: arr}, () => this.sendDataToParent())
     }
 
@@ -124,12 +152,16 @@ class Etapa3 extends Component {
 
     handleInitDate = (childData, index) => {
         const arr = this.state.experiences
+        const parsedData = JSON.parse(childData);
+        arr[index].initDateDisplay = parsedData.display
         arr[index].dataInicioExperienciaProfissional = childData
         this.setState({experiences: arr})
     }
 
     handleFinishDate(childData, index){
         const arr = this.state.experiences
+        const parsedData = JSON.parse(childData);
+        arr[index].finishDateDisplay = parsedData.display
         arr[index].dataFinalExperienciaProfissional = childData
         this.setState({experiences: arr})
     }
@@ -138,6 +170,14 @@ class Etapa3 extends Component {
         const arr = this.state.experiences;
         arr[index].descricaoExperienciaProfissional = text;
         this.setState({experiences: arr});
+    }
+
+    handleCheckbox(index, newValue){
+        const arr = this.state.experiences;
+        arr[index].isEmpregoAtualExperienciaProfissional = newValue;
+        this.setState({experiences: arr}, () => {
+            this.sendDataToParent()
+        })
     }
 
 
@@ -149,7 +189,7 @@ class Etapa3 extends Component {
                     <Text style={ Variables.subtitle }>Você já trabalhou antes? Conte-nos um pouco...</Text>
         
                     <View style={this.state.yesSelected ? [styles.content, styles.yes] : styles.content}>
-                        <TouchableOpacity style={this.state.noSelected ? [styles.btn, styles.btnActive] : styles.btn} onPress={() => this.setState({noSelected: true, yesSelected: false, experiences: [this.initialExperienceState()]})}>
+                        <TouchableOpacity style={this.state.noSelected ? [styles.btn, styles.btnActive] : styles.btn} onPress={() => this.handleNoPressed()}>
                             <CandidaturaFinalizadoSvg/>
                             <Text style={ styles.label }>Não</Text>
                         </TouchableOpacity>
@@ -171,12 +211,11 @@ class Etapa3 extends Component {
                                                 onPress={() => this.openCloseAccord(index)}>
                                                     <View style={ styles.header }>
                                                         <Text style={ styles.accordionTitle }>Experiência</Text>
-                                                        <Etapa1VideoSvg style={ styles.accordiontIcon }/>
                                                     </View>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity style={ styles.delete }
-                                                onPress={() => console.log('click')}>
-                                                    <Etapa1VideoSvg style={ styles.deleteIcon }/>
+                                                onPress={() => this.removeExperience(index)}>
+                                                    <DeleteSvg style={ styles.deleteIcon } color="#e64783"/>
                                                 </TouchableOpacity>
                                             </View>
                                             <View style={[ experience.isOpen === false ? styles.xp : styles.xpActive ]}>
@@ -194,7 +233,7 @@ class Etapa3 extends Component {
                                                         onPress={() => this.handleTogglePicker(index)}>
                                                             <View style={ styles.selectItem }>
                                                                 <Image style={ styles.image } source={require('../../../../assets/images/icons/requisitos/alfabetizacao.png')} />
-                                                                <Text style={ styles.label }>Profissao</Text>
+                                                                <Text style={ styles.label }>{experience.nomeProfissao ? experience.nomeProfissao : 'Profissão'}</Text>
                                                             </View> 
                                                         </TouchableOpacity>
                                                         {experience.togglePicker === true &&
@@ -203,7 +242,7 @@ class Etapa3 extends Component {
                                                                     <View style={ styles.listContent }>
                                                                         <ScrollView style={styles.scrollView}>
                                                                             {this.state.professions.map(profession => (
-                                                                                <TouchableOpacity key={profession.codProfession} style={ styles.item } onPress={() => { this.handleCodCargo(index, experience.codProfissao), this.handleTogglePicker(index)}}>
+                                                                                <TouchableOpacity key={profession.codProfisao} style={ styles.item } onPress={() => { this.handleCodCargo(index, profession.codProfissao, profession.nomeProfissao), this.handleTogglePicker(index)}}>
                                                                                     <Text style={ styles.itemText }>{profession.nomeProfissao}</Text>
                                                                                 </TouchableOpacity>
                                                                             ))}
@@ -214,30 +253,47 @@ class Etapa3 extends Component {
                                                         }
 
                                                     </View>
-
                                                     <View style={ styles.formItem }>
                                                         <Text style={ Variables.label }>Data de início</Text>
                                                         <View style={ styles.calendar }>
-                                                            <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleInitCalendar(index)} onBlur={() => this.handleToggleInitCalendar(index)} value={experience.dataInicioExperienciaProfissional.display}/>
-                                                            <Etapa1VideoSvg style={ styles.calendarIcon }/>
+                                                            <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleInitCalendar(index)} onBlur={() => this.handleToggleInitCalendar(index)} value={experience.initDateDisplay}/>
+                                                            <CalendarSvg style={ styles.calendarIcon } color="#e64783"/>
                                                         </View>
                                                         {experience.toggleCalendar1 && (
                                                             <Datepicker
                                                             parentCallback={data => this.handleInitDate(data, index)}/>
                                                         )}
                                                     </View>
-                                                    <View style={ styles.formItem }>
-                                                        <Text style={ Variables.label }>Data de término</Text>
-                                                        <View style={ styles.calendar }>
-                                                            <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleFinishCalendar(index)} onBlur={() => this.handleToggleFinishCalendar(index)} value={experience.dataFinalExperienciaProfissional.display}/>
-                                                            <Etapa1VideoSvg style={ styles.calendarIcon }/>
-                                                        </View>
-                                                        {experience.toggleCalendar2 && (
-                                                             <Datepicker
-                                                             parentCallback={data => this.handleFinishDate(data, index)}/>
-                                                        )}
+                                                    {experience.isEmpregoAtualExperienciaProfissional === false ? 
+                                                        <View style={ styles.formItem }>
+                                                            <Text style={ Variables.label }>Data de término</Text>
+                                                            <View style={ styles.calendar }>
+                                                                <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleFinishCalendar(index)} onBlur={() => this.handleToggleFinishCalendar(index)} value={experience.finishDateDisplay}/>
+                                                                <CalendarSvg style={ styles.calendarIcon } color="#e64783"/>
+                                                            </View>
+                                                            {experience.toggleCalendar2 && (
+                                                                <Datepicker
+                                                                parentCallback={data => this.handleFinishDate(data, index)}/>
+                                                            )}
+                                                        </View> :
+                                                        <Text style={ styles.present }>Presente</Text>
+                                                    }
+                                                    
+                                                    <View style={[ styles.formItem, styles.checkboxContent ]}>
+                                                        <CheckBox
+                                                        style={ styles.checkbox }
+                                                        onAnimationType="stroke"
+                                                        offAnimationType="bounce"
+                                                        boxType="square"
+                                                        onCheckColor="#fff"
+                                                        onFillColor="#9d1d64"
+                                                        onTintColor="#9d1d64"
+                                                        tintColor="#F2F2F2"
+                                                        value={experience.isEmpregoAtualExperienciaProfissional}
+                                                        onValueChange={(newValue) => this.handleCheckbox(index, newValue)}/>
+                                                        <Text style={ styles.checkboxText }>Este é meu emprego atual</Text>
                                                     </View>
-                                                
+                                                    
                                                     <View style={ descriptionBoxStyles.content }>
                                                         <View style={ descriptionBoxStyles.tabs }>
                                                             <TouchableOpacity style={ descriptionBoxStyles.tabsItem } onPress={() => this.handleVideoTab(index)}>
@@ -256,7 +312,7 @@ class Etapa3 extends Component {
                                                                 </View>
                                                                 :
                                                                 <View style={descriptionBoxStyles.textAreaContainer} >
-                                                                    <TextInput multiline={true} numberOfLines={7} onBlur={() => this.sendDataToParent()} style={ descriptionBoxStyles.textarea } placeholder="Escreva uma breve descrição sobre seu emprego e suas experiências" onChangeText={text => handleDescriptionText(index, text)} />
+                                                                    <TextInput multiline={true} numberOfLines={7} onBlur={() => this.sendDataToParent()} style={ descriptionBoxStyles.textarea } placeholder="Escreva uma breve descrição sobre seu emprego e suas experiências" onChangeText={text => this.handleDescriptionText(index, text)} />
                                                                 </View>
                                                             }
                                                         </View>
@@ -266,12 +322,10 @@ class Etapa3 extends Component {
                                         </View>
                                     ))}
                                 </View>
-                            <View>
-                                <TouchableOpacity style={ styles.accordion } onPress={() => this.toggleNewExperience()}>
-                                    <Text style={[ styles.accordionTitle, styles.newTitle ]}>+</Text>
+                                <TouchableOpacity style={[ styles.accordion, styles.newAccordion ]} onPress={() => this.toggleNewExperience()}>
+                                    <PlusSvg style={[ styles.accordionTitle, styles.newTitle ]} color="#9d1d64"/>
                                 </TouchableOpacity>
                             </View>
-                        </View>
                         </ScrollView>
                     )}
                 </View>

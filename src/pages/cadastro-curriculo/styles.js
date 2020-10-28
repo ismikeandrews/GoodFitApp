@@ -6,15 +6,18 @@ export default StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingBottom: 140,
-        paddingTop: 70,
-        paddingHorizontal: 20,
+        marginBottom: 300,
+        marginTop: 40,
+        paddingTop: 40,
+        paddingBottom: 50,
+        marginHorizontal: 20,
     },
     contentBtn: {
-        flexDirection: 'row-reverse'
+        flexDirection: 'row-reverse',
+        justifyContent: 'space-between',
+        marginBottom: 120,
     },
     btn: {
-        marginHorizontal: 5,
         width: '48%',
     },
     btnText: {

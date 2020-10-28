@@ -31,7 +31,7 @@ export default StyleSheet.create({
     },
     label: {
         color: color.gray,
-        fontSize: 18,
+        fontSize: 17,
         textAlign: 'center',
     }
 })

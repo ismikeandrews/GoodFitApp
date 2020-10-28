@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text } from 'react-native'
 
 import { Variables, Checkbox } from '../../../../shared'
 import styles from './styles'
@@ -34,22 +34,23 @@ class Etapa4 extends React.Component {
                 }
             })
         }
-        console.log(arr)
-        this.setState({selected: arr})
+
+        this.setState({selected: arr}, () => {
+            this.props.parentCallback(this.state.selected)
+        })
     }
     
     render() {
           return (
-            <View style={ styles.content }>
+            <View style={ styles.container }>
                 <Text style={ Variables.title }>Habilidades</Text>
                 <Text style={ Variables.subtitle }>Eu sou bom com...</Text>
-                <ScrollView>
-                    <View style={ styles.container }>
-                        {this.state.adicionais.map(adicional => (
-                            <Checkbox style={ styles.item } key={adicional.codAdicional} name={adicional.nomeAdicional} img={adicional.imagemAdicional} cod={adicional.codAdicional} parentCallback={this.callbackFunction}/>
-                        ))}
-                    </View>
-                </ScrollView>
+                
+                <View style={ styles.content }>
+                    {this.state.adicionais.map(adicional => (
+                        <Checkbox tipo="habilidade" style={ styles.item } key={adicional.codAdicional} name={adicional.nomeAdicional} img={adicional.imagemAdicional} cod={adicional.codAdicional} parentCallback={this.callbackFunction}/>
+                    ))}
+                </View>
             </View>
         )
     }  

@@ -10,7 +10,8 @@ export default Datepicker = (props) => {
         let parseUnix = moment(data).unix()
         let parseDisplay = moment(data).format("DD/MM/YYYY");
         setDateObj({timestamp: parseUnix, isoString: data, display: parseDisplay})
-        props.parentCallback({timestamp: parseUnix, isoString: data, display: parseDisplay})
+        const stringObj = JSON.stringify({timestamp: parseUnix, isoString: data, display: parseDisplay})
+        props.parentCallback(stringObj);
     }
 
     return (

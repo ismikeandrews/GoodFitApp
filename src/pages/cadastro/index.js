@@ -157,12 +157,14 @@ class Cadastro extends Component{
                 codUsuario: codUsuario.data
             }
             const candidatoResponse = await candidatoService.createCandidato(candidatoData);
-            console.log(candidatoResponse.data)
+            if(candidatoResponse.data){
+                Alert.alert('usuario cadastrados com sucesso')
+            }
 
         }else{
             //completar mostrar os erros <------
             Alert.alert("O formulario contem erros")
-            console.log("Not all fields are valid");
+            console.log(validatedUsuarioObj, validatedCandidatoObj, validatedEnderecoObj);
         }
     }
 

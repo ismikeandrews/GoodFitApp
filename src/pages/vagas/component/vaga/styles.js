@@ -8,13 +8,12 @@ export default StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         marginHorizontal: 30,
-        marginTop: 30,
     },
     logo: {
         alignItems: 'center',
     },
     logoImg: {
-        height: 250,
+        height: 270,
         width: '100%',
     },
     buttons: {
@@ -30,7 +29,7 @@ export default StyleSheet.create({
         borderWidth: 1,
         elevation: 7,
         marginBottom: 20,
-        marginTop: -60,
+        marginTop: -70,
         paddingVertical: 10,
         shadowColor: "#000",
         shadowOffset: { width: 3, height: 3, },
@@ -41,8 +40,8 @@ export default StyleSheet.create({
     },
     content: {
         backgroundColor: '#fff',
-        borderRadius: 30,
-        marginTop: 10,
+        borderRadius: 50,
+        marginTop: -10,
         paddingVertical: 40,
     },
     text: {

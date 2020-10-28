@@ -24,7 +24,7 @@ export default Etapa1 = (props) => {
     }
 
     setBirthDay = (chilData) => {
-        setDateObj(chilData)
+        setDateObj(JSON.parse(chilData))
     }
 
     handleDateOnBlur = () => {
