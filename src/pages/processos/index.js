@@ -43,11 +43,11 @@ class Processos extends Component{
                             <View style={ styles.vagas }>
                                 <TouchableOpacity style={ styles.vagaItem }
                                 onPress={() => this.props.navigation.navigate('ProcessosVaga')}>
-                                    <Image style={ styles.logo } source={require('../../assets/images/ijc.png')} />
+                                    <Image style={ styles.logo } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
                                     
                                     <View style={ styles.desc }>
-                                        <Text style={ styles.cargo }>Assistente</Text>
-                                        <Text style={ styles.nome }>Assistente</Text>
+                                        <Text style={ styles.cargo }>Colégio Evoluir</Text>
+                                        <Text style={ styles.nome }>Professor</Text>
                                         
                                         <View style={ styles.statusBox }>
                                             <Text style={[ styles.dot, styles.dotAndamento ]}>●</Text>
@@ -55,7 +55,7 @@ class Processos extends Component{
                                         </View>
                                     </View>
                                 </TouchableOpacity>
-
+                                {/* 
                                 <TouchableOpacity style={ styles.vagaItem }
                                 onPress={() => this.props.navigation.push('ProcessosVaga')}>
                                     <Image style={ styles.logo } source={require('../../assets/images/ijc.png')} />
@@ -69,7 +69,7 @@ class Processos extends Component{
                                             <Text style={ styles.status }>Em análise...</Text>
                                         </View>
                                     </View>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
             
                                 {/* Página vazia, necessário vagas */}
                                 {/* <View style={ styles.vagaEmpty }>

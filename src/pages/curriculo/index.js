@@ -33,7 +33,7 @@ class Curriculo extends Component{
                                 
                                 <View style={ styles.list }>
                                     <IconBox name='Comunicação' tipo="habilidade" img='comunicativo'></IconBox>
-                                    <IconBox name='Códigos' tipo="habilidade" img='html'></IconBox>
+                                    {/* <IconBox name='Códigos' tipo="habilidade" img='html'></IconBox> */}
                                     <IconBox name='Raciocínio' tipo="habilidade" img='inteligente'></IconBox>
                                     <IconBox name='Organização' tipo="habilidade" img='organizacao'></IconBox>
                                 </View>

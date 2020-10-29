@@ -8,14 +8,12 @@ import styles from './styles';
 
 export default Etapa1 = (props) => {
     const [tabs, setTabs] = useState(true);
-    const [descricaoCurriculo, setDescricaoCurriculo] = useState('');
-
+    const [descricaoCurriculo, setDescricaoCurriculo] = useState(props.descricaoCurriculo);
 
     const handleDescricao = text => {
         setDescricaoCurriculo(text)
         props.parentCallback(text)
     }
-
 
     return (
         <View style={ styles.content }>

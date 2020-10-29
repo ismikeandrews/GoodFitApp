@@ -13,13 +13,18 @@ class Etapa4 extends React.Component {
     }
 
     componentDidMount(){
+        console.log(this.props.adicionais)
         this.fetchData()
     }
 
-    
     async fetchData(){
         const adicionalRes = await adicionalService.getAdicionalList();
-        this.setState({adicionais: adicionalRes.data.slice(0, 11)});
+        let arr = []
+        for (const element of adicionalRes.data.slice(0, 11)) {
+            let index = this.props.adicionais.indexOf(element.codAdicional)
+            arr.push({...element, active: index > -1 ? true : false})
+        }
+        this.setState({adicionais: arr});
     }
 
     callbackFunction = childData => {
@@ -48,7 +53,7 @@ class Etapa4 extends React.Component {
                 
                 <View style={ styles.content }>
                     {this.state.adicionais.map(adicional => (
-                        <Checkbox tipo="habilidade" style={ styles.item } key={adicional.codAdicional} name={adicional.nomeAdicional} img={adicional.imagemAdicional} cod={adicional.codAdicional} parentCallback={this.callbackFunction}/>
+                        <Checkbox active={adicional.active} tipo="habilidade" style={ styles.item } key={adicional.codAdicional} name={adicional.nomeAdicional} img={adicional.imagemAdicional} cod={adicional.codAdicional} parentCallback={this.callbackFunction}/>
                     ))}
                 </View>
             </View>

@@ -18,7 +18,12 @@ class Etapa5 extends Component {
     
     async fetchData(){
         const categoriaRes = await categoriaService.getCategoriaList();
-        this.setState({categorias: categoriaRes.data});
+        let arr = []
+        for (const element of categoriaRes.data) {
+            let index = this.props.categorias.indexOf(element.codCategoria)
+            arr.push({...element, active: index > -1 ? true : false})
+        }
+        this.setState({categorias: arr});
     }
 
     callbackFunction = childData => {
@@ -46,7 +51,7 @@ class Etapa5 extends Component {
                 
                 <View style={ styles.content }>
                     {this.state.categorias.map(categoria => (
-                        <Checkbox tipo="profissao" style={ styles.item } key={categoria.codCategoria} name={categoria.nomeCategoria} img={categoria.imagemCategoria} cod={categoria.codCategoria} parentCallback={this.callbackFunction}/>
+                        <Checkbox active={categoria.active} tipo="profissao" style={ styles.item } key={categoria.codCategoria} name={categoria.nomeCategoria} img={categoria.imagemCategoria} cod={categoria.codCategoria} parentCallback={this.callbackFunction}/>
                     ))}
                 </View>
             </View>

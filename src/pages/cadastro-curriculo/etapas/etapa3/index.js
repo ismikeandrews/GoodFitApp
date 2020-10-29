@@ -40,8 +40,10 @@ class Etapa3 extends Component {
             toggleCalendar2: false,
             initDateDisplay: '',
             finishDateDisplay: '',
-            dataInicioExperienciaProfissional: defaultData,
-            dataFinalExperienciaProfissional: defaultData
+            dataInicioExperienciaProfissional: '',
+            dataFinalExperienciaProfissional: ''
+            // dataInicioExperienciaProfissional: defaultData,
+            // dataFinalExperienciaProfissional: defaultData
        }
     }
 
@@ -64,8 +66,10 @@ class Etapa3 extends Component {
             toggleCalendar2: false,
             initDateDisplay: '',
             finishDateDisplay: '',
-            dataInicioExperienciaProfissional: defaultDate,
-            dataFinalExperienciaProfissional: defaultDate,
+            // dataInicioExperienciaProfissional: defaultDate,
+            // dataFinalExperienciaProfissional: defaultDate,
+            dataInicioExperienciaProfissional: '',
+            dataFinalExperienciaProfissional: '',
             codProfissao: null,
             togglePicker: false,
         };
@@ -134,37 +138,49 @@ class Etapa3 extends Component {
         this.setState({experiences: arr}, () => this.sendDataToParent())
     }
 
-    handleToggleInitCalendar(index){
+    handleIntiDate(index, initDate){
         const arr = this.state.experiences;
-        arr[index].toggleCalendar1 === true ? arr[index].toggleCalendar1 = false : arr[index].toggleCalendar1 = true;
-        this.setState({experiences: arr}, () => {
-            this.sendDataToParent()
-        })
-    }
-
-    handleToggleFinishCalendar(index){
-        const arr = this.state.experiences;
-        arr[index].toggleCalendar2 === true ? arr[index].toggleCalendar2 = false : arr[index].toggleCalendar2 = true;
-        this.setState({experiences: arr}, () => {
-            this.sendDataToParent()
-        })
-    }
-
-    handleInitDate = (childData, index) => {
-        const arr = this.state.experiences
-        const parsedData = JSON.parse(childData);
-        arr[index].initDateDisplay = parsedData.display
-        arr[index].dataInicioExperienciaProfissional = childData
+        arr[index].dataInicioExperienciaProfissional = initDate;
         this.setState({experiences: arr})
     }
 
-    handleFinishDate(childData, index){
-        const arr = this.state.experiences
-        const parsedData = JSON.parse(childData);
-        arr[index].finishDateDisplay = parsedData.display
-        arr[index].dataFinalExperienciaProfissional = childData
-        this.setState({experiences: arr})
+    handleFinishDate(index, finishDate){
+        const arr = this.state.experiences;
+        arr[index].dataFinalExperienciaProfissional = finishDate;
+        this.setState({experiences: arr});
     }
+
+    // handleToggleInitCalendar(index){
+    //     const arr = this.state.experiences;
+    //     arr[index].toggleCalendar1 === true ? arr[index].toggleCalendar1 = false : arr[index].toggleCalendar1 = true;
+    //     this.setState({experiences: arr}, () => {
+    //         this.sendDataToParent()
+    //     })
+    // }
+
+    // handleToggleFinishCalendar(index){
+    //     const arr = this.state.experiences;
+    //     arr[index].toggleCalendar2 === true ? arr[index].toggleCalendar2 = false : arr[index].toggleCalendar2 = true;
+    //     this.setState({experiences: arr}, () => {
+    //         this.sendDataToParent()
+    //     })
+    // }
+
+    // handleInitDate = (childData, index) => {
+    //     const arr = this.state.experiences
+    //     const parsedData = JSON.parse(childData);
+    //     arr[index].initDateDisplay = parsedData.display
+    //     arr[index].dataInicioExperienciaProfissional = childData
+    //     this.setState({experiences: arr})
+    // }
+
+    // handleFinishDate(childData, index){
+    //     const arr = this.state.experiences
+    //     const parsedData = JSON.parse(childData);
+    //     arr[index].finishDateDisplay = parsedData.display
+    //     arr[index].dataFinalExperienciaProfissional = childData
+    //     this.setState({experiences: arr})
+    // }
 
     handleDescriptionText(index, text){
         const arr = this.state.experiences;
@@ -256,25 +272,27 @@ class Etapa3 extends Component {
                                                     <View style={ styles.formItem }>
                                                         <Text style={ Variables.label }>Data de início</Text>
                                                         <View style={ styles.calendar }>
-                                                            <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleInitCalendar(index)} onBlur={() => this.handleToggleInitCalendar(index)} value={experience.initDateDisplay}/>
+                                                            <TextInput style={[ Variables.input, styles.calendarInput ]}  onBlur={() => this.sendDataToParent()} value={experience.dataInicioExperienciaProfissional} onChangeText={ text => this.handleIntiDate(index, text) }/>
+                                                            {/* <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleInitCalendar(index)} onBlur={() => this.handleToggleInitCalendar(index)} value={experience.initDateDisplay}/> */}
                                                             <CalendarSvg style={ styles.calendarIcon } color="#e64783"/>
                                                         </View>
-                                                        {experience.toggleCalendar1 && (
+                                                        {/* {experience.toggleCalendar1 && (
                                                             <Datepicker
                                                             parentCallback={data => this.handleInitDate(data, index)}/>
-                                                        )}
+                                                        )} */}
                                                     </View>
                                                     {experience.isEmpregoAtualExperienciaProfissional === false ? 
                                                         <View style={ styles.formItem }>
                                                             <Text style={ Variables.label }>Data de término</Text>
                                                             <View style={ styles.calendar }>
-                                                                <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleFinishCalendar(index)} onBlur={() => this.handleToggleFinishCalendar(index)} value={experience.finishDateDisplay}/>
+                                                                <TextInput style={[ Variables.input, styles.calendarInput ]} onBlur={() => this.sendDataToParent()} value={experience.dataFinalExperienciaProfissional} onChangeText={ text => this.handleFinishDate(index, text)}/>
+                                                                {/* <TextInput style={[ Variables.input, styles.calendarInput ]} onFocus={() => this.handleToggleFinishCalendar(index)} onBlur={() => this.handleToggleFinishCalendar(index)} value={experience.finishDateDisplay}/> */}
                                                                 <CalendarSvg style={ styles.calendarIcon } color="#e64783"/>
                                                             </View>
-                                                            {experience.toggleCalendar2 && (
+                                                            {/* {experience.toggleCalendar2 && (
                                                                 <Datepicker
                                                                 parentCallback={data => this.handleFinishDate(data, index)}/>
-                                                            )}
+                                                            )} */}
                                                         </View> :
                                                         <Text style={ styles.present }>Presente</Text>
                                                     }

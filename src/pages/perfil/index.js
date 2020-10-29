@@ -30,7 +30,6 @@ export default Perfil = (props) => {
             const usuario = await usuarioService.getUsuarioById(session.codUsuario);
             const candidato = await candidatoService.getCandidatoById(session.codCandidato);
             const endereco = await enderecoService.getEnderecoById(session.codEndereco);
-
             setName(candidato.data.nomeCandidato);
             setEmail(usuario.data.email);
             setBirthDay(moment.unix(candidato.data.dataNascimentoCandidato).format('DD/MM/YYYY'));
@@ -54,7 +53,7 @@ export default Perfil = (props) => {
                 <SafeAreaView>
                     <ScrollView style={ styles.scrollView }>
                         <View style={ styles.imgBorder }>
-                            <Image style={ styles.img } source={require('../../assets/images/ijc.png')} />
+                            <Image style={ styles.img } source={require('../../assets/images/default.jpg')} />
                         </View>
 
                         <Text style={ styles.name }>{name}</Text>

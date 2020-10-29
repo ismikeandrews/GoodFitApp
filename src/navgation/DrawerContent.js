@@ -11,6 +11,7 @@ export function DrawerContent(props){
     const { signOut } = useContext(AuthContext);
 
     const handleSignOut = async () => {
+        props.navigation.toggleDrawer()
         await authService.clearData();
         signOut();
     };
@@ -28,7 +29,7 @@ export function DrawerContent(props){
                     <Text style={ drawerStyle.itemText }>Vaga</Text>
             </TouchableOpacity>
             <TouchableOpacity style={ drawerStyle.item }
-                onPress={() => {props.navigation.navigate('Curriculo')}}>
+                onPress={() => {props.navigation.navigate('Curriculo'), {screen: 'Curriculo'}}}>
                     <CurriculoSvg style={ drawerStyle.itemIcon } />
                     <Text style={[ drawerStyle.itemText, drawerStyle.itemTextOdd ]}>Currículo</Text>
             </TouchableOpacity>

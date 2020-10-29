@@ -28,6 +28,7 @@ const authService = {
         let data = await AsyncStorage.getItem('data')
         data = JSON.parse(data)
         data.curriculo.codCurriculo = codCurriculo;
+        data.curriculo.isSet = true
         data = JSON.stringify(data);
         await AsyncStorage.setItem('data', data);
     },

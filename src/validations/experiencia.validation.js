@@ -10,6 +10,11 @@ const experienciaValidation = {
                     valid: true,
                     error: ''
                 },
+                codProfissao: {
+                    value: data.codProfissao,
+                    valid: true,
+                    error: ''
+                },
                 descricaoExperienciaProfissional: {
                     value: data.descricaoExperienciaProfissional,
                     valid: true,
@@ -21,12 +26,12 @@ const experienciaValidation = {
                     error: ''
                 },
                 dataInicioExperienciaProfissional: {
-                    value: moment().unix(),
+                    value: data.dataInicioExperienciaProfissional,
                     valid: true,
                     error: ''
                 },
                 dataFinalExperienciaProfissional: {
-                    value: data.isEmpregoAtualExperienciaProfissional === false ? moment.unix() : null,
+                    value: data.isEmpregoAtualExperienciaProfissional === false ? data.dataFinalExperienciaProfissional : '',
                     valid: true,
                     error: ''
                 }
@@ -50,6 +55,31 @@ const experienciaValidation = {
                 validatedObj.isValid = false;
                 validatedObj.descricaoExperienciaProfissional.valid = false;
                 validatedObj.descricaoExperienciaProfissional.error = 'O campo descrição deve ter no máximo 250 caracteres';
+            }
+
+            //data
+            //inicio
+            if (!data.dataInicioExperienciaProfissional) {
+                validatedObj.isValid = false;
+                validatedObj.dataInicioExperienciaProfissional.valid = false;
+                validatedObj.dataInicioExperienciaProfissional.error = 'O campo descrição é obriatório'; 
+            }
+            if (data.dataInicioExperienciaProfissional) {
+                const parsedDate = moment(data.dataInicioExperienciaProfissional, 'DD/MM/YYYY').unix()
+                validatedObj.dataInicioExperienciaProfissional.value = parsedDate
+            }
+
+            //finish
+            if (data.dataFinalExperienciaProfissional) {
+                const parsedDate = moment(data.dataFinalExperienciaProfissional, 'DD/MM/YYYY').unix()
+                validatedObj.dataFinalExperienciaProfissional.value = parsedDate
+            }
+
+            //codProfissao
+            if(!data.codProfissao){
+                validatedObj.isValid = false;
+                validatedObj.codProfissao.valid = false;
+                validatedObj.codProfissao.error = 'Selecione uma profissão'
             }
 
             return validatedObj

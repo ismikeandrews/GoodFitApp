@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import color from '../../shared/variables/colors'
+import color from '../../shared/variables/colors';
 
 export default StyleSheet.create({
     container: {
@@ -39,4 +39,4 @@ export default StyleSheet.create({
     scrollView: {
         marginLeft: -25,
     },
-})
+});

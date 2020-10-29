@@ -140,7 +140,6 @@ class Cadastro extends Component{
                 estadoEndereco: validatedEnderecoObj.estadoEndereco.value
             }
             const codEndereco = await enderecoService.createEndereco(enderecoData);
-
             let usuarioData = {
                 loginUsuario: validatedUsuarioObj.loginUsuario.value,
                 email: validatedUsuarioObj.email.value,
@@ -159,6 +158,7 @@ class Cadastro extends Component{
             const candidatoResponse = await candidatoService.createCandidato(candidatoData);
             if(candidatoResponse.data){
                 Alert.alert('usuario cadastrados com sucesso')
+                this.props.navigation.navigate('Login')
             }
 
         }else{

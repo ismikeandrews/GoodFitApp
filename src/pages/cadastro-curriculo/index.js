@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, ScrollView, SafeAreaView, Alert } from 'r
 import { Etapa1, Etapa2, Etapa3, Etapa4, Etapa5 } from './etapas';
 import { Stepper, Help } from '../../shared';
 import { Variables, Menu } from '../../shared';
-import { authService, curriculoService, experienciaProfissionalService } from '../../services'
-import { experienciaValidation } from '../../validations'
+import { authService, curriculoService, experienciaProfissionalService } from '../../services';
+import { experienciaValidation } from '../../validations';
 import styles from './styles';
 
 class CadastroCurriculo extends Component{
@@ -12,8 +12,11 @@ class CadastroCurriculo extends Component{
     state = {
         page: 0, 
         total: 5,
+        adicionaisSelect: [],
         adicionais: [],
         descricaoCurriculo: '',
+        schoolName: '',
+        literateName: '',
         experiencesSet: false,
         experiencias: [],
         cargos: []
@@ -21,75 +24,68 @@ class CadastroCurriculo extends Component{
 
     callbackFunctionE1 = (childData) => {
         this.setState({descricaoCurriculo: childData});
-    }
+    };
 
     callbackFunctionE2 = (childData) => {
-        let arr = []
+
+        let arr = [];
         for (const adicional of childData) {
-            arr.push(adicional.codAdicional)
+            arr.push(adicional.codAdicional);
+            adicional.tipo === 'literate' ? this.setState({literateName: adicional.nome}) : this.setState({schoolName: adicional.nome})
         }
-        this.setState({adicionais: arr});
-    }
+        this.setState({adicionaisSelect: arr});
+    };
 
     callbackFunctionE3 = (childData) => {
         if (!childData) {
-            this.setState({experiencesSet: childData})
+            this.setState({experiencesSet: childData});
         }else{
-            let arr = []
+            let arr = [];
             for (const experience of childData) {
                 let expObj = {
                     empresaExperienciaProfissional: experience.empresaExperienciaProfissional,
                     descricaoExperienciaProfissional: experience.descricaoExperienciaProfissional,
                     isEmpregoAtualExperienciaProfissional: experience.isEmpregoAtualExperienciaProfissional,
-                    // dataInicioExperienciaProfissional: experience.dataInicioExperienciaProfissional,
-                    // dataFinalExperienciaProfissional: experience.dataFinalExperienciaProfissional,
+                    dataInicioExperienciaProfissional: experience.dataInicioExperienciaProfissional,
+                    dataFinalExperienciaProfissional: experience.dataFinalExperienciaProfissional,
                     codProfissao: experience.codProfissao,
                     codCurriculo: null
-                }
-                arr.push(expObj)
-            }
-            this.setState({experiencias: arr})
+                };
+                arr.push(expObj);
+            };
+            this.setState({experiencias: arr, experiencesSet: true});
         }
-    }
+    };
 
     callbackFunctionE4 = (childData) => {
-        let arr = []
+        let arr = [];
         for (const adicional of childData) {
-            arr.push(adicional.cod)
+            arr.push(adicional.cod);
         }
-        this.setState({adicionais: [...arr, ...this.state.adicionais]})
+        this.setState({adicionais: arr});
     }
 
     callbackFunctionE5 = (childData) => {
-        let arr = []
+        let arr = [];
         for (const cargo of childData) {
-            arr.push(cargo.cod)
+            arr.push(cargo.cod);
         }
-        this.setState({cargos: arr})
-    }
+        this.setState({cargos: arr});
+    };
 
     handleSubmit = async () => {
         try {
-            if (this.state.adicionais.length > 4 || thi.state.cargos.length > 2) {
+            if (this.state.adicionais.length > 2 || this.state.adicionaisSelect.length === 2 || this.state.cargos.length > 2) {
                 const authData = await authService.getData()
                 const curriculoObj = { descricaoCurriculo: this.state.descricaoCurriculo, codCandidato: authData.codCandidato }
                 const curriculoRes = await curriculoService.setCurriculo(curriculoObj)
                 const codCurriculo = curriculoRes.data;
-                for (const adicional of this.state.adicionais) {
-                    let adicionalObj = {
-                        codCurriculo: codCurriculo,
-                        codAdicional: adicional
-                    }
-                    await curriculoService.setAdicionalCurriculo(adicionalObj)
-                }
-                for (const cargo of this.state.cargos) {
-                    let cargoObj = {
-                        codCurriculo: codCurriculo,
-                        codCategoria: cargo
-                    }
-                    await curriculoService.setCargoCurriculo(cargoObj)
-                }
+                const adicionalObj = { codCurriculo: codCurriculo, adicionais: [...this.state.adicionais, ...this.state.adicionaisSelect] }
+                const cargoObj = { codCurriculo: codCurriculo, cargos: this.state.cargos }
+                await curriculoService.setAdicionalCurriculoList(adicionalObj)
+                await curriculoService.setCargoCurriculoList(cargoObj)
                 if(this.state.experiencesSet != false){
+                    console.log("Here")
                     for (const exp of this.state.experiencias) {
                         const expValidated = await experienciaValidation.validate(exp);
                         let expObj = {
@@ -98,17 +94,19 @@ class CadastroCurriculo extends Component{
                             isEmpregoAtualExperienciaProfissional: expValidated.isEmpregoAtualExperienciaProfissional.value,
                             dataInicioExperienciaProfissional: expValidated.dataInicioExperienciaProfissional.value,
                             dataFinalExperienciaProfissional: expValidated.dataFinalExperienciaProfissional.value,
-                            codProfissao: exp.codProfissao,
+                            codProfissao: expValidated.codProfissao.value,
                             codCurriculo: codCurriculo
                         }
-                        console.log(expObj)
                         if (expValidated.isValid) {
-                            await experienciaProfissionalService.setExperienciaProfissional(expObj)
+                             await experienciaProfissionalService.setExperienciaProfissional(expObj)
+                        }else{
+                            Alert.alert('Seu formulario contem erros')
                         }
                     }
                 }
-                Alert.alert('Curriculo cadastrado com sucesso'[{ text: "OK", onPress: () => this.props.navigation.navigate('Vagas')}]);
                 authService.updateCurriculo(codCurriculo)
+                Alert.alert('Curriculo cadastrado com sucesso');
+                this.props.navigation.navigate('Curriculo')
             }
         } catch (error) {
             console.log(error)
@@ -119,13 +117,16 @@ class CadastroCurriculo extends Component{
     currentPage(){
         if (this.state.page === 0) {
             return (
-                <Etapa1 
+                <Etapa1
+                descricaoCurriculo={this.state.descricaoCurriculo} 
                 parentCallback={this.callbackFunctionE1}/>
             );
         };
         if (this.state.page === 1) {
             return (
                 <Etapa2
+                school={this.state.schoolName}
+                literate={this.state.literateName}
                 parentCallback={this.callbackFunctionE2}/>
             );
         };
@@ -138,17 +139,18 @@ class CadastroCurriculo extends Component{
         if (this.state.page === 3) {
             return (
                 <Etapa4
+                adicionais={this.state.adicionais}
                 parentCallback={this.callbackFunctionE4}/>
             );
         };
         if (this.state.page === 4) {
             return (
                 <Etapa5
+                categorias={this.state.cargos}
                 parentCallback={this.callbackFunctionE5}/>
             );
         };
     }
-
 
     render(){
         return(
@@ -173,7 +175,6 @@ class CadastroCurriculo extends Component{
                                     </TouchableOpacity>
                                 }
                             </View>
-                        
                         </ScrollView>
                     <Help/>
                 </SafeAreaView>

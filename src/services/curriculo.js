@@ -19,8 +19,15 @@ const curriculoService = {
 
     async setCargoCurriculo(data){
         return await axios.post(`${url}/${prefix}/cargo`, data)
-    }
+    },
 
+    async setAdicionalCurriculoList(data){
+        return await axios.post(`${url}/${prefix}/adicionais`, data)
+    },
+
+    async setCargoCurriculoList(data){
+        return await axios.post(`${url}/${prefix}/cargos`, data)
+    }
 };
 
 export default curriculoService;

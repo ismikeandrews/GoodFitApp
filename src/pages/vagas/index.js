@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, ScrollView, Text, TouchableOpacity} from 'react-native';
-
-import { authService, vagaService,  } from '../../services';
+import { authService, vagaService } from '../../services';
 import { Vaga } from './component';
 import { Variables, Menu, Help } from '../../shared';
 import styles from './styles';
@@ -11,20 +10,29 @@ class Vagas extends Component{
 
     state = {
         isCurriculoSet: false,
-        vagas: []
+        vagas: [],
+        teste: ''
     };
 
     componentDidMount(){
-        this.fetchAuthData();
-    }
+        this.props.navigation.addListener('focus', () => {
+            this.fetchAuthData();
+        })
+    };
 
     async fetchAuthData(){
-        const authData = await authService.getData();
-        const vagaRes = await vagaService.match(authData.codCandidato, authData.curriculo.codCurriculo)
-        console.log(authData)
-        console.log(vagaRes.data)
-        this.setState({isCurriculoSet: authData.curriculo.isSet, vagas: vagaRes.data})
-    }
+        try {
+            const authData = await authService.getData();
+            if (authData.curriculo.isSet) {
+                const vagaRes = await vagaService.match(authData.codCandidato, authData.curriculo.codCurriculo);
+                this.setState({isCurriculoSet: authData.curriculo.isSet, vagas: vagaRes.data});
+            }else{
+                this.setState({isCurriculoSet: authData.curriculo.isSet});
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     render(){
         return(
@@ -39,7 +47,7 @@ class Vagas extends Component{
                     onPress={() => console.log('click')}>
                     <Text style={[ Variables.btnText, styles.btnText ]}>Ative as notificações</Text>
                 </TouchableOpacity> */}
-                    {/* {this.state.isCurriculoSet === false ?
+                    {this.state.isCurriculoSet === false ?
                         <SafeAreaView>
                             <View style={ styles.contentEmpty }>
                                 <CurriculoSvg style={ styles.icon } />
@@ -55,23 +63,14 @@ class Vagas extends Component{
                         <SafeAreaView style={ styles.slider } >
                             <ScrollView style={ styles.scrollView } horizontal>
                                 <Vaga style={ styles.first } ></Vaga>
-                                <Vaga></Vaga>
-                                <Vaga></Vaga>
                             </ScrollView>
                         </SafeAreaView>
-                    } */}
-                    <SafeAreaView style={ styles.slider } >
-                        <ScrollView style={ styles.scrollView } horizontal>
-                            <Vaga style={ styles.first } ></Vaga>
-                            <Vaga></Vaga>
-                            <Vaga></Vaga>
-                        </ScrollView>
-                    </SafeAreaView>
+                    }
                 </View>
                 <Help/>
             </View> 
-        )
-    }
+        );
+    };
 }
 
 export { Vagas };

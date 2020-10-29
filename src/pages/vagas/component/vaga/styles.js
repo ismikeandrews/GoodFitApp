@@ -15,6 +15,7 @@ export default StyleSheet.create({
     logoImg: {
         height: 270,
         width: '100%',
+        right: 6
     },
     buttons: {
         alignItems: 'center',

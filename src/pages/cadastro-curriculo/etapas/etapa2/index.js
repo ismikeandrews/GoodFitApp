@@ -7,8 +7,8 @@ import styles from './styles';
 export default Etapa2 = (props) => {
     const [active1, setActive1] = useState(false);
     const [active2, setActive2] = useState(false);
-    const [school, setSchool] = useState('');
-    const [literate, setLiterate] = useState('');
+    const [school, setSchool] = useState(props.school);
+    const [literate, setLiterate] = useState(props.literate);
     const [adicionais, setAdicionais] = useState([]);
     const [shoolLevels, setSchoolLevels] = useState([]);
     const [literateLevels, setLiterateLevels] = useState([]);
@@ -35,15 +35,14 @@ export default Etapa2 = (props) => {
         if (arr.length > 0) {
             for (const element of arr) {
                 if (!element.tipo || element.tipo != "school") {
-                    arr.length < 2 && arr.push({tipo: "school", codAdicional: codAdicional});
+                    arr.length < 2 && arr.push({tipo: "school", codAdicional: codAdicional,  nome: nomeAdicional});
                 }else{
                     element.codAdicional = codAdicional;
                 }
             };
         }else{
-            arr.length < 2 && arr.push({tipo: "school", codAdicional: codAdicional});
+            arr.length < 2 && arr.push({tipo: "school", codAdicional: codAdicional, nome: nomeAdicional});
         }
-
         setActive1(false);
         setSchool(nomeAdicional);
         setAdicionais(arr);
@@ -55,13 +54,13 @@ export default Etapa2 = (props) => {
         if (arr.length > 0) {
             for (const element of arr) {
                 if (!element.tipo || element.tipo != "literate") {
-                    arr.length < 2 && arr.push({tipo: "literate", codAdicional: codAdicional});
+                    arr.length < 2 && arr.push({tipo: "literate", codAdicional: codAdicional, nome: nomeAdicional});
                 }else{
                     element.codAdicional = codAdicional;
                 }
             };
         }else{
-            arr.length < 2 && arr.push({tipo: "literate", codAdicional: codAdicional});
+            arr.length < 2 && arr.push({tipo: "literate", codAdicional: codAdicional,  nome: nomeAdicional});
         }
 
         setActive2(false);
