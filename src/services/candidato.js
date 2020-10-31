@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { authService } from './'
 import url from './enviroment';
 const prefix = 'candidato';
 
@@ -14,7 +14,8 @@ const candidatoService = {
     },
 
     async getCandidatoById(codCandidato){
-        return await axios.get(`${url}/${prefix}/${codCandidato}`);
+        const { token } = await authService.getData()
+        return await axios.get(`${url}/${prefix}/${codCandidato}?token=${token}`);
     }
 }
 

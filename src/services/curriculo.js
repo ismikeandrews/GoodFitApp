@@ -1,5 +1,6 @@
 import axios from 'axios';
 import url from './enviroment';
+import { authService } from './'
 
 const prefix = 'curriculo';
 
@@ -27,21 +28,21 @@ const curriculoService = {
 
     async setCargoCurriculoList(data){
         return await axios.post(`${url}/${prefix}/cargos`, data)
+    },
+
+    async getAdicionaisByCurriculo(codCurriculo){
+        return await axios.get(`${url}/${prefix}/${codCurriculo}/adicional`)
+    },
+
+    async getCargosByCurriculo(codCurriculo){
+        return await axios.get(`${url}/${prefix}/${codCurriculo}/cargo`)
+    },
+
+    async setExperiences(expData){
+        const { token } = await authService.getData()
+        const { data } = await axios.post(`${url}/${prefix}/experiencia-profissional?token=${token}`, expData)
+        return data
     }
 };
 
 export default curriculoService;
-
-// $router->get('/adicional/{codAdicionalCurriculo}', 'AdicionalCurriculoController@show');
-// $router->post('/adicional', 'AdicionalCurriculoController@store');
-// $router->post('/adicionais', 'AdicionalCurriculoController@criaAdicionais');
-// $router->put('{codCurriculo}/adicionais/', 'AdicionalCurriculoController@editaAdicionais');
-// $router->delete('/adicional/{codAdicionalCurriculo}', 'AdicionalCurriculoController@destroy');
-// $router->get('/{codCurriculo}/adicional', 'AdicionalController@getEmCurriculo');
-
-// $router->get('{codCurriculo}/cargo', 'CategoriaController@getPorCurriculo');
-// $router->get('/cargo/{codCargoCurriculo}', 'CargoCurriculoController@show');
-// $router->post('/cargo', 'CargoCurriculoController@store');
-// $router->post('/cargos', 'CargoCurriculoController@adicionaCargos');
-// $router->put('{codCurriculo}/cargos/', 'CargoCurriculoController@editaCargos');
-// $router->delete('/cargo/{codCargoCurriculo}', 'CargoCurriculoController@destroy');

@@ -1,10 +1,36 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
 import { IconBox } from '../../../../shared';
 import styles from './styles';
-import { VagasCheckSvg } from '../../../../assets'
-
+import { VagasCheckSvg, ClockSvg } from '../../../../assets'
+import { adicionalService, vagaService } from '../../../../services'
 class Vaga extends Component{
+
+    state = {
+        requisitos: []
+    }
+
+    componentDidMount(){
+        this.fetchData()
+    }
+
+    fetchData = async () => {
+        let arr = []
+        const banDic = [13, 14, 15, 16, 17, 18, 19, 20, 21]
+        try {
+            const { data } = await vagaService.getRequisitosByCodVaga(this.props.properties.codVaga)
+            for (const element of data) {
+                const index = banDic.indexOf(element.codAdicional)
+                const adicionaRes = await adicionalService.getAdicionalById(element.codAdicional)
+                index < 0 && arr.push(adicionaRes.data)
+            }
+            this.setState({requisitos: arr})
+        } catch (error) {   
+            console.log(error)
+            Alert.alert("Ocorreu um erro, tente novamente mais tarde")
+        }
+    }
+
     render(){
         return(
             <SafeAreaView style={ styles.container }>
@@ -16,34 +42,34 @@ class Vaga extends Component{
                     <View style={ styles.content }>
                         <View style={ styles.buttons }>
                             <TouchableOpacity style={ styles.btn }
-                            onPress={() => console.log('clicked')}>
+                            onPress={() => this.props.parentCallback(this.props.properties.codVaga)}>
                                 <VagasCheckSvg style={[ styles.icon, styles.iconX ]}/>
-                                {/* <Image style={[ styles.icon, styles.iconX ]} source={require('../../../../assets/images/ijc.png')} /> */}
                             </TouchableOpacity>
                         </View>
 
-                        <Text style={[ styles.text, styles.cargo ]}>Assistente</Text>
+                        <Text style={[ styles.text, styles.cargo ]}>{this.props.properties.nomeProfissao}</Text>
 
                         <View style={ styles.item }>
                             <Image style={ styles.icon } source={require('../../../../assets/images/icons/empresa.png')} />
-                            <Text style={[ styles.text, styles.nome ]}>Instituto Jô Clemente</Text>
+                            <Text style={[ styles.text, styles.nome ]}>{this.props.properties.nomeFantasiaEmpresa}</Text>
                         </View>
                         
                         <View style={ styles.item }>
                             <Image style={ styles.icon } source={require('../../../../assets/images/icons/local.png')} />
-                            <Text style={[ styles.text, styles.endereco ]}>Avenida Lins de Vasconcelos, 1222</Text>
+                            <Text style={[ styles.text, styles.endereco ]}>{this.props.properties.logradouroEndereco}</Text>
                         </View>
 
                         <View style={ styles.item }>
-                            <Image style={ styles.icon } source={require('../../../../assets/images/ijc.png')} />
+                            <ClockSvg color="#9d1d64" style={ styles.icon }/>
                             <Text style={[ styles.text, styles.horario ]}>Tempo integral</Text>
                         </View>
 
                         <Text style={[ styles.text, styles.title ]}>Requisitos</Text>
                         <View style={ styles.requisitos }>
                             <View style={ styles.list }>
-                                <IconBox name='Comunicação' tipo="habilidade" img='comunicativo'></IconBox>
-                                <IconBox name='Organização' tipo="habilidade" img='organizacao'></IconBox>
+                                {this.state.requisitos.map(requisito => (
+                                    <IconBox name={requisito.nomeAdicional} tipo="habilidade" img={requisito.imagemAdicional}></IconBox>
+                                ))}
                             </View>
                         </View>
 

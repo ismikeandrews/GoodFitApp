@@ -33,7 +33,6 @@ class Cadastro extends Component{
     };
 
     callbackFunctionE1 = (childData) => {
-        console.log(childData)
         this.setState({
             email: childData.email,
             dataNascimentoCandidato: JSON.parse(childData.dateObj), 

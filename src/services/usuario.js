@@ -28,7 +28,8 @@ const usuarioService = {
         },
         
         async getUsuarioById(id){
-                return await axios.get(`${url}/${prefix}/${id}`)
+                const { data } = await axios.get(`${url}/${prefix}/${id}`)
+                return data
         },
 
         async createUsuario(data){

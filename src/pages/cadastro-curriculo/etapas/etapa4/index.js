@@ -13,7 +13,6 @@ class Etapa4 extends React.Component {
     }
 
     componentDidMount(){
-        console.log(this.props.adicionais)
         this.fetchData()
     }
 

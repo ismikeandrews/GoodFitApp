@@ -10,7 +10,8 @@ const enderecoService = {
     },
 
     async getEnderecoById(codEndereco){
-        return await axios.get(`${url}/${prefix}/${codEndereco}`)
+        const { data } = await axios.get(`${url}/${prefix}/${codEndereco}`)
+        return data
     }
     
 };

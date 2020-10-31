@@ -10,3 +10,5 @@ export { default as profissaoService } from './profissao';
 export { default as vagaService } from './vaga';
 export { default as categoriaService } from './categoria';
 export { default as experienciaProfissionalService } from './experienciaProfissional';
+export { default as candidaturaService } from './candidatura';
+export { default as empresaService } from './empresa';

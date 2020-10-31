@@ -17,8 +17,32 @@ class Etapa3 extends Component {
         professions: []
     };
 
-    componentDidMount(){
-        this.fetchData()
+    componentDidMount = async () => {
+        await this.fetchData()
+        if (this.props.isSet && this.props.experiences.length > 0) {
+            let arr = [];
+            for (const element of this.props.experiences) {
+                arr.push({
+                    tabs: true,
+                    isOpen: false,
+                    empresaExperienciaProfissional: element.empresaExperienciaProfissional,
+                    descricaoExperienciaProfissional: element.descricaoExperienciaProfissional,
+                    isEmpregoAtualExperienciaProfissional: element.isEmpregoAtualExperienciaProfissional,
+                    nomeProfissao: '',
+                    codProfissao: element.codProfissao,
+                    togglePicker: false,
+                    toggleCalendar1: false,
+                    toggleCalendar2: false,
+                    initDateDisplay: element.dataInicioExperienciaProfissional,
+                    finishDateDisplay: element.dataFinalExperienciaProfissional,
+                    dataInicioExperienciaProfissional: element.dataInicioExperienciaProfissional,
+                    dataFinalExperienciaProfissional: element.dataFinalExperienciaProfissional
+                })
+            }
+            this.setState({experiences: arr, yesSelected: true, noSelected: false})
+        }else{
+            this.setState({noSelected: true, yesSelected: false})
+        }
     };
 
     sendDataToParent = () => {
@@ -32,7 +56,7 @@ class Etapa3 extends Component {
             isOpen: false,
             empresaExperienciaProfissional: '',
             descricaoExperienciaProfissional: '',
-            isEmpregoAtualExperienciaProfissional: false,
+            isEmpregoAtualExperienciaProfissional: true,
             nomeProfissao: '',
             codProfissao: null,
             togglePicker: false,
@@ -229,10 +253,12 @@ class Etapa3 extends Component {
                                                         <Text style={ styles.accordionTitle }>Experiência</Text>
                                                     </View>
                                                 </TouchableOpacity>
-                                                <TouchableOpacity style={ styles.delete }
-                                                onPress={() => this.removeExperience(index)}>
-                                                    <DeleteSvg style={ styles.deleteIcon } color="#e64783"/>
-                                                </TouchableOpacity>
+                                                {index > 0 && (
+                                                    <TouchableOpacity style={ styles.delete }
+                                                    onPress={() => this.removeExperience(index)}>
+                                                        <DeleteSvg style={ styles.deleteIcon } color="#e64783"/>
+                                                    </TouchableOpacity>
+                                                )}
                                             </View>
                                             <View style={[ experience.isOpen === false ? styles.xp : styles.xpActive ]}>
                                                 <View style={ styles.form }>

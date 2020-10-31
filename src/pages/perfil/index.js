@@ -27,20 +27,30 @@ export default Perfil = (props) => {
     const fetchData = async () => {
         const session = await authService.getData();
         try {
-            const usuario = await usuarioService.getUsuarioById(session.codUsuario);
+            const { email } = await usuarioService.getUsuarioById(session.codUsuario);
             const candidato = await candidatoService.getCandidatoById(session.codCandidato);
-            const endereco = await enderecoService.getEnderecoById(session.codEndereco);
+            const { 
+                cepEndereco, 
+                logradouroEndereco, 
+                cidadeEndereco, 
+                bairroEndereco, 
+                estadoEndereco, 
+                zonaEndereco, 
+                numeroEndereco, 
+                complementoEndereco
+            } = await enderecoService.getEnderecoById(session.codEndereco);
+
             setName(candidato.data.nomeCandidato);
-            setEmail(usuario.data.email);
+            setEmail(email);
             setBirthDay(moment.unix(candidato.data.dataNascimentoCandidato).format('DD/MM/YYYY'));
-            setPostalcode(endereco.data.cepEndereco);
-            setAddress(endereco.data.logradouroEndereco);
-            setCity(endereco.data.cidadeEndereco);
-            setNeighbor(endereco.data.bairroEndereco);
-            setState(endereco.data.estadoEndereco);
-            setZone(endereco.data.zonaEndereco);
-            setNumber(endereco.data.numeroEndereco);
-            setComplement(endereco.data.complementoEndereco);
+            setPostalcode(cepEndereco);
+            setAddress(logradouroEndereco);
+            setCity(cidadeEndereco);
+            setNeighbor(bairroEndereco);
+            setState(estadoEndereco);
+            setZone(zonaEndereco);
+            setNumber(numeroEndereco);
+            setComplement(complementoEndereco);
         } catch (error) {
             console.log(error);
         };

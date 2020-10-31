@@ -75,38 +75,50 @@ class CadastroCurriculo extends Component{
 
     handleSubmit = async () => {
         try {
+            const authData = await authService.getData()
             if (this.state.adicionais.length > 2 || this.state.adicionaisSelect.length === 2 || this.state.cargos.length > 2) {
-                const authData = await authService.getData()
-                const curriculoObj = { descricaoCurriculo: this.state.descricaoCurriculo, codCandidato: authData.codCandidato }
-                const curriculoRes = await curriculoService.setCurriculo(curriculoObj)
-                const codCurriculo = curriculoRes.data;
-                const adicionalObj = { codCurriculo: codCurriculo, adicionais: [...this.state.adicionais, ...this.state.adicionaisSelect] }
-                const cargoObj = { codCurriculo: codCurriculo, cargos: this.state.cargos }
-                await curriculoService.setAdicionalCurriculoList(adicionalObj)
-                await curriculoService.setCargoCurriculoList(cargoObj)
+                let isValid = true
+                let sendExp = {experiencias: []}
                 if(this.state.experiencesSet != false){
-                    console.log("Here")
                     for (const exp of this.state.experiencias) {
                         const expValidated = await experienciaValidation.validate(exp);
-                        let expObj = {
-                            empresaExperienciaProfissional: expValidated.empresaExperienciaProfissional.value,
-                            descricaoExperienciaProfissional: expValidated.descricaoExperienciaProfissional.value,
-                            isEmpregoAtualExperienciaProfissional: expValidated.isEmpregoAtualExperienciaProfissional.value,
-                            dataInicioExperienciaProfissional: expValidated.dataInicioExperienciaProfissional.value,
-                            dataFinalExperienciaProfissional: expValidated.dataFinalExperienciaProfissional.value,
-                            codProfissao: expValidated.codProfissao.value,
-                            codCurriculo: codCurriculo
-                        }
                         if (expValidated.isValid) {
-                             await experienciaProfissionalService.setExperienciaProfissional(expObj)
+                            sendExp.experiencias.push({
+                                empresaExperienciaProfissional: expValidated.empresaExperienciaProfissional.value,
+                                descricaoExperienciaProfissional: expValidated.descricaoExperienciaProfissional.value,
+                                isEmpregoAtualExperienciaProfissional: expValidated.isEmpregoAtualExperienciaProfissional.value,
+                                dataInicioExperienciaProfissional: expValidated.dataInicioExperienciaProfissional.value,
+                                dataFinalExperienciaProfissional: expValidated.dataFinalExperienciaProfissional.value,
+                                videoExperienciaProfissional: "",
+                                codProfissao: expValidated.codProfissao.value,
+                                codCurriculo: null
+                            })
                         }else{
-                            Alert.alert('Seu formulario contem erros')
+                            isValid = false
                         }
                     }
                 }
-                authService.updateCurriculo(codCurriculo)
-                Alert.alert('Curriculo cadastrado com sucesso');
-                this.props.navigation.navigate('Curriculo')
+                if (isValid) {
+                    const curriculoObj = { descricaoCurriculo: this.state.descricaoCurriculo, codCandidato: authData.codCandidato }
+                    const { data } = await curriculoService.setCurriculo(curriculoObj)
+                    for(const element of sendExp.experiencias){
+                        element.codCurriculo = data
+                    }
+                    this.state.experiencesSet != false && await curriculoService.setExperiences(sendExp)
+                    // creating adicional obj cargo obj and setting both
+                    const adicionalObj = { codCurriculo: data, adicionais: [...this.state.adicionais, ...this.state.adicionaisSelect] }
+                    const cargoObj = { codCurriculo: data, cargos: this.state.cargos }
+                    await curriculoService.setAdicionalCurriculoList(adicionalObj)
+                    await curriculoService.setCargoCurriculoList(cargoObj)
+                    //updating authService and navigating to curriculo
+                    authService.updateCurriculo(data)
+                    Alert.alert('Curriculo cadastrado com sucesso');
+                    this.props.navigation.navigate('Curriculo')   
+                }else{
+                    Alert.alert('Seu formulario contem erros')
+                }
+            }else{
+                Alert.alert('O formulario contem erros');    
             }
         } catch (error) {
             console.log(error)
@@ -133,6 +145,8 @@ class CadastroCurriculo extends Component{
         if (this.state.page === 2) {
             return (
                 <Etapa3
+                isSet={this.state.experiencesSet}
+                experiences={this.state.experiencias}
                 parentCallback={this.callbackFunctionE3}/>
             );
         };

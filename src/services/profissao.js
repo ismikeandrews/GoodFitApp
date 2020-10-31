@@ -10,7 +10,8 @@ const profissaoService = {
     },
 
     async getProfissaoByProfissaoId(codProfissao) {
-        return axios.get(`${url}/${prefix}/${codProfissao}`);
+        const { data } = await axios.get(`${url}/${prefix}/${codProfissao}`);
+        return data
     },
 
     async setProfissao(data) {

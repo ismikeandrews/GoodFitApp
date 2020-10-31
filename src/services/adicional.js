@@ -9,7 +9,7 @@ const adicionalService = {
         return axios.get(`${url}/${prefix}/`);
     },
 
-    async getProfissaoByProfissaoId(codAdicional) {
+    async getAdicionalById(codAdicional) {
         return axios.get(`${url}/${prefix}/${codAdicional}`);
     },
 
@@ -30,26 +30,3 @@ const adicionalService = {
 export default adicionalService;
 
 
-// import axios from 'axios';
-// import url from './enviroment';
-
-// const prefix = 'adicional';
-
-// const adicionalService = {
-//     async getAdicionalList(){
-//         return await axios.get(`${url}/${prefix}/`)
-//     }
-// }
-
-// export default adicionalService;
-
-
-// $router->group(['prefix' => 'adicional'], function () use ($router) {
-//     $router->get('/', 'AdicionalController@index');
-//     $router->get('/{codAdicional}', 'AdicionalController@show');
-//     $router->get('/tipo/{codTipoAdicional}', 'AdicionalController@getPorTipo');
-//     $router->get('/tipo/nome/{nomeTipoAdicional}', 'AdicionalController@getPorNomeTipo');
-//     $router->post('/', 'AdicionalController@store');
-//     $router->put('/{codAdicional}', 'AdicionalController@update');
-//     $router->delete('/{codAdicional}', 'AdicionalController@destroy');
-// });

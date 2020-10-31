@@ -1,16 +1,41 @@
 import React, { Component } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native'
-
+import { candidaturaService, authService, vagaService, empresaService, profissaoService } from '../../services'
 import { Variables, Help, Menu } from '../../shared'
 import { CandidaturaTodosSvg, CandidaturaAprovadoSvg, CandidaturaAndamentoSvg, CandidaturaFinalizadoSvg } from '../../assets'
 import styles from './styles'
 
 class Processos extends Component{
+
+    state = {
+        candidaturas: []
+    }
+
+    componentDidMount(){
+        this.fetchData()
+    }
+
+    fetchData = async () => {
+        try {
+            let arr = []
+            const { codCandidato } = await authService.getData()
+            const candidaturaList = await candidaturaService.getCandidaturasByCodCandidato(codCandidato)
+            for (const element of candidaturaList) {
+                const { codEmpresa, codProfissao } = await vagaService.getVaga(element.codVaga)
+                const { nomeFantasiaEmpresa } = await empresaService.getEmpresa(codEmpresa)
+                const { nomeProfissao } = await profissaoService.getProfissaoByProfissaoId(codProfissao)
+                element.nomeFantasiaEmpresa = nomeFantasiaEmpresa
+                element.nomeProfissao = nomeProfissao
+                arr.push(element)
+            }
+            this.setState({candidaturas: arr})
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     render(){
         return(
-            // <View>
-            
-            // </View>
             <View style={ styles.container }>
                 <Menu {...this.props}/>
                 <View style={ styles.content }>
@@ -41,20 +66,22 @@ class Processos extends Component{
                     <SafeAreaView style={ styles.contentVagas }>
                         <ScrollView style={ styles.scrollView }>
                             <View style={ styles.vagas }>
-                                <TouchableOpacity style={ styles.vagaItem }
-                                onPress={() => this.props.navigation.navigate('ProcessosVaga')}>
-                                    <Image style={ styles.logo } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
-                                    
-                                    <View style={ styles.desc }>
-                                        <Text style={ styles.cargo }>Colégio Evoluir</Text>
-                                        <Text style={ styles.nome }>Professor</Text>
+                                {this.state.candidaturas.map(candidatura => (
+                                    <TouchableOpacity key={candidatura.codCandidatura} style={ styles.vagaItem }
+                                    onPress={() => this.props.navigation.navigate('ProcessosVaga',{ codCandidatura: candidatura.codCandidatura })}>
+                                        <Image style={ styles.logo } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
                                         
-                                        <View style={ styles.statusBox }>
-                                            <Text style={[ styles.dot, styles.dotAndamento ]}>●</Text>
-                                            <Text style={ styles.status }>Em análise...</Text>
+                                        <View style={ styles.desc }>
+                                            <Text style={ styles.cargo }>{candidatura.nomeFantasiaEmpresa}</Text>
+                                            <Text style={ styles.nome }>{candidatura.nomeProfissao}</Text>
+                                            
+                                            <View style={ styles.statusBox }>
+                                                <Text style={[ styles.dot, styles.dotAndamento ]}>●</Text>
+                                                <Text style={ styles.status }>Em análise...</Text>
+                                            </View>
                                         </View>
-                                    </View>
-                                </TouchableOpacity>
+                                    </TouchableOpacity>
+                                ))}
                                 {/* 
                                 <TouchableOpacity style={ styles.vagaItem }
                                 onPress={() => this.props.navigation.push('ProcessosVaga')}>
