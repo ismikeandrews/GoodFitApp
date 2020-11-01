@@ -95,24 +95,13 @@ export default StyleSheet.create({
         flexDirection: 'row',
         marginTop: 5,
     },
-    dot: {
-        fontSize: 20,
-        marginRight: 5,
-        marginTop: -5,
-    },
-    dotAprovado: {
-        color: '#63DE9A',
-    },
-    dotAndamento: {
-        color: '#f7d07a',
-    },
-    dotReprovado: {
-        color: '#F06A47',
-    },
     status: {
         color: '#A2A2A2',
         fontSize: 14,
         fontWeight: '700',
+    },
+    statusIcon: {
+        marginRight: 5,
     },
     vagaEmpty: {
         alignItems: 'center',
@@ -121,12 +110,12 @@ export default StyleSheet.create({
         paddingVertical: 70,
     },
     message: {
-        color: color.dark_red,
+        color: color.orange,
         marginVertical: 20,
         paddingHorizontal: 15,
     },
     btn: {
-        backgroundColor: color.dark_red,
+        backgroundColor: color.orange,
         marginVertical: 10,
         paddingHorizontal: 17,
     },

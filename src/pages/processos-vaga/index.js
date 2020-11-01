@@ -74,7 +74,7 @@ class ProcessosVaga extends Component{
                     </View>
 
                     <View style={ styles.item }>
-                        <ClockSvg style={ styles.icon } color="red"/>
+                        <ClockSvg style={ styles.icon } color="#9d1d64"/>
                         <Text style={[ styles.text, styles.horario ]}>Tempo integral</Text>
                     </View>
 

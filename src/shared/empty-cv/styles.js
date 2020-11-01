@@ -2,23 +2,12 @@ import { StyleSheet } from 'react-native';
 import color from '../../shared/variables/colors';
 
 export default StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingBottom: 20,
-        paddingHorizontal: 0,
-    },
     content: {
         alignItems: 'center',
-        flex: 1,
-        flexDirection: 'column',
         justifyContent: 'center',
     },
     icon: {
         marginBottom: 20,
-    },
-    contentEmpty: {
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     text: {
         color: color.dark_red,
@@ -35,11 +24,5 @@ export default StyleSheet.create({
         color: color.white,
         fontWeight: '700',
         textTransform: 'uppercase',
-    },
-    scrollView: {
-        marginLeft: -25,
-    },
-    empty: {
-        paddingHorizontal: 90
     },
 });

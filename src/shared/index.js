@@ -7,3 +7,4 @@ export { DescriptionBox } from "./description-box";
 export { Formacao } from "./formacao";
 export { default as Checkbox } from "./checkbox";
 export { IconBox } from "./icon-box";
+export { default as EmptyCv } from "./empty-cv";

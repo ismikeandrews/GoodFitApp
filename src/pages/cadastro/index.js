@@ -153,6 +153,7 @@ class Cadastro extends Component{
                 dataNascimentoCandidato: validatedCandidatoObj.dataNascimentoCandidato.value,
                 codUsuario: codUsuario
             }
+            console.log(candidatoData)
             const { data } = await candidatoService.createCandidato(candidatoData);
             if(data){
                 Alert.alert('usuario cadastrados com sucesso')

@@ -7,7 +7,7 @@ export default StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        marginHorizontal: 30,
+        marginHorizontal: 10,
     },
     logo: {
         alignItems: 'center',
@@ -15,7 +15,6 @@ export default StyleSheet.create({
     logoImg: {
         height: 270,
         width: '100%',
-        right: 6
     },
     buttons: {
         alignItems: 'center',
@@ -30,7 +29,7 @@ export default StyleSheet.create({
         borderWidth: 1,
         elevation: 7,
         marginBottom: 20,
-        marginTop: -70,
+        marginTop: -60,
         paddingVertical: 10,
         shadowColor: "#000",
         shadowOffset: { width: 3, height: 3, },
@@ -41,8 +40,9 @@ export default StyleSheet.create({
     },
     content: {
         backgroundColor: '#fff',
-        borderRadius: 50,
-        marginTop: -10,
+        borderRadius: 30,
+        marginTop: -20,
+        marginLeft: 20,
         paddingVertical: 40,
     },
     text: {
@@ -88,5 +88,12 @@ export default StyleSheet.create({
     },
     iconX: {
         marginLeft: 10,
+    },
+    reqItem: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        maxWidth: 370,
     },
 })

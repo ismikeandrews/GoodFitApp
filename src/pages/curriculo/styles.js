@@ -69,4 +69,58 @@ export default StyleSheet.create({
         color: color.white,
         textAlign: 'center',
     },
+    emptycv: {
+        alignItems: 'center',
+        height: '85%',
+        justifyContent: 'center',
+    },
+
+
+
+
+
+
+
+    description: {
+        marginTop: 10
+    },
+    tabs: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        borderBottomWidth: 1,
+        borderColor: color.gray,
+        marginBottom: 30,
+    },
+    tabsItem: {
+        alignItems: 'center',
+        marginBottom: 10,
+        marginTop: 20,
+    },
+    tabsImg: {
+        height: 30,
+        padding: 10,
+        width: 35,
+    },
+    bar: {
+        backgroundColor: color.gray,
+        height: 45,
+        marginTop: 15,
+        width: 1,
+    },
+    desc: {
+        marginBottom: 30
+    },
+    boxContainer: {
+        backgroundColor: '#fff',
+        borderColor: 'gray',
+        borderWidth: 1,
+        paddingHorizontal: 15,
+        paddingVertical: 20,
+        height: 170,
+    },
+    box: {
+        color: color.gray,
+        justifyContent: 'flex-start',
+    },
 })

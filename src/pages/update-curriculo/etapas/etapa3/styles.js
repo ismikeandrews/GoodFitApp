@@ -48,7 +48,10 @@ export default StyleSheet.create({
     header: {
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'flex-start'
+    },
+    delete: {
+        marginLeft: 15,
     },
     deleteIcon: {
         height: 70,
@@ -57,14 +60,15 @@ export default StyleSheet.create({
     },
     accordiontIcon: {
         paddingRight: 30,
-        width: '15%',
+        width: '10%',
     },
     accordionTitle: {
         color: color.dark_red,
         fontSize: 20,
+        paddingLeft: 10,
         paddingVertical: 10,
         textAlign: 'left',
-        width: '80%',
+        width: '90%',
     },
     newAccordion: {
         flexDirection: 'row',

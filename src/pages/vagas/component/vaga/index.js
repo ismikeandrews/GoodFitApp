@@ -67,9 +67,11 @@ class Vaga extends Component{
                         <Text style={[ styles.text, styles.title ]}>Requisitos</Text>
                         <View style={ styles.requisitos }>
                             <View style={ styles.list }>
-                                {this.state.requisitos.map(requisito => (
-                                    <IconBox name={requisito.nomeAdicional} tipo="habilidade" img={requisito.imagemAdicional}></IconBox>
-                                ))}
+                                <View style={ styles.reqItem }>
+                                    {this.state.requisitos.map(requisito => (
+                                        <IconBox name={requisito.nomeAdicional} tipo="habilidade" img={requisito.imagemAdicional}></IconBox>
+                                    ))}
+                                </View>
                             </View>
                         </View>
 

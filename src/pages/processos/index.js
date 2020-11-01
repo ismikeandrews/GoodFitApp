@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native'
 import { candidaturaService, authService, vagaService, empresaService, profissaoService } from '../../services'
-import { Variables, Help, Menu } from '../../shared'
+import { Variables, Help, Menu, EmptyCv } from '../../shared'
 import { CandidaturaTodosSvg, CandidaturaAprovadoSvg, CandidaturaAndamentoSvg, CandidaturaFinalizadoSvg, CurriculoSvg, MenuVagasSvg } from '../../assets'
 import styles from './styles'
 
@@ -51,8 +51,10 @@ export default Processos = (props) => {
                                   <Text style={ styles.nome }>{candidatura.nomeProfissao}</Text>
                                   
                                   <View style={ styles.statusBox }>
-                                      <Text style={[ styles.dot, styles.dotAndamento ]}>●</Text>
-                                      <Text style={ styles.status }>Em análise...</Text>
+                                    {/* <CandidaturaAprovadoSvg w="18" h="17" style={[ styles.icon, styles.statusIcon ]}/> */}
+                                    <CandidaturaAndamentoSvg w="17" h="18" style={[ styles.icon, styles.statusIcon ]}/>
+                                    {/* <CandidaturaFinalizadoSvg w="17" h="17" style={[ styles.icon, styles.statusIcon ]}/> */}
+                                    <Text style={ styles.status }>Em análise...</Text>
                                   </View>
                               </View>
                           </TouchableOpacity>
@@ -75,12 +77,7 @@ export default Processos = (props) => {
           if (isCurriculoSet === false) {
               return (
                 <View style={ styles.vagaEmpty }>
-                    <CurriculoSvg style={ styles.icon }/>
-                    <Text style={[ styles.text, styles.message ]}>Para continuar cadastre um currículo</Text>
-                    <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                    onPress={() => props.navigation.navigate('CadastroCurriculo')}>
-                        <Text style={[ Variables.btnText, styles.btnText ]}>Cadastro do currículo</Text>
-                    </TouchableOpacity>
+                    <EmptyCv {...props}/>
                 </View>
               )
           }
@@ -101,15 +98,15 @@ export default Processos = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity style={[ styles.tabItem, styles.tabAprovado ]}
                             onPress={() => console.log('clicked')}>
-                            <CandidaturaAprovadoSvg style={ styles.icon }/>
+                            <CandidaturaAprovadoSvg style={ styles.icon } w="26" h="24.95"/>
                         </TouchableOpacity>
                         <TouchableOpacity style={[ styles.tabItem, styles.tabAndamento ]}
                             onPress={() => console.log('clicked')}>
-                            <CandidaturaAndamentoSvg style={ styles.icon }/>
+                            <CandidaturaAndamentoSvg style={ styles.icon } w="23.638" h="24.123"/>
                         </TouchableOpacity>
                         <TouchableOpacity style={[ styles.tabItem, styles.tabReprovado ]}
                             onPress={() => console.log('clicked')}>
-                            <CandidaturaFinalizadoSvg style={ styles.icon }/>   
+                            <CandidaturaFinalizadoSvg style={ styles.icon } w="25.12" h="25.12"/>
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -55,13 +55,13 @@ export default Etapa1 = (props) => {
                     <Image style={ styles.perfilImg } source={{uri: imagemUsuario ? imagemUsuario.uri : 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png'}} />
                 </TouchableOpacity>
             </View>
-            <Text style={ Variables.label }>Nome completo</Text>
+            <Text style={ Variables.label }>Nome completo*</Text>
             <TextInput style={ Variables.input } onBlur={() => sendDataToParent()} textContentType="name" autoFocus={true} autoCompleteType="name" autoCapitalize="words" value={nomeCandidato} onChangeText={ text => setNomeCandidato(text) }/>
 
-            <Text style={ Variables.label }>Email</Text>
+            <Text style={ Variables.label }>Email*</Text>
             <TextInput style={ Variables.input } onBlur={() => sendDataToParent()} textContentType="emailAddress" autoCompleteType="email" autoCapitalize="none" keyboardType="email-address" value={email} onChangeText={ text => setEmail(text.trim()) }/>
 
-            <Text style={ Variables.label }>Data de Nascimento</Text>
+            <Text style={ Variables.label }>Data de Nascimento*</Text>
             <TextInput style={ Variables.input } onBlur={() =>  handleDateOnBlur()} value={dateObj.display} onFocus={() => setToggleDatepicker(true)}/>
             {toggleDatepicker && (
                 <Datepicker

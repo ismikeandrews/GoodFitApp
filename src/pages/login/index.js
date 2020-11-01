@@ -61,7 +61,7 @@ export default Login = ({ navigation }) => {
                 
                 <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btns, styles.btnCodigo ]}
                 onPress={() => navigation.push('Vagas')}>
-                    <Text style={[ Variables.btnText, styles.btnTextCodigo ]}>Código de cadastro</Text>
+                    <Text style={[ Variables.btnText, styles.btnTextCodigo ]}>QR Code</Text>
                 </TouchableOpacity>
             </View>
         </View>

@@ -3,7 +3,7 @@ import Svg, { G, Path } from "react-native-svg"
 
 function CandidaturaAndamentoSvg(props) {
   return (
-    <Svg width={23.638} height={24.123} viewBox="0 0 23.638 24.123" {...props}>
+    <Svg width={props.w} height={props.h} viewBox="0 0 23.638 24.123" {...props}>
       <G data-name="Grupo 168">
         <G data-name="Grupo 167" fill="#fdcf67">
           <Path

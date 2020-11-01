@@ -20,16 +20,16 @@ export default Etapa2 = (props) => {
             <Text style={ Variables.title }>Informações da Conta</Text>
             <Text style={ Variables.subtitle }>Agora vamos configurar a sua conta</Text>
 
-            <Text style={ Variables.label }>Login</Text>
+            <Text style={ Variables.label }>Login*</Text>
             <TextInput style={ Variables.input } onBlur={() => sendDataToParent()} autoCapitalize="none" textContentType="username" autoFocus={true} autoCompleteType="username" value={loginUsuario} onChangeText={ text => setLoginUsuario(text.trim()) }/>
 
-            <Text style={ Variables.label }>CPF</Text>
+            <Text style={ Variables.label }>CPF*</Text>
             <TextInput style={ Variables.input } onBlur={() => sendDataToParent()} maxLength={11} keyboardType="number-pad" autoCapitalize="none" textContentType="none"  autoCompleteType="username" value={cpfCandidato} onChangeText={ text => setCpfCandidato(text.trim()) }/>
 
-            <Text style={ Variables.label }>Senha</Text>
+            <Text style={ Variables.label }>Senha*</Text>
             <TextInput style={ Variables.input } onBlur={() => sendDataToParent()} textContentType="password" autoCapitalize="none" secureTextEntry={true} value={password} onChangeText={ text => setPassword(text.trim()) }/>
 
-            <Text style={ Variables.label }>Confirmar senha</Text>
+            <Text style={ Variables.label }>Confirmar senha*</Text>
             <TextInput style={ Variables.input } onBlur={() => sendDataToParent()} textContentType="password" autoCapitalize="none" secureTextEntry={true} value={confirmPassword} onChangeText={ text => setConfirmPassword(text.trim()) }/>
         </View>
     );

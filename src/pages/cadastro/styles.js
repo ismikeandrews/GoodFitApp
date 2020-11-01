@@ -3,6 +3,7 @@ import color from '../../shared/variables/colors'
 
 export default StyleSheet.create({
     container: {
+        marginBottom: 150,
         marginTop: 50,
         paddingHorizontal: 30,
     },

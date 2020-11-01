@@ -3,7 +3,7 @@ import Svg, { G, Path } from "react-native-svg"
 
 function CandidaturaAprovadoSvg(props) {
   return (
-    <Svg width={26} height={24.96} viewBox="0 0 26 24.96" {...props}>
+    <Svg width={props.w} height={props.h} viewBox="0 0 26 24.96" {...props}>
       <G data-name="Grupo 169" fill="#63de9a">
         <Path
           data-name="Caminho 95"

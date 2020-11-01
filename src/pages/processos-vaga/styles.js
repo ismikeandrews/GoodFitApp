@@ -4,12 +4,11 @@ import color from '../../shared/variables/colors'
 export default StyleSheet.create({
     container: {
         alignItems: 'center',
-        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
+        marginBottom: 50,
         marginTop: 80,
-        paddingBottom: 80,
-        paddingHorizontal: 20,
+        marginHorizontal: 20,
     },
     logo: {
         alignItems: 'center',
@@ -68,6 +67,7 @@ export default StyleSheet.create({
         borderWidth: 2,
         flexDirection: 'row',
         justifyContent: 'center',
+        marginBottom: 130,
         marginTop: 30,
         paddingHorizontal: 20,
         paddingVertical: 15,

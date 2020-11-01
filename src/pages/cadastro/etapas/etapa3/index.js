@@ -46,45 +46,45 @@ export default Etapa3 = forwardRef((props, ref) => {
         <View style={[ Variables.content, styles.content ]}>
             <Text style={[ Variables.title, styles.title ]}>Endereço</Text>
 
-            <Text style={ Variables.label }>CEP</Text>
+            <Text style={ Variables.label }>CEP*</Text>
             <TextInput style={ Variables.input } textContentType="postalCode" autoFocus={true} maxLength={8} keyboardType="number-pad" onBlur={() => locationData(cepEndereco)} value={cepEndereco} onChangeText={ text => setCepEndereco(text.trim()) }/>
 
-            <Text style={ Variables.label }>Logradouro</Text>
+            <Text style={ Variables.label }>Logradouro*</Text>
             <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} textContentType="fullStreetAddress" value={logradouroEndereco} onChangeText={ text => setLogradouroEndereco(text) }/>
 
             <View style={ styles.inputGrid }>
                 <View style={ styles.input }>
-                    <Text style={ Variables.label }>Cidade</Text>
-                    <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} textContentType="addressCity" value={cidadeEndereco} onChangeText={ text => setCidadeEndereco(text) }/>
-                </View>
-
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Bairro</Text>
-                    <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} value={bairroEndereco} onChangeText={ text => setBairroEndereco(text) }/>
-                </View>
-            </View>
-
-            <View style={ styles.inputGrid }>
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Estado</Text>
-                    <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} textContentType="addressState" value={estadoEndereco} onChangeText={ text => setEstadoEndereco(text) }/>
-                </View>
-
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Zona</Text>
-                    <TextInput style={ Variables.input }  onBlur={() => sendIfFilled()} value={zonaEndereco} onChangeText={ text => setZonaEndereco(text) }/>
-                </View>
-            </View>
-
-            <View style={ styles.inputGrid }>
-                <View style={ styles.input }>
-                    <Text style={ Variables.label }>Número</Text>
+                    <Text style={ Variables.label }>Número*</Text>
                     <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} value={numeroEndereco} onChangeText={ text => setNumeroEndereco(text) }/>
                 </View>
 
                 <View style={ styles.input }>
                     <Text style={ Variables.label }>Complemento</Text>
                     <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} value={complementoEndereco} onChangeText={ text => setComplementoEndereco(text) }/>
+                </View>
+            </View>
+
+            <View style={ styles.inputGrid }>
+                <View style={ styles.input }>
+                    <Text style={ Variables.label }>Cidade*</Text>
+                    <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} textContentType="addressCity" value={cidadeEndereco} onChangeText={ text => setCidadeEndereco(text) }/>
+                </View>
+
+                <View style={ styles.input }>
+                    <Text style={ Variables.label }>Bairro*</Text>
+                    <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} value={bairroEndereco} onChangeText={ text => setBairroEndereco(text) }/>
+                </View>
+            </View>
+
+            <View style={ styles.inputGrid }>
+                <View style={ styles.input }>
+                    <Text style={ Variables.label }>Estado*</Text>
+                    <TextInput style={ Variables.input } onBlur={() => sendIfFilled()} textContentType="addressState" value={estadoEndereco} onChangeText={ text => setEstadoEndereco(text) }/>
+                </View>
+
+                <View style={ styles.input }>
+                    <Text style={ Variables.label }>Zona*</Text>
+                    <TextInput style={ Variables.input }  onBlur={() => sendIfFilled()} value={zonaEndereco} onChangeText={ text => setZonaEndereco(text) }/>
                 </View>
             </View>
         </View>
