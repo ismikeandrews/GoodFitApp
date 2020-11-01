@@ -7,8 +7,8 @@ import { authService, curriculoService, experienciaProfissionalService } from '.
 import { experienciaValidation } from '../../validations';
 import styles from './styles';
 
-class CadastroCurriculo extends Component{
-
+class UpdateCurriculo extends Component {
+    
     state = {
         page: 0, 
         total: 5,
@@ -21,6 +21,24 @@ class CadastroCurriculo extends Component{
         experiencias: [],
         cargos: []
     };
+
+    componentDidMount(){
+        this.fetchData()
+    }
+
+    fetchData = async () => {
+        const { curriculo } = await authService.getData();
+        if (curriculo.isSet) {
+            const curriculoRes = await curriculoService.getCurriculo(curriculo.codCurriculo)
+            const adicionaisRes = await curriculoService.getAdicionalListByCurriculoId(curriculo.codCurriculo)
+            const cargoRes = await curriculoService.getCargoListCurriculoId(curriculo.codCurriculo)
+            const experienciaProfissionalRes = await experienciaProfissionalService.getExperienciaByCurriculoId(curriculo.codCurriculo)
+            console.log(curriculoRes);
+            console.log(adicionaisRes);
+            console.log(cargoRes);
+            console.log(experienciaProfissionalRes);
+        }
+    }
 
     callbackFunctionE1 = (childData) => {
         this.setState({descricaoCurriculo: childData});
@@ -197,4 +215,4 @@ class CadastroCurriculo extends Component{
     };
 }
 
-export {CadastroCurriculo};
+export default UpdateCurriculo;

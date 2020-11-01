@@ -35,12 +35,10 @@ class ProcessosVaga extends Component{
             const adicionaRes = await adicionalService.getAdicionalById(element.codAdicional)
             index < 0 && arr.push(adicionaRes.data)
         }
-        this.setState({vaga, adicionais: arr, nomeFantasiaEmpresa, nomeProfissao, logradouroEndereco}, () => console.log(this.state))
+        this.setState({vaga, adicionais: arr, nomeFantasiaEmpresa, nomeProfissao, logradouroEndereco})
     }
     
     confirmCancel = async () => {
-        // await candidaturaService(this.props.route.params.codCandidatura)
-        // this.props.navigation.goBack()
         Alert.alert(
             "Atenção",
             "Você está prestes a cancelar uma candidatura. Deseja continuar?",

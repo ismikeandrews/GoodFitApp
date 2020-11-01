@@ -2,15 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { ActivityIndicator, Text, View } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { AuthContext } from '../config/authContext'
-import { Login, Cadastro, Vagas, CadastroCurriculo, Processos, Perfil, Curriculo, ProcessosVaga } from '../pages';
+import { Login, Cadastro, Vagas, CadastroCurriculo, Processos, Perfil, Curriculo, ProcessosVaga, UpdateCurriculo } from '../pages';
 import { DrawerContent } from './DrawerContent'
 import drawerStyle from './drawerStyle';
 
 const AuthStack = createStackNavigator();
-// const Tabs = createBottomTabNavigator();
 const ProcessosStack = createStackNavigator();
 const CurriculoStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -26,18 +24,10 @@ const CurriculoStackScreen = () => {
     return (
         <CurriculoStack.Navigator screenOptions={{ headerShown: false }}>
             <CurriculoStack.Screen name="Curriculo" component={Curriculo}/>
-            <CurriculoStack.Screen name="CadastroCurriculo" component={CadastroCurriculo}/>
+            <CurriculoStack.Screen name="UpdateCurriculo" component={UpdateCurriculo}/>
         </CurriculoStack.Navigator>
     )
 }
-
-
-// const TabsScreen = () => (
-//     <Tabs.Navigator>
-//         <Tabs.Screen name="Vagas" component={Vagas} />
-//         <Tabs.Screen name="Curriculo" component={CurriculoStackScreen}/>
-//     </Tabs.Navigator>
-// );
 
 export default Navigation = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -70,6 +60,7 @@ export default Navigation = () => {
                             <Drawer.Screen name="Curriculo" component={CurriculoStackScreen}/>
                             <Drawer.Screen name="Processos" component={ProcessosStackScreen}/>
                             <Drawer.Screen name="Perfil" component={Perfil}/>
+                            <Drawer.Screen name="CadastroCurriculo" component={CadastroCurriculo}/>
                         </Drawer.Navigator>
                     ) : (
                         <AuthStack.Navigator screenOptions={{ headerShown: false }}>

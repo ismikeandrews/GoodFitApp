@@ -32,8 +32,9 @@ const usuarioService = {
                 return data
         },
 
-        async createUsuario(data){
-                return await axios.post(`${url}/${prefix}/`, data)
+        async createUsuario(dataObj){
+                const { data } = await axios.post(`${url}/${prefix}/`, dataObj)
+                return data
         },
 
         async updateUsuario(id, data){

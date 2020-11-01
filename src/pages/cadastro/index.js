@@ -144,18 +144,17 @@ class Cadastro extends Component{
                 email: validatedUsuarioObj.email.value,
                 password: validatedUsuarioObj.password.value,
                 codNivelUsuario: this.state.codNivelUsuario,
-                codEndereco: codEndereco.data
+                codEndereco: codEndereco
             };
             const codUsuario = await usuarioService.createUsuario(usuarioData)
-
             let candidatoData = {
                 nomeCandidato: validatedCandidatoObj.nomeCandidato.value,
                 cpfCandidato: validatedCandidatoObj.cpfCandidato.value,
                 dataNascimentoCandidato: validatedCandidatoObj.dataNascimentoCandidato.value,
-                codUsuario: codUsuario.data
+                codUsuario: codUsuario
             }
-            const candidatoResponse = await candidatoService.createCandidato(candidatoData);
-            if(candidatoResponse.data){
+            const { data } = await candidatoService.createCandidato(candidatoData);
+            if(data){
                 Alert.alert('usuario cadastrados com sucesso')
                 this.props.navigation.navigate('Login')
             }

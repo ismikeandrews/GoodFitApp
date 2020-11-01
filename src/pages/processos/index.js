@@ -1,24 +1,26 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native'
 import { candidaturaService, authService, vagaService, empresaService, profissaoService } from '../../services'
 import { Variables, Help, Menu } from '../../shared'
-import { CandidaturaTodosSvg, CandidaturaAprovadoSvg, CandidaturaAndamentoSvg, CandidaturaFinalizadoSvg } from '../../assets'
+import { CandidaturaTodosSvg, CandidaturaAprovadoSvg, CandidaturaAndamentoSvg, CandidaturaFinalizadoSvg, CurriculoSvg, MenuVagasSvg } from '../../assets'
 import styles from './styles'
 
-class Processos extends Component{
+export default Processos = (props) => {
+    const [candidaturas, setCandidaturas] = useState([])
+    const [isCurriculoSet, setIsCurriculoSet] = useState(false)
 
-    state = {
-        candidaturas: []
-    }
+    useEffect(() => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+          fetchData()
+        });
+    
+        return unsubscribe;
+      }, [props.navigation]);
 
-    componentDidMount(){
-        this.fetchData()
-    }
-
-    fetchData = async () => {
+      const fetchData = async () => {
         try {
             let arr = []
-            const { codCandidato } = await authService.getData()
+            const { codCandidato, curriculo } = await authService.getData()
             const candidaturaList = await candidaturaService.getCandidaturasByCodCandidato(codCandidato)
             for (const element of candidaturaList) {
                 const { codEmpresa, codProfissao } = await vagaService.getVaga(element.codVaga)
@@ -28,106 +30,103 @@ class Processos extends Component{
                 element.nomeProfissao = nomeProfissao
                 arr.push(element)
             }
-            this.setState({candidaturas: arr})
+            setCandidaturas(arr)
+            setIsCurriculoSet(curriculo.isSet)
         } catch (error) {
             console.log(error)
         }
-    }
+      }
 
-    render(){
-        return(
-            <View style={ styles.container }>
-                <Menu {...this.props}/>
-                <View style={ styles.content }>
-                    <View style={ styles.header }>
-                        <Text style={[ styles.text, styles.title ]}>Status das candidaturas</Text>
-                        <Text style={[ styles.text, styles.subtitle ]}>Acompanhe os processos das suas candidaturas</Text>
-
-                        <View style={ styles.tabs }>
-                            <TouchableOpacity style={[ styles.tabItem, styles.tabAll ]}
-                                onPress={() => console.log('clicked')}>
-                                <CandidaturaTodosSvg style={ styles.icon }/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[ styles.tabItem, styles.tabAprovado ]}
-                                onPress={() => console.log('clicked')}>
-                                <CandidaturaAprovadoSvg style={ styles.icon }/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[ styles.tabItem, styles.tabAndamento ]}
-                                onPress={() => console.log('clicked')}>
-                                <CandidaturaAndamentoSvg style={ styles.icon }/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[ styles.tabItem, styles.tabReprovado ]}
-                                onPress={() => console.log('clicked')}>
-                                <CandidaturaFinalizadoSvg style={ styles.icon }/>   
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    
-                    <SafeAreaView style={ styles.contentVagas }>
-                        <ScrollView style={ styles.scrollView }>
-                            <View style={ styles.vagas }>
-                                {this.state.candidaturas.map(candidatura => (
-                                    <TouchableOpacity key={candidatura.codCandidatura} style={ styles.vagaItem }
-                                    onPress={() => this.props.navigation.navigate('ProcessosVaga',{ codCandidatura: candidatura.codCandidatura })}>
-                                        <Image style={ styles.logo } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
-                                        
-                                        <View style={ styles.desc }>
-                                            <Text style={ styles.cargo }>{candidatura.nomeFantasiaEmpresa}</Text>
-                                            <Text style={ styles.nome }>{candidatura.nomeProfissao}</Text>
-                                            
-                                            <View style={ styles.statusBox }>
-                                                <Text style={[ styles.dot, styles.dotAndamento ]}>●</Text>
-                                                <Text style={ styles.status }>Em análise...</Text>
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                ))}
-                                {/* 
-                                <TouchableOpacity style={ styles.vagaItem }
-                                onPress={() => this.props.navigation.push('ProcessosVaga')}>
-                                    <Image style={ styles.logo } source={require('../../assets/images/ijc.png')} />
-                                    
-                                    <View style={ styles.desc }>
-                                        <Text style={ styles.cargo }>Professor de Matemática</Text>
-                                        <Text style={ styles.nome }>Education & Future</Text>
-                                        
-                                        <View style={ styles.statusBox }>
-                                            <Text style={[ styles.dot, styles.dotAndamento ]}>●</Text>
-                                            <Text style={ styles.status }>Em análise...</Text>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity> */}
-            
-                                {/* Página vazia, necessário vagas */}
-                                {/* <View style={ styles.vagaEmpty }>
-                                    <Image style={ styles.icon } source={require('../../assets/images/ijc.png')} />
-                                    <Text style={[ styles.text, styles.message ]}>Não há nenhum processo ocorrendo no momento</Text>
-                                    <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                                    onPress={() => this.props.navigation.navigate('Vagas')}>
-                                        <Text style={[ Variables.btnText, styles.btnText ]}>Selecione uma vaga</Text>
-                                    </TouchableOpacity>
-                                </View> */}
-
-                                {/* Página vazia, necessário currículo */}
-                                {/* <View style={ styles.vagaEmpty }>
-                                    <Image style={ styles.icon } source={require('../../assets/images/ijc.png')} />
-                                    <Text style={[ styles.text, styles.message ]}>Para continuar cadastre um currículo</Text>
-                                    <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                                    onPress={() => this.props.navigation.navigate('CadastroCurriculo')}>
-                                        <Text style={[ Variables.btnText, styles.btnText ]}>Cadastro do currículo</Text>
-                                    </TouchableOpacity>
-                                </View> */}
-            
-                            </View>
-
-                        </ScrollView>
-
-                    </SafeAreaView>
-                    <Help/>
+      const showOptions = () => {
+          if (candidaturas.length > 0) {
+              return (
+                  <View>
+                      {candidaturas.map(candidatura => (
+                          <TouchableOpacity key={candidatura.codCandidatura} style={ styles.vagaItem }
+                          onPress={() => props.navigation.navigate('ProcessosVaga',{ codCandidatura: candidatura.codCandidatura })}>
+                              <Image style={ styles.logo } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
+                              
+                              <View style={ styles.desc }>
+                                  <Text style={ styles.cargo }>{candidatura.nomeFantasiaEmpresa}</Text>
+                                  <Text style={ styles.nome }>{candidatura.nomeProfissao}</Text>
+                                  
+                                  <View style={ styles.statusBox }>
+                                      <Text style={[ styles.dot, styles.dotAndamento ]}>●</Text>
+                                      <Text style={ styles.status }>Em análise...</Text>
+                                  </View>
+                              </View>
+                          </TouchableOpacity>
+                      ))}
+                  </View>
+              )
+          }
+          if (candidaturas.length === 0 && isCurriculoSet) {
+              return (
+                <View style={ styles.vagaEmpty }>
+                    <MenuVagasSvg style={ styles.icon }/>
+                    <Text style={[ styles.text, styles.message ]}>Não há nenhum processo ocorrendo no momento</Text>
+                    <TouchableOpacity style={[ Variables.btn, styles.btn ]}
+                    onPress={() => props.navigation.navigate('Vagas')}>
+                        <Text style={[ Variables.btnText, styles.btnText ]}>Selecione uma vaga</Text>
+                    </TouchableOpacity>
                 </View>
-            </View>
-        )
-    }
-}
+              )
+          }
+          if (isCurriculoSet === false) {
+              return (
+                <View style={ styles.vagaEmpty }>
+                    <CurriculoSvg style={ styles.icon }/>
+                    <Text style={[ styles.text, styles.message ]}>Para continuar cadastre um currículo</Text>
+                    <TouchableOpacity style={[ Variables.btn, styles.btn ]}
+                    onPress={() => props.navigation.navigate('CadastroCurriculo')}>
+                        <Text style={[ Variables.btnText, styles.btnText ]}>Cadastro do currículo</Text>
+                    </TouchableOpacity>
+                </View>
+              )
+          }
+      }
 
-export { Processos }
+      return(
+        <View style={ styles.container }>
+            <Menu {...props}/>
+            <View style={ styles.content }>
+                <View style={ styles.header }>
+                    <Text style={[ styles.text, styles.title ]}>Status das candidaturas</Text>
+                    <Text style={[ styles.text, styles.subtitle ]}>Acompanhe os processos das suas candidaturas</Text>
+
+                    <View style={ styles.tabs }>
+                        <TouchableOpacity style={[ styles.tabItem, styles.tabAll ]}
+                            onPress={() => console.log('clicked')}>
+                            <CandidaturaTodosSvg style={ styles.icon }/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[ styles.tabItem, styles.tabAprovado ]}
+                            onPress={() => console.log('clicked')}>
+                            <CandidaturaAprovadoSvg style={ styles.icon }/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[ styles.tabItem, styles.tabAndamento ]}
+                            onPress={() => console.log('clicked')}>
+                            <CandidaturaAndamentoSvg style={ styles.icon }/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[ styles.tabItem, styles.tabReprovado ]}
+                            onPress={() => console.log('clicked')}>
+                            <CandidaturaFinalizadoSvg style={ styles.icon }/>   
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                
+                <SafeAreaView style={ styles.contentVagas }>
+                    <ScrollView style={ styles.scrollView }>
+                        <View style={ styles.vagas }>
+                        
+                           {showOptions()}    
+        
+                        </View>
+
+                    </ScrollView>
+
+                </SafeAreaView>
+                <Help/>
+            </View>
+        </View>
+    )
+}

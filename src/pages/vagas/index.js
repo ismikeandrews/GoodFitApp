@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, ScrollView, Text, TouchableOpacity} from 'react-native';
 import { authService, vagaService, candidaturaService } from '../../services';
 import { Vaga } from './component';
@@ -7,20 +7,21 @@ import styles from './styles';
 import { CurriculoSvg } from '../../assets'
 import moment from 'moment';
 
-class Vagas extends Component{
+export default Vagas = (props) => {
+    const [isCurriculoSet, setIsCurriculoSet] = useState(false)
+    const [vagas, setVagas] = useState([])
 
-    state = {
-        isCurriculoSet: false,
-        vagas: [],
-    };
+    useEffect(() => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            fetchAuthData()
+        });
+    
+        return unsubscribe;
+    }, [props.navigation]);
 
-    componentDidMount(){
-        this.fetchAuthData();
-    };
-
-    callback = async (childData) => {
+    const callback = async (childData) => {
         const { codCandidato } = await authService.getData()
-        let arr = this.state.vagas;
+        let arr = vagas;
         arr = arr.filter(vaga => {
             return vaga.codVaga !== childData
         })
@@ -29,12 +30,11 @@ class Vagas extends Component{
             codVaga: childData,
             dataCandidatura: moment().unix()
         }
-        console.log(candidaturaObj)
         await candidaturaService.setCandidatura(candidaturaObj);
-        this.setState({vagas: arr})
+        setVagas(arr)
     }
 
-    fetchAuthData = async () => {
+    const fetchAuthData = async () => {
         try {
             const { curriculo, codCandidato } = await authService.getData();
             if (curriculo.isSet) {
@@ -46,21 +46,22 @@ class Vagas extends Component{
                     let index = vagaBanList.indexOf(vaga.codVaga)
                     index < 0 && arr.push(vaga)
                 }
-                this.setState({isCurriculoSet: curriculo.isSet, vagas: arr});
+                setIsCurriculoSet(curriculo.isSet)
+                setVagas(arr)
             }else{
-                this.setState({isCurriculoSet: curriculo.isSet});
+                setIsCurriculoSet(curriculo.isSet)
             }
         } catch (error) {
             console.log(error);
         }
-    };
+    }
 
-    renderVagas(){
-        if(this.state.vagas.length === 0){
+    const renderVagas = () => {
+        if(vagas.length === 0){
             return (
                 <View>
                     <Text style={ styles.text }>
-                        Nenhuma vaga encontrada no momento T_T
+                        Nenhuma vaga encontrada no momento 😢
                     </Text>
                         
                     <TouchableOpacity style={[ Variables.btn, styles.btn ]}
@@ -73,8 +74,8 @@ class Vagas extends Component{
             return (
                 <SafeAreaView style={ styles.slider } >
                     <ScrollView style={ styles.scrollView } horizontal>
-                        {this.state.vagas.map(vaga => (
-                            <Vaga key={vaga.codVaga} style={ styles.first } properties={vaga} parentCallback={this.callback}></Vaga>
+                        {vagas.map(vaga => (
+                            <Vaga key={vaga.codVaga} style={ styles.first } properties={vaga} parentCallback={callback}></Vaga>
                         ))}
                     </ScrollView>
                 </SafeAreaView> 
@@ -82,35 +83,31 @@ class Vagas extends Component{
         }
     }
 
-    render(){
-        return(
-            <View style={ styles.container }>
-                <Menu {...this.props}/>
-                <View style={ styles.content }>
-                
-                    {this.state.isCurriculoSet ?
-                        <View>
-                            {this.renderVagas()}
-                        </View>
-                        : 
-                        <SafeAreaView>
-                        <View style={ styles.contentEmpty }>
-                            <CurriculoSvg style={ styles.icon } />
-                            <Text style={ styles.text }>
-                                Para continuar cadastre um currículo
-                            </Text>
-                            <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                            onPress={() => this.props.navigation.navigate('Curriculo', {screen: 'CadastroCurriculo'})}>
-                                <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar do curriculo</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </SafeAreaView>
-                    }
-                </View>
-                <Help/>
-            </View> 
-        );
-    };
+    return(
+        <View style={ styles.container }>
+            <Menu {...props}/>
+            <View style={ styles.content }>
+            
+                {isCurriculoSet ?
+                    <View>
+                        {renderVagas()}
+                    </View>
+                    : 
+                    <SafeAreaView>
+                    <View style={ styles.contentEmpty }>
+                        <CurriculoSvg style={ styles.icon } />
+                        <Text style={ styles.text }>
+                            Para continuar cadastre um currículo
+                        </Text>
+                        <TouchableOpacity style={[ Variables.btn, styles.btn ]}
+                        onPress={() => props.navigation.navigate('CadastroCurriculo')}>
+                            <Text style={[ Variables.btnText, styles.btnText ]}>Cadastrar do curriculo</Text>
+                        </TouchableOpacity>
+                    </View>
+                </SafeAreaView>
+                }
+            </View>
+            <Help/>
+        </View> 
+    );
 }
-
-export { Vagas };

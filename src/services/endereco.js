@@ -5,8 +5,9 @@ const prefix = 'endereco';
 
 const enderecoService = {
 
-    async createEndereco(data){
-        return await axios.post(`${url}/${prefix}/store`, data);
+    async createEndereco(dataObj){
+        const { data } = await axios.post(`${url}/${prefix}/store`, dataObj);
+        return data
     },
 
     async getEnderecoById(codEndereco){
