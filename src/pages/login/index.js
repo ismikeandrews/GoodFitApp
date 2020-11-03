@@ -1,6 +1,6 @@
 import React, { useState, useContext} from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity, Alert } from 'react-native';
-
+import ImagePicker from 'react-native-image-picker';
 import { AuthContext } from '../../config/authContext';
 import { usuarioService, authService } from '../../services';
 import { Variables } from '../../shared';
@@ -28,10 +28,23 @@ export default Login = ({ navigation }) => {
         }
     }
 
+    const imagePickerCallback = (data) => {
+        if (data.didCancel) {
+            return;
+        }
+        if (data.error) {
+            Alert.alert('Ocorreu um erro')
+        }
+        if (!data.uri) {
+            Alert.alert('Não foi possivel verificar a imagem')
+        }
+        Alert.alert("Login realizado com sucesso")
+    }
+
     return(
         <View style={ Variables.container }>
             <View style={ styles.logo }>
-                <Image style={ styles.logoImg } source={require('../../assets/images/ijc.png')} />
+                <Image style={ styles.logoImg } source={require('../../assets/images/components/ijc.png')} />
             </View>
 
             <Text style={ Variables.title }>Seja bem-vindo!</Text>
@@ -60,7 +73,7 @@ export default Login = ({ navigation }) => {
                 </TouchableOpacity>
                 
                 <TouchableOpacity style={[ Variables.btn, styles.btn, styles.btns, styles.btnCodigo ]}
-                onPress={() => navigation.push('Vagas')}>
+                onPress={() => ImagePicker.showImagePicker({}, imagePickerCallback)}>
                     <Text style={[ Variables.btnText, styles.btnTextCodigo ]}>QR Code</Text>
                 </TouchableOpacity>
             </View>

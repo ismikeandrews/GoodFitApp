@@ -7,16 +7,16 @@ const experienciaProfissionalService = {
     
     async getExperienciaByCurriculoId(codCurriculo) {
         const { token } = await authService.getData()
-        const { data } = await axios.get(`${url}/${prefix}/${codCurriculo}?token=${token}`);
+        const { data } = await axios.get(`${url.development}/${prefix}/${codCurriculo}?token=${token}`);
         return data
     },
 
     async setExperienciaProfissional(data) {
-        return axios.post(`${url}/${prefix}/`, data);
+        return axios.post(`${url.development}/${prefix}/`, data);
     },
     
     async updateExperienciaProfissional(codExperiencia, data) {
-        return axios.put(`${url}/${prefix}/${codExperiencia}`, data);
+        return axios.put(`${url.development}/${prefix}/${codExperiencia}`, data);
     }
 
 };

@@ -4,7 +4,7 @@ const prefix = 'empresa';
 
 export default empresaService = {
     async getEmpresa(codEmpresa){
-        const { data } = await axios.get(`${url}/${prefix}/${codEmpresa}`);
+        const { data } = await axios.get(`${url.development}/${prefix}/${codEmpresa}`);
         return data
     }
 }

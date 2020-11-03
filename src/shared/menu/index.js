@@ -17,7 +17,7 @@ export default function Menu(props){
                 </TouchableOpacity>
 
                 <TouchableOpacity style={ styles.perfil } onPress={() => props.navigation.navigate('Perfil')}>
-                    <Image style={ styles.perfilImg } source={require('../../assets/images/default.jpg')} />
+                    <Image style={ styles.perfilImg } source={{uri: 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png'}} />
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

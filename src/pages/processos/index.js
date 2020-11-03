@@ -18,6 +18,7 @@ export default Processos = (props) => {
       }, [props.navigation]);
 
       const fetchData = async () => {
+        setIsLoading(true)
         try {
             let arr = []
             const { codCandidato, curriculo } = await authService.getData()
@@ -42,44 +43,56 @@ export default Processos = (props) => {
           if (candidaturas.length > 0) {
               return (
                   <View>
-                      {candidaturas.map(candidatura => (
-                          <TouchableOpacity key={candidatura.codCandidatura} style={ styles.vagaItem }
-                          onPress={() => props.navigation.navigate('ProcessosVaga',{ codCandidatura: candidatura.codCandidatura })}>
-                              <Image style={ styles.logo } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
-                              
-                              <View style={ styles.desc }>
-                                  <Text style={ styles.cargo }>{candidatura.nomeFantasiaEmpresa}</Text>
-                                  <Text style={ styles.nome }>{candidatura.nomeProfissao}</Text>
-                                  
-                                  <View style={ styles.statusBox }>
+                      {isLoading ? <ActivityIndicator style={ styles.load } size="large" color="#9d1d64"/> :
+                      <>
+                        {candidaturas.map(candidatura => (
+                            <TouchableOpacity key={candidatura.codCandidatura} style={ styles.vagaItem }
+                            onPress={() => props.navigation.navigate('ProcessosVaga',{ codCandidatura: candidatura.codCandidatura })}>
+                                <Image style={ styles.logo } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
+                                
+                                <View style={ styles.desc }>
+                                    <Text style={ styles.cargo }>{candidatura.nomeFantasiaEmpresa}</Text>
+                                    <Text style={ styles.nome }>{candidatura.nomeProfissao}</Text>
+                                    
+                                    <View style={ styles.statusBox }>
                                     {/* <CandidaturaAprovadoSvg w="18" h="17" style={[ styles.icon, styles.statusIcon ]}/> */}
                                     <CandidaturaAndamentoSvg w="17" h="18" style={[ styles.icon, styles.statusIcon ]}/>
                                     {/* <CandidaturaFinalizadoSvg w="17" h="17" style={[ styles.icon, styles.statusIcon ]}/> */}
                                     <Text style={ styles.status }>Em análise...</Text>
-                                  </View>
-                              </View>
-                          </TouchableOpacity>
-                      ))}
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                      </>
+                     }
                   </View>
               )
           }
           if (candidaturas.length === 0 && isCurriculoSet) {
               return (
-                <View style={ styles.vagaEmpty }>
-                    <MenuVagasSvg style={ styles.icon }/>
-                    <Text style={[ styles.text, styles.message ]}>Não há nenhum processo ocorrendo no momento</Text>
-                    <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                    onPress={() => props.navigation.navigate('Vagas')}>
-                        <Text style={[ Variables.btnText, styles.btnText ]}>Selecione uma vaga</Text>
-                    </TouchableOpacity>
-                </View>
+                <>
+                  {isLoading ? <ActivityIndicator style={ styles.load } size="large" color="#9d1d64"/> : 
+                    <View style={ styles.vagaEmpty }>
+                        <MenuVagasSvg style={ styles.icon }/>
+                        <Text style={[ styles.text, styles.message ]}>Não há nenhum processo ocorrendo no momento</Text>
+                        <TouchableOpacity style={[ Variables.btn, styles.btn ]}
+                        onPress={() => props.navigation.navigate('Vagas')}>
+                            <Text style={[ Variables.btnText, styles.btnText ]}>Selecione uma vaga</Text>
+                        </TouchableOpacity>
+                    </View>
+                    }
+                </>
               )
           }
           if (isCurriculoSet === false) {
               return (
-                <View style={ styles.vagaEmpty }>
-                    <EmptyCv {...props}/>
-                </View>
+                <>
+                    {isLoading ? <ActivityIndicator style={ styles.load } size="large" color="#9d1d64"/> : 
+                    <View style={ styles.vagaEmpty }>
+                        <EmptyCv {...props}/>
+                    </View>
+                    }
+                </>
               )
           }
       }

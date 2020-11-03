@@ -34,7 +34,7 @@ export default Vagas = (props) => {
         }
         await candidaturaService.setCandidatura(candidaturaObj);
         setVagas(arr)
-        // setIsLoading(false)
+        setIsLoading(false)
     }
 
     const fetchAuthData = async () => {
@@ -65,14 +65,18 @@ export default Vagas = (props) => {
         if(vagas.length === 0){
             return (
                 <View style={ styles.empty }>
-                    <Text style={ styles.text }>
-                        Nenhuma vaga encontrada no momento
-                    </Text>
-                        
-                    <TouchableOpacity style={[ Variables.btn, styles.btn ]}
-                    onPress={() => console.log('click')}>
-                        <Text style={[ Variables.btnText, styles.btnText ]}>Ative as notificações</Text>
-                    </TouchableOpacity>
+                    {isLoading ? <ActivityIndicator style={ styles.load } size="large" color="#9d1d64"/> :
+                    <>
+                        <Text style={ styles.text }>
+                            Nenhuma vaga encontrada no momento
+                        </Text>
+                            
+                        <TouchableOpacity style={[ Variables.btn, styles.btn ]}
+                        onPress={() => console.log('click')}>
+                            <Text style={[ Variables.btnText, styles.btnText ]}>Ative as notificações</Text>
+                        </TouchableOpacity>
+                    </>
+                    }
                 </View>
             )
         }else{

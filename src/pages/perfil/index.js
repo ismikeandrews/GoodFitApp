@@ -63,7 +63,7 @@ export default Perfil = (props) => {
                 <SafeAreaView>
                     <ScrollView style={ styles.scrollView }>
                         <View style={ styles.imgBorder }>
-                            <Image style={ styles.img } source={require('../../assets/images/default.jpg')} />
+                            <Image style={ styles.img } source={{uri: 'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png'}} />
                         </View>
 
                         <Text style={ styles.name }>{name}</Text>

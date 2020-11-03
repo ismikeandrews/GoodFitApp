@@ -35,9 +35,7 @@ export default Curriculo = (props) => {
                 const adicionalRes = await curriculoService.getAdicionaisByCurriculo(authData.curriculo.codCurriculo)
                 const cargoRes = await curriculoService.getCargosByCurriculo(authData.curriculo.codCurriculo)
                 for (const element of adicionalRes.data) {
-                    console.log(element)
                     let schoolIndex = schoolDic.indexOf(element.codAdicional);
-                    console.log(schoolIndex)
                     let literateIndex = literateDic.indexOf(element.codAdicional);
                     if(schoolIndex > -1){
                         setSchool(element)
@@ -55,6 +53,7 @@ export default Curriculo = (props) => {
                 setCurriculo(authData.curriculo)
                 setIsLoading(false)
             }
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
         }
