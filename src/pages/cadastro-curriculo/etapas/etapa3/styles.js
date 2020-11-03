@@ -29,12 +29,6 @@ export default StyleSheet.create({
         backgroundColor: '#ec377c40',
         borderColor: color.pink_light,
     },
-    icon: {
-        height: 30,
-        marginBottom: 0,
-        paddingBottom: 10,
-        width: 40,
-    },
     label: {
         color: color.gray,
         fontSize: 18,

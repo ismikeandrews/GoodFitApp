@@ -124,4 +124,7 @@ export default StyleSheet.create({
         fontWeight: '700',
         textTransform: 'uppercase',
     },
+    load: {
+        minHeight: '65%',
+    },
 })

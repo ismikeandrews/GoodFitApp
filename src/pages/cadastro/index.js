@@ -126,7 +126,6 @@ class Cadastro extends Component{
         const validatedUsuarioObj = await usuarioValidation.validate(usuarioObj);
         const validatedCandidatoObj = candidatoValidation.validate(canditadoObj);
         const validatedEnderecoObj = enderecoValidation.validate(enderecoObj);
-
         if(validatedUsuarioObj.isValid && validatedCandidatoObj.isValid && validatedEnderecoObj.isValid){
             let enderecoData = {
                 cepEndereco: validatedEnderecoObj.cepEndereco.value,

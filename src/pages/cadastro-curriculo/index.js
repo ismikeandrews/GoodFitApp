@@ -113,7 +113,7 @@ class CadastroCurriculo extends Component{
                     //updating authService and navigating to curriculo
                     authService.updateCurriculo(data)
                     Alert.alert('Curriculo cadastrado com sucesso');
-                    this.props.navigation.navigate('Vagas')  
+                    this.props.navigation.push('Vagas')  
                 }else{
                     Alert.alert('Seu formulario contem erros')
                 }

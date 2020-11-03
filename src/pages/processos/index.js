@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native'
+import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { candidaturaService, authService, vagaService, empresaService, profissaoService } from '../../services'
 import { Variables, Help, Menu, EmptyCv } from '../../shared'
 import { CandidaturaTodosSvg, CandidaturaAprovadoSvg, CandidaturaAndamentoSvg, CandidaturaFinalizadoSvg, CurriculoSvg, MenuVagasSvg } from '../../assets'
@@ -8,7 +8,7 @@ import styles from './styles'
 export default Processos = (props) => {
     const [candidaturas, setCandidaturas] = useState([])
     const [isCurriculoSet, setIsCurriculoSet] = useState(false)
-
+    const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
         const unsubscribe = props.navigation.addListener('focus', () => {
           fetchData()
@@ -32,6 +32,7 @@ export default Processos = (props) => {
             }
             setCandidaturas(arr)
             setIsCurriculoSet(curriculo.isSet)
+            setIsLoading(false)
         } catch (error) {
             console.log(error)
         }
@@ -87,41 +88,46 @@ export default Processos = (props) => {
         <View style={ styles.container }>
             <Menu {...props}/>
             <View style={ styles.content }>
-                <View style={ styles.header }>
-                    <Text style={[ styles.text, styles.title ]}>Status das candidaturas</Text>
-                    <Text style={[ styles.text, styles.subtitle ]}>Acompanhe os processos das suas candidaturas</Text>
+                {isLoading ? <ActivityIndicator style={ styles.load } size="large" color="#9d1d64"/> :
+                    <>
+                        <View style={ styles.header }>
+                            <Text style={[ styles.text, styles.title ]}>Status das candidaturas</Text>
+                            <Text style={[ styles.text, styles.subtitle ]}>Acompanhe os processos das suas candidaturas</Text>
 
-                    <View style={ styles.tabs }>
-                        <TouchableOpacity style={[ styles.tabItem, styles.tabAll ]}
-                            onPress={() => console.log('clicked')}>
-                            <CandidaturaTodosSvg style={ styles.icon }/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[ styles.tabItem, styles.tabAprovado ]}
-                            onPress={() => console.log('clicked')}>
-                            <CandidaturaAprovadoSvg style={ styles.icon } w="26" h="24.95"/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[ styles.tabItem, styles.tabAndamento ]}
-                            onPress={() => console.log('clicked')}>
-                            <CandidaturaAndamentoSvg style={ styles.icon } w="23.638" h="24.123"/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[ styles.tabItem, styles.tabReprovado ]}
-                            onPress={() => console.log('clicked')}>
-                            <CandidaturaFinalizadoSvg style={ styles.icon } w="25.12" h="25.12"/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                
-                <SafeAreaView style={ styles.contentVagas }>
-                    <ScrollView style={ styles.scrollView }>
-                        <View style={ styles.vagas }>
-                        
-                           {showOptions()}    
-        
+                            <View style={ styles.tabs }>
+                                <TouchableOpacity style={[ styles.tabItem, styles.tabAll ]}
+                                    onPress={() => console.log('clicked')}>
+                                    <CandidaturaTodosSvg style={ styles.icon }/>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[ styles.tabItem, styles.tabAprovado ]}
+                                    onPress={() => console.log('clicked')}>
+                                    <CandidaturaAprovadoSvg style={ styles.icon } w="26" h="24.95"/>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[ styles.tabItem, styles.tabAndamento ]}
+                                    onPress={() => console.log('clicked')}>
+                                    <CandidaturaAndamentoSvg style={ styles.icon } w="23.638" h="24.123"/>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[ styles.tabItem, styles.tabReprovado ]}
+                                    onPress={() => console.log('clicked')}>
+                                    <CandidaturaFinalizadoSvg style={ styles.icon } w="25.12" h="25.12"/>
+                                </TouchableOpacity>
+                            </View>
                         </View>
+                        
+                        <SafeAreaView style={ styles.contentVagas }>
+                            <ScrollView style={ styles.scrollView }>
+                                <View style={ styles.vagas }>
+                                
+                                {showOptions()}    
+                
+                                </View>
 
-                    </ScrollView>
+                            </ScrollView>
 
-                </SafeAreaView>
+                        </SafeAreaView>
+                    </>
+                }
+                
                 <Help/>
             </View>
         </View>

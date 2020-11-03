@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { validate } from 'gerador-validador-cpf'
 
 const candidatoValidation = {
 
@@ -45,6 +46,14 @@ const candidatoValidation = {
                 validatedObj.cpfCandidato.valid = false;
                 validatedObj.cpfCandidato.error = 'O campo CPF deve ter 11 caracteres';
             };
+
+            const isValid = validate(data.cpfCandidato)
+
+            if (!isValid) {
+                validatedObj.isValid = false;
+                validatedObj.cpfCandidato.valid = false;
+                validatedObj.cpfCandidato.error = 'Digite um cpf válido';
+            }
 
             //Birthday section
             if(!data.dataNascimentoCandidato){

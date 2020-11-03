@@ -77,4 +77,7 @@ export default StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
     },
+    load: {
+        minHeight: '100%',
+    },
 })

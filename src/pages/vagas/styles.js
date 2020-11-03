@@ -42,4 +42,7 @@ export default StyleSheet.create({
     empty: {
         paddingHorizontal: 90
     },
+    load: {
+        minHeight: '90%',
+    },
 });

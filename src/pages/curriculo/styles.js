@@ -74,13 +74,6 @@ export default StyleSheet.create({
         height: '85%',
         justifyContent: 'center',
     },
-
-
-
-
-
-
-
     description: {
         marginTop: 10
     },
@@ -111,16 +104,16 @@ export default StyleSheet.create({
     desc: {
         marginBottom: 30
     },
-    boxContainer: {
-        backgroundColor: '#fff',
-        borderColor: 'gray',
-        borderWidth: 1,
-        paddingHorizontal: 15,
-        paddingVertical: 20,
-        height: 170,
-    },
     box: {
         color: color.gray,
+        fontSize: 18,
         justifyContent: 'flex-start',
+        height: 230,
+        lineHeight: 24,
+        width: '100%',
+        maxWidth: 350,
+    },
+    load: {
+        minHeight: '100%',
     },
 })

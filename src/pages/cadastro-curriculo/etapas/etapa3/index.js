@@ -231,12 +231,12 @@ class Etapa3 extends Component {
         
                     <View style={this.state.yesSelected ? [styles.content, styles.yes] : styles.content}>
                         <TouchableOpacity style={this.state.noSelected ? [styles.btn, styles.btnActive] : styles.btn} onPress={() => this.handleNoPressed()}>
-                            <CandidaturaFinalizadoSvg/>
+                            <CandidaturaFinalizadoSvg w="25" h="25"/>
                             <Text style={ styles.label }>Não</Text>
                         </TouchableOpacity>
         
                         <TouchableOpacity style={this.state.yesSelected ? [styles.btn, styles.btnActive] : styles.btn} onPress={() =>  this.setState({yesSelected: true, noSelected: false})}>
-                            <CandidaturaAprovadoSvg/>
+                            <CandidaturaAprovadoSvg w="26" h="25"/>
                             <Text style={ styles.label }>Sim</Text>
                         </TouchableOpacity>
                     </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
+import { SafeAreaView, ScrollView, View, Image, Text, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { IconBox, Help } from '../../shared';
 import { CloseButtonSvg, ClockSvg } from '../../assets';
 import styles from './styles';
@@ -11,7 +11,8 @@ class ProcessosVaga extends Component{
         adicionais: [],
         nomeFantasiaEmpresa: '',
         nomeProfissao: '',
-        logradouroEndereco: ''
+        logradouroEndereco: '',
+        isLoading: true
     }
 
     componentDidMount(){
@@ -35,7 +36,7 @@ class ProcessosVaga extends Component{
             const adicionaRes = await adicionalService.getAdicionalById(element.codAdicional)
             index < 0 && arr.push(adicionaRes.data)
         }
-        this.setState({vaga, adicionais: arr, nomeFantasiaEmpresa, nomeProfissao, logradouroEndereco})
+        this.setState({vaga, adicionais: arr, nomeFantasiaEmpresa, nomeProfissao, logradouroEndereco, isLoading: false})
     }
     
     confirmCancel = async () => {
@@ -61,51 +62,55 @@ class ProcessosVaga extends Component{
         return(
             <SafeAreaView style={ styles.container }>
                 <ScrollView style={ styles.scrollView }>
-                    <View style={ styles.logo }>
-                        <Image style={ styles.logoImg } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
-                    </View>
-                    <Text style={[ styles.text, styles.nome ]}>{this.state.nomeFantasiaEmpresa}</Text>
+                    {this.state.isLoading ? <ActivityIndicator style={ styles.load } size="large" color="#9d1d64"/> :
+                        <>
+                            <View style={ styles.logo }>
+                                <Image style={ styles.logoImg } source={require('../../assets/images/empresas/empresa-colegio.jpg')} />
+                            </View>
+                            <Text style={[ styles.text, styles.nome ]}>{this.state.nomeFantasiaEmpresa}</Text>
 
-                    <Text style={[ styles.text, styles.cargo ]}>Professor</Text>
+                            <Text style={[ styles.text, styles.cargo ]}>Professor</Text>
 
-                    <View style={ styles.item }>
-                        <Image style={ styles.icon } source={require('../../assets/images/icons/empresa.png')} />
-                        <Text style={[ styles.text, styles.endereco ]}>{this.state.logradouroEndereco}</Text>
-                    </View>
+                            <View style={ styles.item }>
+                                <Image style={ styles.icon } source={require('../../assets/images/icons/empresa.png')} />
+                                <Text style={[ styles.text, styles.endereco ]}>{this.state.logradouroEndereco}</Text>
+                            </View>
 
-                    <View style={ styles.item }>
-                        <ClockSvg style={ styles.icon } color="#9d1d64"/>
-                        <Text style={[ styles.text, styles.horario ]}>Tempo integral</Text>
-                    </View>
+                            <View style={ styles.item }>
+                                <ClockSvg style={ styles.icon } color="#9d1d64"/>
+                                <Text style={[ styles.text, styles.horario ]}>Tempo integral</Text>
+                            </View>
 
-                    <Text style={[ styles.text, styles.title ]}>Requisitos</Text>
-                    <View style={ styles.requisitos }>
-                        <View style={ styles.list }>
-                            {this.state.adicionais.map(adicional => (
-                                <IconBox key={adicional.codAdicional} name={adicional.nomeAdicional} tipo="habilidade" img={adicional.imagemAdicional}></IconBox>
-                            ))}
-                        </View>
-                    </View>
+                            <Text style={[ styles.text, styles.title ]}>Requisitos</Text>
+                            <View style={ styles.requisitos }>
+                                <View style={ styles.list }>
+                                    {this.state.adicionais.map(adicional => (
+                                        <IconBox key={adicional.codAdicional} name={adicional.nomeAdicional} tipo="habilidade" img={adicional.imagemAdicional}></IconBox>
+                                    ))}
+                                </View>
+                            </View>
 
-                    <Text style={[ styles.text, styles.title ]}>Benefícios</Text>
-                    <View style={ styles.beneficios }>
-                        <View style={ styles.item }>
-                            <Text style={[ styles.text, styles.beneficio ]}>Vale Refeição</Text>
-                        </View>
-                        <View style={ styles.item }>
-                            <Text style={[ styles.text, styles.beneficio ]}>Vale Transporte</Text>
-                        </View>
-                    </View>
+                            <Text style={[ styles.text, styles.title ]}>Benefícios</Text>
+                            <View style={ styles.beneficios }>
+                                <View style={ styles.item }>
+                                    <Text style={[ styles.text, styles.beneficio ]}>Vale Refeição</Text>
+                                </View>
+                                <View style={ styles.item }>
+                                    <Text style={[ styles.text, styles.beneficio ]}>Vale Transporte</Text>
+                                </View>
+                            </View>
 
-                    <TouchableOpacity style={ styles.btn }
-                    onPress={() => this.confirmCancel()}>
-                        <Text style={ styles.btnText }>Cancelar candidatura</Text>
-                        <CloseButtonSvg style={[ styles.icon, styles.iconX ]} color="#9d1d64"/>
-                    </TouchableOpacity>
+                            <TouchableOpacity style={ styles.btn }
+                            onPress={() => this.confirmCancel()}>
+                                <Text style={ styles.btnText }>Cancelar candidatura</Text>
+                                <CloseButtonSvg style={[ styles.icon, styles.iconX ]} color="#9d1d64"/>
+                            </TouchableOpacity>
+                        </>
+                    }
                 </ScrollView>
-                <Help/>
+                {!this.state.isLoading && <Help/>}
             </SafeAreaView>
-        );
+        );   
     };
 }
 
