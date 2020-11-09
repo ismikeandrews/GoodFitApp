@@ -19,7 +19,7 @@ class Etapa4 extends React.Component {
     async fetchData(){
         const adicionalRes = await adicionalService.getAdicionalList();
         let arr = []
-        for (const element of adicionalRes.data.slice(0, 11)) {
+        for (const element of adicionalRes.data.slice(0, 12)) {
             let index = this.props.adicionais.indexOf(element.codAdicional)
             arr.push({...element, active: index > -1 ? true : false})
         }
